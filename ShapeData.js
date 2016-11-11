@@ -1,3 +1,5 @@
+"use strict";
+
 const SHAPES = {
 	ship: {
 		position:		{x:10,y:10},

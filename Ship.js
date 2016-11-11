@@ -1,3 +1,5 @@
+"use strict";
+
 const VELOCITY_MAX				= 4; //Velocity in meter/second
 const SHIP_ROTATION_UNIT	= Math.PI * 2; //Rotation allowed per frame
 const SHIP_BOOST_UNIT			= 0.1; //Velocity in meter/second
@@ -11,9 +13,21 @@ const Ship = {
 		isBoost:  false,
 		isLeft:   false,
 		isRight:  false,
-		position: Vector2D.create(1,1), //Game space coordinates
-		velocity: Vector2D.create(1,0), //Velocity in meter/second
+		position: Vector2D.create(0,0), //Game space coordinates
+		velocity: Vector2D.create(0,0), //Velocity in meter/second
 		direction: 0, //Radian
+
+		getPosition() {
+			return this.position;
+		},
+
+		getVelocity() {
+			return this.velocity;
+		},
+
+		getDirection() {
+			return this.direction;
+		},
 
 		updatePosition(elapsedTime /*frame duration in second*/) {
 			//Update velocity

@@ -1,3 +1,5 @@
+"use strict";
+
 const EPSILON = 0.00001; //Small float used to compensate error intruced by floats.
 
 const Util = {
@@ -14,6 +16,10 @@ const Util = {
 
 		compareFloat(float1,float2) {
 			return -EPSILON < (float1 - float2) && (float1 - float2) < EPSILON;
+		},
+
+		defined(object) {
+			return typeof object !== 'undefined';
 		}
 	}
 

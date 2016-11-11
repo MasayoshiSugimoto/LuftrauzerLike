@@ -1,3 +1,4 @@
+"use strict";
 
 const Vector2D = {
 	create(x,y) {
@@ -30,14 +31,14 @@ const Vector2D = {
 		},
 
 		add(vector2D) {
-			result = Vector2D.zero();
+			let result = Vector2D.zero();
 			result.x = vector2D.x + this.x;
 			result.y = vector2D.y + this.y;
 			return result;
 		},
 
 		scalarMultiply(scalar) {
-			result = Vector2D.zero();
+			let result = Vector2D.zero();
 			result.x = this.x * scalar;
 			result.y = this.y * scalar;
 			return result;

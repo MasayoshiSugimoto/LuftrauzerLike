@@ -1,3 +1,5 @@
+"use strict";
+
 const Rectangle = {
 	fromData(rectangle) {
 		Util.create().assert(rectangle.type == "Rectangle");
@@ -8,12 +10,14 @@ const Rectangle = {
 		return rectangleObject;
 	},
 
+	create() {
+		return Object.create(this.template);
+	},
+
 	template: {
-		rectangle: {
-			position:		Vector2D.zero(),
-			size:       Vector2D.create(10,10),
-			direction:  0,
-		},
+		position:		Vector2D.zero(),
+		size:       Vector2D.zero(),
+		direction:  0,
 
 		getPosition() {
 			return this.position;

@@ -1,3 +1,5 @@
+"use strict";
+
 {
 	let v = Vector2D.create(1,2);
 
@@ -26,7 +28,7 @@
 	util.assert(v.cut(2).distance() <= 2 + EPSILON);
 
 	//Test a complete circle rotation.
-	for (index = 0;
+	for (let index = 0;
 			index < 2 * 10 + 1/*+1 to be sure to test bigger than 2 * PI*/;
 			index++) {
 		let angle = index * (Math.PI / 10);

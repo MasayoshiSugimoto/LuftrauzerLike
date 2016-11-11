@@ -1,3 +1,5 @@
+"use strict";
+
 const Canvas = {
 	create(canvas) {
 		let canvasWrapper = Object.create(this.template);

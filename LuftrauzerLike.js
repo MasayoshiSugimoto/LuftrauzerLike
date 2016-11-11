@@ -1,3 +1,5 @@
+"use strict";
+
 const FRAME_TIME					= 1000 / 30; //milliseconds
 const GRAVITY_CONSTANT		= 9.80665;
 const PIXEL_PER_METER			= 200;
