@@ -1,12 +1,15 @@
 "use strict";
 
+//TODO: Change the name to RectangleDrawObjectMaker
 const RectangleDrawObject = {
+
 	create(rectangle) {
 		let rectangleDrawObject = Object.create(this.template);
 		rectangleDrawObject.rectangle = rectangle;
 		return rectangleDrawObject;
 	},
 
+	//TODO: Change the name to RectangleDrawObject
 	template: {
 		rectangle: Rectangle.create(),
 
@@ -30,11 +33,11 @@ const RectangleDrawObject = {
 			return this.rectangle.getGeometryType();
 		},
 
+		placeOn(canvasContext) {
+			this.rectangle.placeOn(canvasContext);
+		},
+
 		draw(canvasContext) {
-			canvasContext.translate(
-				this.rectangle.getPosition().getX(),
-				this.rectangle.getPosition().getY());
-			canvasContext.rotate(this.rectangle.getDirection())
 			canvasContext.fillRect(
 				-this.rectangle.getSize().getX()/2,
 				-this.rectangle.getSize().getY()/2,

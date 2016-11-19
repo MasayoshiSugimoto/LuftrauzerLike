@@ -1,5 +1,14 @@
+===============
+Coding Standard
+===============
+
+Composites should contain 'Composite' in their name (Example: FireActionComposite). It becomes clear that the object is to be used as a composition.
+
 ============
 Current task
 ============
 
-Organizing a folder tree.
+I am currently creating a composite containing position and direction.
+Its name is PositionableComposite.
+
+PositionableComposite is used when drawing. The object contains information to position and rotate the object before drawing. It is clearly a common behavior.

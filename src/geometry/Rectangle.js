@@ -1,39 +1,41 @@
 "use strict";
 
 const Rectangle = {
+
 	fromData(rectangle) {
 		Util.create().assert(rectangle.type == "Rectangle");
-		let rectangleObject = Object.create(this.template);
-		rectangleObject.position = Vector2D.fromData(rectangle.position);
-		rectangleObject.size = Vector2D.fromData(rectangle.size);
-		rectangleObject.direction = rectangle.direction;
+		let rectangleObject = this.create();
+		rectangleObject.setPosition(Vector2D.fromData(rectangle.position));
+		rectangleObject.setDirection(rectangle.direction);
+		rectangleObject.setSize(Vector2D.fromData(rectangle.size));
 		return rectangleObject;
 	},
 
 	create() {
-		return Object.create(this.template);
-	},
+		let state = {
+			position:   Vector2D.zero(),
+			size:       Vector2D.zero(),
+			direction:  0.0 //Gradian
+		};
 
-	template: {
-		position:		Vector2D.zero(),
-		size:       Vector2D.zero(),
-		direction:  0,
+		return Object.assign(
+			{
 
-		getPosition() {
-			return this.position;
-		},
+				getSize() {
+					return this.size;
+				},
 
-		getSize() {
-			return this.size;
-		},
+				setSize(size) {
+					this.size = size;
+				},
 
-		getDirection() {
-			return this.direction;
-		},
+				getGeometryType() {
+					return "Rectangle";
+				}
 
-		getGeometryType() {
-			return "Rectangle";
-		}
-
+			},
+			PositionableComposite(state)
+		);
 	}
+
 };

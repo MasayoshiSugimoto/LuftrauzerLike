@@ -1,10 +1,13 @@
 "use strict";
 
+//Rename the file, not the same as object
+
+//Tree node of draw object tree.
 const DrawObjectTreeNodeMaker = {
 	create(drawObject) {
 		let node = Object.create(this.DrawObjectTreeNode);
 		node.drawObject = drawObject;
-		node.childrenDrawObjects = [];
+		node.childrenDrawObjects = []; //TODO: Change the name to childrenNodes
 		return node;
 	},
 
@@ -42,6 +45,7 @@ const DrawObjectTreeNodeMaker = {
 
 			//Draw the node object
 			canvasContext.save();	
+			this.drawObject.placeOn(canvasContext);
 			this.drawObject.draw(canvasContext);
 			//Draw the children inside the context of the parent:
 			//the children position are relative to the parent object.

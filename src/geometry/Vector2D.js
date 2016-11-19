@@ -1,5 +1,6 @@
 "use strict";
 
+//TODO: Change the name to Vector2DMaker
 const Vector2D = {
 	create(x,y) {
 		let v = Object.create(this.template);
@@ -18,9 +19,8 @@ const Vector2D = {
 		return this.create(0,0);
 	},
 
+	//TODO: Change template to Vector2D
 	template: {
-		x: 0,
-		y: 0,
 
 		getX() {
 			return this.x;
