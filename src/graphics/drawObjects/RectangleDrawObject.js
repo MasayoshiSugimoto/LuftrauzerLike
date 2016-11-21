@@ -1,16 +1,14 @@
 "use strict";
 
-//TODO: Change the name to RectangleDrawObjectMaker
-const RectangleDrawObject = {
+const RectangleDrawObjectMaker = {
 
 	create(rectangle) {
-		let rectangleDrawObject = Object.create(this.template);
+		let rectangleDrawObject = Object.create(this.RectangleDrawObject);
 		rectangleDrawObject.rectangle = rectangle;
 		return rectangleDrawObject;
 	},
 
-	//TODO: Change the name to RectangleDrawObject
-	template: {
+	RectangleDrawObject: {
 		rectangle: Rectangle.create(),
 
 		getPosition() {

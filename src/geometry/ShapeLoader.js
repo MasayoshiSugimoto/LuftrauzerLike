@@ -30,7 +30,8 @@ const ShapeLoader = {
 			let drawObject = EmptyDrawObject;
 			switch (shape.type) {
 				case "Rectangle":
-					drawObject = RectangleDrawObject.create(Rectangle.fromData(shape));
+					drawObject = RectangleDrawObjectMaker
+						.create(Rectangle.fromData(shape));
 					break;
 				default:
 					this.util.assert(false, "Unknown shape type in shapes. shape:" + shape);

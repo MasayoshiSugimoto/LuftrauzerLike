@@ -6,7 +6,8 @@ function testRectangleDrawObject() {
 	canvasContext.clearRect(0,0,canvas.width, canvas.height); //Clear context
 
 	let shapes = ShapeLoader.create().load(TEST_SHAPES);
-	let rectangleDraw = RectangleDrawObject.create(shapes.get("testRectangle1"));
+	let rectangleDraw =
+		RectangleDrawObjectMaker.create(shapes.get("testRectangle1"));
 	rectangleDraw.draw(canvasContext);
 
 }
