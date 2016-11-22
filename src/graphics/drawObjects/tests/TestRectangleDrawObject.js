@@ -7,7 +7,7 @@ function testRectangleDrawObject() {
 
 	let shapes = ShapeLoader.create().load(TEST_SHAPES);
 	let rectangleDraw =
-		RectangleDrawObjectMaker.create(shapes.get("testRectangle1"));
+		RectangleDrawObject.create(shapes.get("testRectangle1"));
 	rectangleDraw.draw(canvasContext);
 
 }

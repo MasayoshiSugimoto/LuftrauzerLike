@@ -1,14 +1,14 @@
 "use strict";
 
-const RectangleDrawObjectMaker = {
+const RectangleDrawObject = {
 
 	create(rectangle) {
-		let rectangleDrawObject = Object.create(this.RectangleDrawObject);
+		let rectangleDrawObject = Object.create(this.template);
 		rectangleDrawObject.rectangle = rectangle;
 		return rectangleDrawObject;
 	},
 
-	RectangleDrawObject: {
+	template: {
 		rectangle: Rectangle.create(),
 
 		getPosition() {

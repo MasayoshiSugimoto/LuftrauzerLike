@@ -30,7 +30,7 @@ const ShapeLoader = {
 			let drawObject = EmptyDrawObject;
 			switch (shape.type) {
 				case "Rectangle":
-					drawObject = RectangleDrawObjectMaker
+					drawObject = RectangleDrawObject
 						.create(Rectangle.fromData(shape));
 					break;
 				default:
@@ -43,7 +43,7 @@ const ShapeLoader = {
 				children = [];
 			}
 
-			let drawNode = DrawObjectTreeNodeMaker.create(drawObject);
+			let drawNode = DrawObjectTreeNode.create(drawObject);
 			//Create the children
 			for (let index = 0; index < children.length; index++) {
 				drawNode.addDrawObject(

@@ -3,15 +3,15 @@
 //Rename the file, not the same as object
 
 //Tree node of draw object tree.
-const DrawObjectTreeNodeMaker = {
+const DrawObjectTreeNode = {
 	create(drawObject) {
-		let node = Object.create(this.DrawObjectTreeNode);
+		let node = Object.create(this.template);
 		node.drawObject = drawObject;
 		node.childrenDrawObjects = []; //TODO: Change the name to childrenNodes
 		return node;
 	},
 
-	DrawObjectTreeNode: {
+	template: {
 
 		getPosition() {
 			return this.drawObject.getPosition();
