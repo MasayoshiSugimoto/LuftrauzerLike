@@ -1,7 +1,5 @@
 "use strict";
 
-//Rename the file, not the same as object
-
 //Tree node of draw object tree.
 const DrawObjectTree = {
 
