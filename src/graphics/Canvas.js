@@ -1,15 +1,15 @@
 "use strict";
 
 const Canvas = {
+
 	create(canvas) {
 		let canvasWrapper = Object.create(this.template);
 		canvasWrapper.canvas = canvas;
+		canvasWrapper.drawObjects = []; //List of objects to be drawn
 		return canvasWrapper;
 	},
 
 	template: {
-		canvas: null,
-		drawObjects: [], //List of object to be drawn
 
 		registerDrawObject(drawObject) {
 			this.drawObjects.push(drawObjects);
