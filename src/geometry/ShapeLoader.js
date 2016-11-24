@@ -2,11 +2,12 @@
 
 const ShapeLoader = {
 	create() {
-		return Object.create(this.template);
+		let shapeLoader = Object.create(this.template);
+		shapeLoader.util = Util.create();
+		return shapeLoader;
 	},
 
 	template: {
-		util: Util.create(),
 
 		//List of shapes. Data file containing drawable objects to be loaded at startup.
 		//If an object contain children, it will be created as a tree.
