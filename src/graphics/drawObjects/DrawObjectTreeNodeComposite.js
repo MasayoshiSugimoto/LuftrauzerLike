@@ -1,13 +1,13 @@
 "use strict";
 
-const DrawObjectTreeNodeComposite = (drawObject) => ({
+const DrawObjectTreeComposite = (drawObject) => ({
 
-	getChildrenNodes() {
-		return this.childrenNodes;
+	getChildren() {
+		return this.children;
 	},
 
 	addDrawObject(drawObject) {
-		this.childrenNodes.push(drawObject);
+		this.children.push(drawObject);
 	},
 
 	draw(canvasContext) {
@@ -18,7 +18,7 @@ const DrawObjectTreeNodeComposite = (drawObject) => ({
 		this.draw(canvasContext);
 		//Draw the children inside the context of the parent:
 		//the children position are relative to the parent object.
-		this.childrenNodes.forEach( function(item,index) {
+		this.children.forEach( function(item,index) {
 			item.draw(canvasContext);
 		} )
 		canvasContext.restore();

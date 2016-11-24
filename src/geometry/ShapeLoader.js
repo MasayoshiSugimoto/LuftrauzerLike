@@ -44,14 +44,14 @@ const ShapeLoader = {
 				children = [];
 			}
 
-			let drawNode = DrawObjectTreeNode.create(drawObject);
+			let drawTree = DrawObjectTree.create(drawObject);
 			//Create the children
 			for (let index = 0; index < children.length; index++) {
-				drawNode.addDrawObject(
+				drawTree.addDrawObject(
 						this.loadRecursively(children[index]));
 			}
 
-			return drawNode;
+			return drawTree;
 		}
 
 	}

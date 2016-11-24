@@ -21,10 +21,10 @@ const TestShapeLoader = {
 		util.assert(ship.getDirection() === 5);
 	},
 
-	testDrawObjectTreeNodeRoot() {
+	testDrawObjectTreeRoot() {
 		let shapeLoader = ShapeLoader.create();
 		let tree = shapeLoader.load(TEST_SHAPES)
-				.get("testDrawObjectTreeNodesRoot");
+				.get("testDrawObjectTreeRoot");
 
 		let util = Util.create();
 		util.assert(tree.getPosition().getX() == 400);
@@ -50,4 +50,4 @@ const TestShapeLoader = {
 	}
 }
 
-TestShapeLoader.testDrawObjectTreeNodeRoot();
+TestShapeLoader.testDrawObjectTreeRoot();

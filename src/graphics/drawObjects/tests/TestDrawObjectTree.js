@@ -1,12 +1,12 @@
 "use strict";
 
-function testDrawObjectTreeNode() {
+function testDrawObjectTree() {
 	let canvas = document.getElementById("canvas");
 	let canvasContext = canvas.getContext("2d"); //Get the draw context
 	canvasContext.clearRect(0,0,canvas.width, canvas.height); //Clear context
 
 	let shapes = ShapeLoader.create().load(TEST_SHAPES);
-	shapes.get("testDrawObjectTreeNodesRoot").draw(canvasContext);
+	shapes.get("testDrawObjectTreeRoot").draw(canvasContext);
 }
 
 //Print all the shapes of 'SHAPES' by interval.

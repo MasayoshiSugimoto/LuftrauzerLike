@@ -3,7 +3,7 @@
 //Rename the file, not the same as object
 
 //Tree node of draw object tree.
-const DrawObjectTreeNode = {
+const DrawObjectTree = {
 
 	create(drawObject) {
 		let node = Object.create(this.template);
