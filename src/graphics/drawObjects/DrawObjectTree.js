@@ -8,7 +8,7 @@ const DrawObjectTree = {
 	create(drawObject) {
 		let node = Object.create(this.template);
 		node.drawObject = drawObject;
-		node.childrenDrawObjects = []; //TODO: Change the name to childrenNodes
+		node.children = [];
 		return node;
 	},
 
@@ -27,19 +27,19 @@ const DrawObjectTree = {
 		},
 
 		getChildren() {
-			return this.childrenDrawObjects;
+			return this.children;
 		},
 
 		getGeometryType() {
 			return this.drawObject.getGeometryType();
 		},
 
-		setDrawObjects(childrenDrawObjects) {
-			this.childrenDrawObjects = childrenDrawObjects;
+		setDrawObjects(children) {
+			this.children = children;
 		},
 
 		addDrawObject(drawObject) {
-			this.childrenDrawObjects.push(drawObject);
+			this.children.push(drawObject);
 		},
 
 		draw(canvasContext) {
@@ -50,7 +50,7 @@ const DrawObjectTree = {
 			this.drawObject.draw(canvasContext);
 			//Draw the children inside the context of the parent:
 			//the children position are relative to the parent object.
-			this.childrenDrawObjects.forEach( function(item,index) {
+			this.children.forEach( function(item,index) {
 				item.draw(canvasContext);
 			} )
 			canvasContext.restore();
