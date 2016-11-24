@@ -2,46 +2,37 @@
 
 const RectangleDrawObject = {
 
-	create(rectangle) {
-		let rectangleDrawObject = Object.create(this.template);
-		rectangleDrawObject.rectangle = rectangle;
-		return rectangleDrawObject;
+	create() {
+		let state = {
+			position: Vector2D.zero(),
+			direction: 0,
+			size: Vector2D.zero(),
+
+
+			draw(canvasContext) {
+				canvasContext.fillRect(
+					-this.getSize().getX()/2,
+					-this.getSize().getY()/2,
+					this.getSize().getX(),
+					this.getSize().getY());
+			}
+
+		};
+
+		return Object.assign(
+			state,
+			PositionableComposite(state),
+			RectangleComposite(state)
+		);
 	},
 
-	template: {
-		rectangle: Rectangle.create(),
-
-		getPosition() {
-			return this.rectangle.getPosition();
-		},
-
-		getSize() {
-			return this.rectangle.getSize();
-		},
-
-		getDirection() {
-			return this.rectangle.getDirection();
-		},
-
-		getChildren() {
-			return [];
-		},
-
-		getGeometryType() {
-			return this.rectangle.getGeometryType();
-		},
-
-		placeOn(canvasContext) {
-			this.rectangle.placeOn(canvasContext);
-		},
-
-		draw(canvasContext) {
-			canvasContext.fillRect(
-				-this.rectangle.getSize().getX()/2,
-				-this.rectangle.getSize().getY()/2,
-				this.rectangle.getSize().getX(),
-				this.rectangle.getSize().getY());
-		}
-
+	fromData(rectangle) {
+		Util.create().assert(rectangle.type == "Rectangle");
+		let rectangleObject = this.create();
+		rectangleObject.setPosition(Vector2D.fromData(rectangle.position));
+		rectangleObject.setDirection(rectangle.direction);
+		rectangleObject.setSize(Vector2D.fromData(rectangle.size));
+		return rectangleObject;
 	}
+
 };

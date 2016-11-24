@@ -19,6 +19,7 @@ const Rectangle = {
 		};
 
 		return Object.assign(
+			state,
 			RectangleComposite(state),
 			PositionableComposite(state)
 		);

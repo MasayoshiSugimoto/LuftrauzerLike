@@ -31,8 +31,7 @@ const ShapeLoader = {
 			let drawObject = EmptyDrawObject;
 			switch (shape.type) {
 				case "Rectangle":
-					drawObject = RectangleDrawObject
-						.create(Rectangle.fromData(shape));
+					drawObject = RectangleDrawObject.fromData(shape);
 					break;
 				default:
 					this.util.assert(false, "Unknown shape type in shapes. shape:" + shape);
@@ -44,7 +43,7 @@ const ShapeLoader = {
 				children = [];
 			}
 
-			let drawTree = DrawObjectTree.create(drawObject);
+			let drawTree = DrawObjectTree.fromData(drawObject);
 			//Create the children
 			for (let index = 0; index < children.length; index++) {
 				drawTree.addDrawObject(

@@ -3,7 +3,7 @@
 //Tree node of draw object tree.
 const DrawObjectTree = {
 
-	create(drawObject) {
+	fromData(drawObject) {
 		let node = Object.create(this.template);
 		node.drawObject = drawObject;
 		node.children = [];
