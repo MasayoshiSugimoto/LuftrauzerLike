@@ -4,6 +4,7 @@
 
 //Tree node of draw object tree.
 const DrawObjectTreeNode = {
+
 	create(drawObject) {
 		let node = Object.create(this.template);
 		node.drawObject = drawObject;

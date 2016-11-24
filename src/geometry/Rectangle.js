@@ -19,21 +19,7 @@ const Rectangle = {
 		};
 
 		return Object.assign(
-			{
-
-				getSize() {
-					return this.size;
-				},
-
-				setSize(size) {
-					this.size = size;
-				},
-
-				getGeometryType() {
-					return "Rectangle";
-				}
-
-			},
+			RectangleComposite(state),
 			PositionableComposite(state)
 		);
 	}
