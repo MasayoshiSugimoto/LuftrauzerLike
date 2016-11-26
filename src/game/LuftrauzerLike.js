@@ -63,6 +63,10 @@ function gameLoop() {
 	let canvasContext = canvas.getContext("2d"); //Get the draw context
 	canvasContext.clearRect(0,0,canvas.width, canvas.height); //Clear context
 
+	canvasContext.fillStyle = "#66ccff"; //Blue sky color
+	canvasContext.fillRect(0,0,canvas.width, canvas.height); //Blue sky background
+	canvasContext.fillStyle = "black"; //Revert black color
+
 	{
 		/* Draw the ship. Look like the following:
 		*      X
