@@ -7,9 +7,11 @@ const RectangleDrawObject = {
 			position: Vector2D.zero(),
 			direction: 0,
 			size: Vector2D.zero(),
+			color: "green",
 
 
 			draw(canvasContext) {
+				canvasContext.fillStyle = this.color;
 				canvasContext.fillRect(
 					-this.getSize().getX()/2,
 					-this.getSize().getY()/2,
