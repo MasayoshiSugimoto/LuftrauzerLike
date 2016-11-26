@@ -4,7 +4,8 @@ const TEST_SHAPES = {
 		position:		{x:400,y:300},
 		size:       {x:10,y:100},
 		direction:  Math.PI / 4,
-		type:				"Rectangle"
+		type:				"Rectangle",
+		color:			"green"
 	},
 	testDrawObjectTreeRoot: {
 		//Position is the middle of the screen

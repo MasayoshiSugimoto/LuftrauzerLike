@@ -29,11 +29,13 @@ const RectangleDrawObject = {
 	},
 
 	fromData(rectangle) {
-		Util.create().assert(rectangle.type == "Rectangle");
+		let util = Util.create();
+		util.assert(rectangle.type == "Rectangle");
 		let rectangleObject = this.create();
 		rectangleObject.setPosition(Vector2D.fromData(rectangle.position));
 		rectangleObject.setDirection(rectangle.direction);
 		rectangleObject.setSize(Vector2D.fromData(rectangle.size));
+		rectangleObject.color = rectangle.color;
 		return rectangleObject;
 	}
 
