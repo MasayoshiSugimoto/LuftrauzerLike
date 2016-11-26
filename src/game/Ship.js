@@ -6,16 +6,17 @@ const SHIP_BOOST_UNIT			= 0.1; //Velocity in meter/second
 
 const Ship = {
 	create() {
-		return Object.create(this.template);
+		let ship       =  Object.create(this.template);
+		ship.isBoost   =  false;
+		ship.isLeft    =  false;
+		ship.isRight   =  false;
+		ship.position  =  Vector2D.create(0,0); //Game space coordinates
+		ship.velocity  =  Vector2D.create(0,0); //Velocity in meter/second
+		ship.direction =  0; //Radian
+		return ship;
 	},
 
 	template: {
-		isBoost:  false,
-		isLeft:   false,
-		isRight:  false,
-		position: Vector2D.create(0,0), //Game space coordinates
-		velocity: Vector2D.create(0,0), //Velocity in meter/second
-		direction: 0, //Radian
 
 		getPosition() {
 			return this.position;

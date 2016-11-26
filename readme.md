@@ -6,10 +6,10 @@ Composites should contain 'Composite' in their name (Example: FireActionComposit
 
 | Task											 | State | Current |
 |----------------------------|-------|---------|
-|Blue background						 | DONE  | X       |
-|Draw objects color	    		 |       |         |
+|Blue background						 | DONE  |         |
+|Draw objects color	    		 |       | X       |
 |Bullets           	    		 |       |         |
 |One simple ennemy 	    		 |       |         |
 |Border collisions 	    		 |       |         |
-|Game starts in the center   |       |         |
+|Game starts in the center   | DONE  |         |
 

@@ -1,12 +1,16 @@
 "use strict";
 
-const FRAME_TIME					= 1000 / 30; //milliseconds
-const GRAVITY_CONSTANT		= 9.80665;
-const PIXEL_PER_METER			= 200;
-const GRAVITY_VECTOR 			= Vector2D.create(0,GRAVITY_CONSTANT);
+const FRAME_TIME_MILLISECOND			= 1000.0 / 60.0;
+const FRAME_TIME_SECOND						= FRAME_TIME_MILLISECOND / 1000.0;
+const GRAVITY_CONSTANT						= 9.80665;
+const PIXEL_PER_METER							= 200;
+const GRAVITY_VECTOR 							= Vector2D.create(0,GRAVITY_CONSTANT);
+const TIMEOUT_LATENCY_MILLISECOND = 10;
 
 var ship = Ship.create();
-var lastTime = (new Date()).getTime();
+var lastTimeMillisecond = (new Date()).getTime();
+var frameCounter = 0;
+var frameCounterTimerMillisecond = 0;
 
 function meter2Pixel(distanceInMeter) {
 	return distanceInMeter * PIXEL_PER_METER;
@@ -26,16 +30,29 @@ function vectorPixel2Meter(v) {
 
 function gameLoop() {
 
-	let debugDiv = document.getElementById("debug");
-	debugDiv.textContent = ship.velocity.toString();
-
+	//First thing to do on a frame update is to update the current time.
 	//Calculate the elapsed time
-	let newTime = (new Date()).getTime();
-	let elapsedTime = (newTime - lastTime) / 1000; //Elapsed time in second
-	lastTime = newTime;
+	let frameStartTimeMillisecond = (new Date()).getTime();
+	let elapsedTimeSecond = Math.min(
+		(frameStartTimeMillisecond - lastTimeMillisecond) / 1000,
+		FRAME_TIME_SECOND); 
+	lastTimeMillisecond = frameStartTimeMillisecond;
 
-	ship.updateControl(elapsedTime);
-	ship.updatePosition(elapsedTime);
+	let debugDiv = document.getElementById("debug");
+
+	//Update frame counter
+	frameCounter++;
+	frameCounterTimerMillisecond = frameCounterTimerMillisecond + elapsedTimeSecond * 1000.0;
+	if (frameCounterTimerMillisecond >= 1000 /* 1 second */) {
+		//Update frame counter display
+		debugDiv.textContent = "Frame per second = " + frameCounter;
+		//Reset frame counter
+		frameCounterTimerMillisecond = frameCounterTimerMillisecond - 1000;
+		frameCounter = 0
+	}
+
+	ship.updateControl(elapsedTimeSecond);
+	ship.updatePosition(elapsedTimeSecond);
 
 	//Keep in the screen
 	let canvas = document.getElementById("canvas");
@@ -97,11 +114,16 @@ function gameLoop() {
 		canvasContext.restore();
 	}
 
+	window.setTimeout(gameLoop,
+		//Remaining time before frame update in millisecond
+		FRAME_TIME_MILLISECOND - Math.max(0, (new Date()).getTime() - frameStartTimeMillisecond) 
+	);
 }
 
 const LuftrauzerLike = {
 
 	//First function to be called.
+	//Setup the game before starting the game loop
 	startGame() {
 
 		//Set key down handler
@@ -134,7 +156,17 @@ const LuftrauzerLike = {
 			}
 		}
 
-		window.setInterval(gameLoop,FRAME_TIME);
+		let canvas = document.getElementById("canvas");
+
+		//The ship starts at the bottom of the screen, horizontaly centered.
+		ship.position = Vector2D.create(
+			pixel2Meter(canvas.width / 2),
+			pixel2Meter(canvas.height - 1));
+		//The ship starts by beeing thrown upward.
+		ship.direction = -Math.PI / 2.0;
+		ship.velocity = Vector2D.create(0.0, -5);
+
+		gameLoop();
 
 	}
 };
