@@ -5,14 +5,15 @@ const SHIP_ROTATION_UNIT	= Math.PI * 2; //Rotation allowed per frame
 const SHIP_BOOST_UNIT			= 0.1; //Velocity in meter/second
 
 const Ship = {
-	create() {
-		let ship       =  Object.create(this.template);
-		ship.isBoost   =  false;
-		ship.isLeft    =  false;
-		ship.isRight   =  false;
-		ship.position  =  Vector2D.create(0,0); //Game space coordinates
-		ship.velocity  =  Vector2D.create(0,0); //Velocity in meter/second
-		ship.direction =  0; //Radian
+	create(drawObject) {
+		let ship        =  Object.create(this.template);
+		ship.isBoost    =  false;
+		ship.isLeft     =  false;
+		ship.isRight    =  false;
+		ship.position   =  Vector2D.create(0,0); //Game space coordinates
+		ship.velocity   =  Vector2D.create(0,0); //Velocity in meter/second
+		ship.direction  =  0; //Radian
+		ship.drawObject = drawObject;
 		return ship;
 	},
 
@@ -56,7 +57,12 @@ const Ship = {
 					.add(Vector2D.create(boost,0).rotate(this.direction));
 			}
 
+		},
+
+		draw() {
+			this.drawObject.draw();
 		}
+
 	}
 
 };
