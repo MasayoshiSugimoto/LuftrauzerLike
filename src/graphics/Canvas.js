@@ -1,5 +1,7 @@
 "use strict";
 
+const PIXEL_PER_METER							= 200;
+
 const Canvas = {
 
 	create(canvas) {
@@ -23,6 +25,22 @@ const Canvas = {
 			for (let index = 0; index < this.drawObjects.length; ++index) {
 				this.drawObjects[index].draw();
 			}
+		},
+
+		meter2Pixel(distanceInMeter) {
+			return distanceInMeter * PIXEL_PER_METER;
+		}
+
+		pixel2Meter(distanceInPixel) {
+			return distanceInPixel / PIXEL_PER_METER;
+		}
+
+		vectorMeter2Pixel(v) {
+			return v.scalarMultiply(PIXEL_PER_METER);
+		}
+
+		vectorPixel2Meter(v) {
+			return v.scalarMultiply(1 / PIXEL_PER_METER);
 		}
 
 	}

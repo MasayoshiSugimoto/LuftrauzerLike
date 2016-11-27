@@ -19,8 +19,8 @@ const PositionableComposite = (state) => ({
 	},
 
 	placeOn(canvasContext) {
-		canvasContext.translate(state.position.getX(), state.position.getY());
-		canvasContext.rotate(state.direction);
+		canvasContext.translate(state.getPosition().getX(), state.getPosition().getY());
+		canvasContext.rotate(state.getDirection());
 	}
 
 })

@@ -51,3 +51,9 @@ const TestShapeLoader = {
 }
 
 TestShapeLoader.testDrawObjectTreeRoot();
+
+const TEST_SHAPE_MAP = {};
+
+TEST_SHAPE_MAP.getTestShip = function() {
+	return ShapeLoader.create().load(TEST_SHAPES).get("testShip");
+};

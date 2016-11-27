@@ -37,6 +37,7 @@ const ShapeLoader = {
 					this.util.assert(false, "Unknown shape type in shapes. shape:" + shape);
 			}
 
+			//TODO: Simplify this.
 			//Wrap the shape in a tree node
 			let children = shape.children;
 			if (!this.util.defined(children)) {
@@ -54,4 +55,11 @@ const ShapeLoader = {
 		}
 
 	}
+};
+
+//Global instance containing all game shapes.
+const SHAPE_MAP = ShapeLoader.create().load(SHAPES);
+
+SHAPE_MAP.getShip = function() {
+	return SHAPE_MAP.get("ship");
 };

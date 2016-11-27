@@ -5,13 +5,26 @@
 		<meta charset="utf-8">
 		<title>Canvas Test</title>
 
+		<!-- Data -->
+		<script src="data/ShapeData.js"></script>
+
 		<!-- Imports -->
 		<script src="src/geometry/Vector2D.js"></script>
+		<script src="src/geometry/PositionableComposite.js"></script>
+		<script src="src/geometry/RectangleComposite.js"></script>
 		<script src="src/game/Ship.js"></script>
+		<script src="src/core/Util.js"></script>
+		<script src="src/core/UtilConsts.js"></script>
+		<script src="src/core/tests/TestConsts.js"></script>
+		<script src="src/geometry/Rectangle.js"></script>
+		<script src="src/graphics/drawObjects/DrawObjectTree.js"></script>
+		<script src="src/graphics/drawObjects/EmptyDrawObject.js"></script>
+		<script src="src/graphics/drawObjects/RectangleDrawObject.js"></script>
+		<script src="src/geometry/ShapeLoader.js"></script>
 		<script src="src/game/LuftrauzerLike.js"></script>
 
 		<script>
-			window.onload = function() { LuftrauzerLike().startGame(); };
+			window.onload = function() { LuftrauzerLike.create().startGame(); };
 		</script>
 
 	</head>

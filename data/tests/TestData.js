@@ -5,7 +5,7 @@ const TEST_SHAPES = {
 		size:       {x:10,y:100},
 		direction:  Math.PI / 4,
 		type:				"Rectangle",
-		color:			"green"
+		color:			"green",
 	},
 	testDrawObjectTreeRoot: {
 		//Position is the middle of the screen
@@ -27,5 +27,11 @@ const TEST_SHAPES = {
 				type:				"Rectangle"
 			}
 		]
-	}
+	},
+	testShip: {
+		position:		{x:0,y:0},
+		size:       {x:0,y:0},
+		direction:  0,
+		type:				"Rectangle",
+	},
 };

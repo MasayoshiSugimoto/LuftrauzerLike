@@ -16,12 +16,20 @@ const DrawObjectTree = {
 			return this.drawObject.getPosition();
 		},
 
+		setPosition(position) {
+			return this.drawObject.setPosition(position);
+		},
+
 		getSize() {
 			return this.drawObject.getSize();
 		},
 
 		getDirection() {
 			return this.drawObject.getDirection();
+		},
+
+		setDirection(direction) {
+			return this.drawObject.setDirection(direction);
 		},
 
 		getChildren() {
