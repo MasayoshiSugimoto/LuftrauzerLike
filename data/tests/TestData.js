@@ -1,3 +1,5 @@
+"use strict";
+
 const TEST_SHAPES = {
 	testRectangle1: {
 		//Position is the middle of the screen

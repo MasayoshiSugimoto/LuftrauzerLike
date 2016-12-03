@@ -54,6 +54,8 @@ const LuftrauzerLike = {
 					case 68: //D
 						gameContext.ship.isRight = true;
 						break;
+					case 32: //Space
+						break;
 				}
 			}
 

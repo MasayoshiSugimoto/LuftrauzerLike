@@ -10,9 +10,11 @@ const Ship = {
 		ship.isBoost    =  false;
 		ship.isLeft     =  false;
 		ship.isRight    =  false;
+		ship.isBullet		=  false;
 		ship.position		=  Vector2D.create(0,0); //Game coordinates in meter
 		ship.velocity   =  Vector2D.create(0,0); //Velocity in meter/second
 		ship.drawObject = drawObject;
+		//ship.machineGun = MachineGun.create(this);
 		return ship;
 	},
 
@@ -64,6 +66,12 @@ const Ship = {
 				let boost = SHIP_BOOST_UNIT * elapsedTime;
 				this.velocity = this.velocity
 					.add(Vector2D.create(boost,0).rotate(this.getDirection()));
+			}
+
+			//Update bullets
+			if (this.isBullet) {
+				//Create bullets if the key is pressed.
+				//this.machineGun.fire(elapsedTime);
 			}
 
 		},

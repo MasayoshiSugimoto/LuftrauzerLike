@@ -46,5 +46,12 @@ const SHAPES = {
 				type:				"Rectangle"
 			}
 		]
+	},
+	bullet: {
+		position:		{x:0,y:0},
+		size:       {x:5,y:5},
+		direction:  0,
+		type:				"Rectangle",
+		color:			"grey",
 	}
 };
