@@ -86,3 +86,47 @@
 	machineGun.clear();
 	util.assert(machineGun.getFireTimer() == 0.0);
 }
+
+{ //Test onFireStart and onFireStop events
+	let util = Util.create();
+	let bulletFactory = {
+		fromDataCounter: 0,
+		fromData() {
+			this.fromDataCounter++;
+			return { getDrawObject() {} };
+		}
+	};
+	let ship = {
+		getPosition() { },
+		getDirection() { }
+	};
+	let drawObjectManager = {
+		addDrawObject() { }
+	};
+	let machineGun = MachineGun.create(ship, bulletFactory, drawObjectManager);
+
+	//Update more than 1 second and check than no bullet has been fired.
+	machineGun.update(1.1 /* second */);
+	util.assert(bulletFactory.fromDataCounter == 0);
+
+	//Raise fire start event.
+	machineGun.onFireStart();
+
+	//Update more than 1 second and check that a bullet has been fired.
+	machineGun.update(1.1 /* second */);
+	util.assert(bulletFactory.fromDataCounter == 1);
+
+	//Raise fire stop event.
+	machineGun.onFireStop();
+	util.assert(bulletFactory.fromDataCounter == 1);
+
+	//Update more than 1 second and check than no bullet has been fired.
+	machineGun.update(1.1 /* second */);
+
+	//Raise fire start event.
+	machineGun.onFireStart();
+
+	//Update more than 1 second and check that a bullet has been fired.
+	machineGun.update(1.1 /* second */);
+	util.assert(bulletFactory.fromDataCounter == 2);
+}
