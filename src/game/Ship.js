@@ -13,7 +13,7 @@ const Ship = {
 		ship.isBullet		=  false;
 		ship.position		=  Vector2D.create(0,0); //Game coordinates in meter
 		ship.velocity   =  Vector2D.create(0,0); //Velocity in meter/second
-		ship.drawObject = drawObject;
+		ship.drawObject =  drawObject;
 		//ship.machineGun = MachineGun.create(this);
 		return ship;
 	},
