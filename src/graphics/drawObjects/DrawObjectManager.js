@@ -6,35 +6,35 @@ const DrawObjectManager = {
 		let state = {
 			drawObjects: []
 		};
-		return Object.assign(state, this.template);
-	},
 
-	template: {
+		let proto = {
 
-		add(drawObject) {
-			this.drawObjects.push(drawObject);
-		},
+			add(drawObject) {
+				this.drawObjects.push(drawObject);
+			},
 
-		length() {
-			return this.drawObjects.length;
-		},
+			length() {
+				return this.drawObjects.length;
+			},
 
-		get(index) {
-			return this.drawObjects[index];
-		},
+			get(index) {
+				return this.drawObjects[index];
+			},
 
-		remove(drawObject) {
-			this.drawObjects = this.drawObjects.filter( function(element) {
-				return element != drawObject;
-			} );
-		},
+			remove(drawObject) {
+				this.drawObjects = this.drawObjects.filter( function(element) {
+					return element != drawObject;
+				} );
+			},
 
-		draw(canvasContext) {
-			this.drawObjects.forEach( function(drawObject) {
-				drawObject.draw(canvasContext);
-			} );
-		}
+			draw(canvasContext) {
+				this.drawObjects.forEach( function(drawObject) {
+					drawObject.draw(canvasContext);
+				} );
+			}
+		};
 
+		return Object.assign(state, proto);
 	}
 
 };
