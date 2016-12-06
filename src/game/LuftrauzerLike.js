@@ -3,29 +3,12 @@
 const FRAME_TIME_MILLISECOND			= 1000.0 / 60.0;
 const FRAME_TIME_SECOND						= FRAME_TIME_MILLISECOND / 1000.0;
 const GRAVITY_CONSTANT						= 9.80665;
-const PIXEL_PER_METER							= 200;
 const GRAVITY_VECTOR 							= Vector2D.create(0,GRAVITY_CONSTANT);
 const TIMEOUT_LATENCY_MILLISECOND = 10;
 
 var lastTimeMillisecond = (new Date()).getTime();
 var frameCounter = 0;
 var frameCounterTimerMillisecond = 0;
-
-function meter2Pixel(distanceInMeter) {
-	return distanceInMeter * PIXEL_PER_METER;
-}
-
-function pixel2Meter(distanceInPixel) {
-	return distanceInPixel / PIXEL_PER_METER;
-}
-
-function vectorMeter2Pixel(v) {
-	return v.scalarMultiply(PIXEL_PER_METER);
-}
-
-function vectorPixel2Meter(v) {
-	return v.scalarMultiply(1 / PIXEL_PER_METER);
-}
 
 const LuftrauzerLike = {
 
