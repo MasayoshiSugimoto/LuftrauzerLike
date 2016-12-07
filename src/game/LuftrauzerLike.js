@@ -37,31 +37,15 @@ const LuftrauzerLike = {
 					this.ship.setDirection(-Math.PI / 2.0);
 					this.ship.velocity = Vector2D.create(0.0, -5);
 
-					this.gameLoop();
+					let luftrauzerLike = this;
+					Scheduler.create(Time.create())
+						.callByInterval(
+							(elapsedTimeSecond) => { luftrauzerLike.gameLoop(elapsedTimeSecond); },
+							FRAME_TIME_MILLISECOND);
 
 				},
 
-				gameLoop() {
-
-					//First thing to do on a frame update is to update the current time.
-					//Calculate the elapsed time
-					let frameStartTimeMillisecond = (new Date()).getTime();
-					let elapsedTimeSecond = Math.min(
-							(frameStartTimeMillisecond - lastTimeMillisecond) / 1000,
-							FRAME_TIME_SECOND); 
-					lastTimeMillisecond = frameStartTimeMillisecond;
-
-					//Update frame counter
-					frameCounter++;
-					frameCounterTimerMillisecond = frameCounterTimerMillisecond + elapsedTimeSecond * 1000.0;
-					if (frameCounterTimerMillisecond >= 1000 /* 1 second */) {
-						//Update frame counter display
-						let debugDiv = document.getElementById("debug");
-						debugDiv.textContent = "Frame per second = " + frameCounter;
-						//Reset frame counter
-						frameCounterTimerMillisecond = frameCounterTimerMillisecond - 1000;
-						frameCounter = 0
-					}
+				gameLoop(elapsedTimeSecond) {
 
 					this.ship.updateControl(elapsedTimeSecond);
 					this.ship.updatePosition(elapsedTimeSecond);
@@ -97,12 +81,6 @@ const LuftrauzerLike = {
 
 					this.ship.draw(canvasContext);
 
-					let gameContext = this;
-					window.setTimeout(
-							function() { gameContext.gameLoop(); },
-							//Remaining time before frame update in millisecond
-							FRAME_TIME_MILLISECOND - Math.max(0, (new Date()).getTime() - frameStartTimeMillisecond) 
-							);
 				}
 			});
 	}
