@@ -101,7 +101,8 @@
 		getDirection() { }
 	};
 	let drawObjectManager = {
-		addDrawObject() { }
+		addDrawObject() { },
+		remove() { }
 	};
 	let machineGun = MachineGun.create(ship, bulletFactory, drawObjectManager);
 
