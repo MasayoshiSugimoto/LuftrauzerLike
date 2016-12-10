@@ -6,7 +6,7 @@ const Bullet = {
 		let state = {
 			position: Vector2D.zero(),
 			direction: 0, //Radian
-			velocity: 1.0, //meter per second
+			velocity: 5.0, //meter per second
 			drawObject: SHAPE_MAP.get("bullet")
 		};
 
@@ -40,7 +40,8 @@ const Bullet = {
 		updatePosition(elapsedTimeSecond) {
 			//Update the coordinates. Gravity does not apply to bullets.
 			let velocityVector = Vector2D.create(1.0, 0.0).rotate(this.direction);
-			this.position = this.position.add(velocityVector.scalarMultiply(elapsedTimeSecond));
+			this.position = this.position.add(velocityVector.scalarMultiply(
+				elapsedTimeSecond * this.velocity));
 		},
 
 		draw(canvasContext) {

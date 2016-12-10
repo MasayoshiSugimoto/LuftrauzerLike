@@ -7,9 +7,9 @@
 	util.assert(bullet.getPosition().getX() == 0);
 	util.assert(bullet.getPosition().getY() == 0);
 	util.assert(bullet.getDirection() == 0);
-	util.assert(bullet.getVelocity() == 1.0);
-	util.assert(bullet.getDrawObject().getSize().getX() == 5);
-	util.assert(bullet.getDrawObject().getSize().getY() == 5);
+	util.assert(bullet.getVelocity() == 5.0);
+	util.assert(bullet.getDrawObject().getSize().getX() == 10);
+	util.assert(bullet.getDrawObject().getSize().getY() == 10);
 }
 
 { //Test the 'fromData' function
@@ -19,9 +19,9 @@
 	util.assert(bullet.getPosition().getX() == 1.0);
 	util.assert(bullet.getPosition().getY() == 2.0);
 	util.assert(bullet.getDirection() == 3);
-	util.assert(bullet.getVelocity() == 1.0);
-	util.assert(bullet.getDrawObject().getSize().getX() == 5);
-	util.assert(bullet.getDrawObject().getSize().getY() == 5);
+	util.assert(bullet.getVelocity() == 5.0);
+	util.assert(bullet.getDrawObject().getSize().getX() == 10);
+	util.assert(bullet.getDrawObject().getSize().getY() == 10);
 }
 
 { //Test 'updatePosition'. Move 1 meter to the right.
@@ -30,7 +30,7 @@
 
 	bullet.updatePosition(1.0 /* duration in second */);
 
-	util.assert(bullet.getPosition().getX() == 1.0);
+	util.assert(bullet.getPosition().getX() == 5.0);
 	util.assert(bullet.getPosition().getY() == 0.0);
 }
 
@@ -44,5 +44,5 @@
 
 	util.assert(bullet.getPosition().getX() < 0.0);
 	util.assert(bullet.getPosition().getY() < 0.0);
-	util.assert(util.compareFloat(bullet.getPosition().distance(), 1.0));
+	util.assert(util.compareFloat(bullet.getPosition().distance(), 5.0));
 }

@@ -14,12 +14,21 @@ const LuftrauzerLike = {
 
 	create() {
 		let shapeMap = ShapeLoader.create().load(SHAPES);
+		let ship = Ship.create(shapeMap.get("ship"));
+		let drawObjectManager = DrawObjectManager.create();
+		let machineGun = MachineGun.create(ship, Bullet, drawObjectManager);
 
 		return Object.assign(
 			{
-				ship: Ship.create(shapeMap.get("ship"))
+				ship: ship,
+				drawObjectManager: drawObjectManager,
+				machineGun: machineGun
 			}, 
 			{
+				getMachineGun() {
+					return this.machineGun;
+				},
+
 				//First function to be called.
 				//Setup the game before starting the game loop
 				//This function is only called once at startup
@@ -49,6 +58,8 @@ const LuftrauzerLike = {
 
 					this.ship.updateControl(elapsedTimeSecond);
 					this.ship.updatePosition(elapsedTimeSecond);
+
+					this.machineGun.update(elapsedTimeSecond);
 
 					//Keep in the screen
 					let canvas = document.getElementById("canvas");
@@ -81,6 +92,7 @@ const LuftrauzerLike = {
 
 					this.ship.draw(canvasContext);
 
+					this.drawObjectManager.draw(canvasContext);
 				}
 			});
 	}

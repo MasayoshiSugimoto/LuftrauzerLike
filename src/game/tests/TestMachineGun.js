@@ -7,7 +7,7 @@
 	};
 	let machineGun = MachineGun.create({}, bulletFactory, {}, {});
 
-	machineGun.fire(0.1 /*second*/);
+	machineGun.fire(0.01 /*second*/);
 	let util = Util.create();
 	util.assert(!bulletFactory.isCreatedCalled);
 }
@@ -32,12 +32,12 @@
 	let drawObjectManager = {
 		removeCounter: 0,
 		addDrawObjectCounter: 0,
-		addDrawObject(drawObject) {
-			util.assert(drawObject == expectedDrawObject);
+		add(drawObject) {
+			util.assert(drawObject == bullet);
 			this.addDrawObjectCounter++;
 		},
 		remove(drawObject) {
-			util.assert(drawObject == expectedDrawObject);
+			util.assert(drawObject == bullet);
 			this.removeCounter++;
 		}
 	};
@@ -51,18 +51,18 @@
 	//Create machinegun
 	let machineGun = MachineGun.create(ship, bulletFactory, drawObjectManager);
 
-	//Fire for 1 second and check that the first bullet is created
-	machineGun.fire(1.0);
+	//Fire for 0.05 second and check that the first bullet is created
+	machineGun.fire(0.05);
 	util.assert(drawObjectManager.addDrawObjectCounter == 1);
 	util.assert(machineGun.getBulletsLength() == 1);
 
-	//Fire for 0.5 second and check that no bullet has been created.
-	machineGun.fire(0.5);
+	//Fire for 0.01 second and check that no bullet has been created.
+	machineGun.fire(0.01);
 	util.assert(drawObjectManager.addDrawObjectCounter == 1);
 	util.assert(machineGun.getBulletsLength() == 1);
 
 	//Fire for another 0.5 second and check that the second bullet has been created.
-	machineGun.fire(0.5 + EPSILON);
+	machineGun.fire(0.04 + EPSILON);
 	util.assert(machineGun.getBulletsLength() == 2);
 	util.assert(drawObjectManager.addDrawObjectCounter == 2);
 
@@ -78,8 +78,8 @@
 
 	let machineGun = MachineGun.create({}, {}, {}, {});
 
-	//Fire for 0.5 seconds
-	machineGun.fire(0.5);
+	//Fire for 0.01 seconds
+	machineGun.fire(0.01);
 	util.assert(machineGun.getFireTimer() != 0.0);
 
 	//Clear and check if the time has been reset
@@ -93,7 +93,10 @@
 		fromDataCounter: 0,
 		fromData() {
 			this.fromDataCounter++;
-			return { getDrawObject() {} };
+			return {
+				getDrawObject() {},
+				updatePosition() {}
+			};
 		}
 	};
 	let ship = {
@@ -101,7 +104,7 @@
 		getDirection() { }
 	};
 	let drawObjectManager = {
-		addDrawObject() { },
+		add() { },
 		remove() { }
 	};
 	let machineGun = MachineGun.create(ship, bulletFactory, drawObjectManager);

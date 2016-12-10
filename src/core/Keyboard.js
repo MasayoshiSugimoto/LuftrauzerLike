@@ -21,6 +21,9 @@ const Keyboard = {
 				case KEYBOARD_KEY_D:
 					gameContext.ship.isRight = true;
 					break;
+				case KEYBOARD_KEY_SPACE:
+					gameContext.getMachineGun().onFireStart();
+					break;
 			}
 		}
 
@@ -35,6 +38,9 @@ const Keyboard = {
 					break;
 				case KEYBOARD_KEY_D:
 					gameContext.ship.isRight = false;
+					break;
+				case KEYBOARD_KEY_SPACE:
+					gameContext.getMachineGun().onFireStop();
 					break;
 			}
 		}

@@ -1,6 +1,6 @@
 "use strict";
 
-const MACHINE_GUN_FIRE_RATE = 1.0; //Bullet per second
+const MACHINE_GUN_FIRE_RATE = 0.05; //Time between bullets in seconds
 
 const MachineGun = {
 
@@ -29,14 +29,14 @@ const MachineGun = {
 
 				//Add bullets
 				this.bullets.push(bullet);
-				this.drawObjectManager.addDrawObject(bullet.getDrawObject());
+				this.drawObjectManager.add(bullet);
 
 				//Set an event to delete the bullets after some time
 				let that = this;
 				setTimeout(
 					() => {
-						that.bullets = that.bullets.filter( (b) => { b != bullet; } );
-						that.drawObjectManager.remove(bullet.getDrawObject());
+						that.bullets = that.bullets.filter( (b) => { return b != bullet; } );
+						that.drawObjectManager.remove(bullet);
 					},
 					5000 /*Life time of the bullet created in millisecond.*/
 				);
@@ -54,8 +54,12 @@ const MachineGun = {
 				this.updateFunction = this.clear;
 			},
 
-			update(elapsedTime) {
-				this.updateFunction(elapsedTime);
+			update(elapsedTimeSecond) {
+				this.updateFunction(elapsedTimeSecond);
+
+				this.bullets.forEach( function(bullet) {
+					bullet.updatePosition(elapsedTimeSecond);
+				} );
 			}
 
 		};

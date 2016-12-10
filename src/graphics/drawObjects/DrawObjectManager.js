@@ -29,7 +29,10 @@ const DrawObjectManager = {
 
 			draw(canvasContext) {
 				this.drawObjects.forEach( function(drawObject) {
+					canvasContext.save();
+					drawObject.placeOn(canvasContext);
 					drawObject.draw(canvasContext);
+					canvasContext.restore();
 				} );
 			}
 		};
