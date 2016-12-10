@@ -8,7 +8,7 @@ Composites should contain 'Composite' in their name (Example: FireActionComposit
 |----------------------------|-------|---------|
 |Blue background						 | DONE  |         |
 |Draw objects color	    		 | DONE  |         |
-|Bullets           	    		 |       | X       |
+|Bullets           	    		 | DONE  |         |
 |One simple ennemy 	    		 |       |         |
 |Border collisions 	    		 |       |         |
 |Game starts in the center   | DONE  |         |
