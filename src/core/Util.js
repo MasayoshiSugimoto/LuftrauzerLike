@@ -4,10 +4,10 @@ const EPSILON = 0.00001; //Small float used to compensate error intruced by floa
 
 const Util = {
 	create() {
-		return Object.create(this.template);
+		return Object.create(this.proto);
 	},
 	
-	template: {
+	proto: {
 		assert(condition,message) {
 			if (!condition) {
 				throw message || "Assertion failure.";
