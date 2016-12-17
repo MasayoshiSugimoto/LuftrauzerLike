@@ -14,6 +14,10 @@ const Util = {
 			}
 		},
 
+		assertEqualFloat(expected, actual) {
+			this.assert(this.compareFloat(expected, actual));
+		},
+
 		compareFloat(float1,float2) {
 			return -EPSILON < (float1 - float2) && (float1 - float2) < EPSILON;
 		},

@@ -18,6 +18,14 @@ const Vector2D = {
 		return this.create(0,0);
 	},
 
+	unitX() {
+		return this.create(1.0, 0.0);
+	},
+
+	unitY() {
+		return this.create(0.0, 1.0);
+	},
+
 	template: {
 
 		getX() {
@@ -50,6 +58,10 @@ const Vector2D = {
 			return this.scalarMultiply(size / this.distance());
 		},
 
+		normalize() {
+			return this.resize(1.0);
+		},
+
 		distance() {
 			return Math.sqrt((this.x * this.x) + (this.y * this.y));
 		},
@@ -68,8 +80,16 @@ const Vector2D = {
 			);
 		},
 
+		dot(vector2D) {
+			return this.x * Vector2D.x + this.y * Vector2D.y;
+		},
+
 		toString() {
 			return "{x:" + this.x + ",y:" + this.y + "}";
+		},
+
+		getAngle() {
+			return Angle.create(Math.atan2(this.y, this.x));
 		}
 
 	}

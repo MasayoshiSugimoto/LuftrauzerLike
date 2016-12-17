@@ -45,3 +45,16 @@
 	}
 
 }
+
+{ //Test getAngle
+	let util = Util.create();
+
+	let v2 = Vector2D.create(3.0, 3.0);
+	util.assertEqualFloat(Math.PI / 4.0, v2.getAngle().get());
+
+	let v3 = Vector2D.create(2.0, 0.0);
+	util.assertEqualFloat(0.0, v3.getAngle().get());
+
+	let v4 = Vector2D.create(0.0, 5.0);
+	util.assertEqualFloat(Math.PI / 2.0, v4.getAngle().get());
+}
