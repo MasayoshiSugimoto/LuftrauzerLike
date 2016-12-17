@@ -9,5 +9,5 @@
 		let counter = 0;
 		scheduler.callByInterval( () => { counter++; } , 1000.0 / 60.0);
 		setTimeout( () => { util.assert(counter >= 60); }, 1050 )
-	}, 3000 /* Delay to let the time to the debuger to initialize. */);
+	}, 5000 /* Delay to let the time to the debuger to initialize. */);
 }
