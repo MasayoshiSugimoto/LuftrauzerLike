@@ -46,6 +46,12 @@
 
 }
 
+{ //Test substract
+	let util = Util.create();
+	util.assert(Vector2D.create(1.0, 2.0).substract(Vector2D.create(1.0, 2.0)).x == 0.0);
+	util.assert(Vector2D.create(1.0, 2.0).substract(Vector2D.create(1.0, 2.0)).y == 0.0);
+}
+
 { //Test getAngle
 	let util = Util.create();
 

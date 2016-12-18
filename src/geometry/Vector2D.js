@@ -43,6 +43,13 @@ const Vector2D = {
 			return result;
 		},
 
+		substract(vector2D) {
+			let result = Vector2D.zero();
+			result.x = this.x - vector2D.x;
+			result.y = this.y - vector2D.y;
+			return result;
+		},
+
 		scalarMultiply(scalar) {
 			let result = Vector2D.zero();
 			result.x = this.x * scalar;
