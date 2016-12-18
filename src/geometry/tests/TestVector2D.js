@@ -64,3 +64,22 @@
 	let v4 = Vector2D.create(0.0, 5.0);
 	util.assertEqualFloat(Math.PI / 2.0, v4.getAngle().get());
 }
+
+{ //Test distanceBetween
+	let util = Util.create();
+
+	util.assertEqualFloat(
+		0.0,
+		Vector2D.distanceBetween(Vector2D.create(1.0, 2.0), Vector2D.create(1.0, 2.0))
+	);
+
+	util.assertEqualFloat(
+		1.0,
+		Vector2D.distanceBetween(Vector2D.create(1.0, 2.0), Vector2D.create(1.0, 3.0))
+	);
+
+	util.assertEqualFloat(
+		1.0,
+		Vector2D.distanceBetween(Vector2D.create(1.0, 2.0), Vector2D.create(2.0, 2.0))
+	);
+}

@@ -26,6 +26,10 @@ const Vector2D = {
 		return this.create(0.0, 1.0);
 	},
 
+	distanceBetween(v1, v2) {
+		return v1.substract(v2).distance();
+	},
+
 	template: {
 
 		getX() {
