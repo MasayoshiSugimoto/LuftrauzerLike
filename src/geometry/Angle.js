@@ -19,17 +19,19 @@ const Angle = {
 					let divisor = 0;
 					//Round to zero
 					if (angleInRadian > 0.0) {
-						divisor = Math.floor(angleInRadian / Math.PI);
+						divisor = Math.floor(angleInRadian / PIx2);
 					} else {
-						divisor = Math.ceil(angleInRadian / Math.PI);
+						divisor = Math.ceil(angleInRadian / PIx2);
 					}
 
 					//Remove modulo
-					angleInRadian = angleInRadian - divisor * Math.PI;
+					angleInRadian = angleInRadian - divisor * PIx2;
 
-					//Correct side if non 2PI factor
-					if (divisor % 2 != 0) {
-						angleInRadian = -angleInRadian;
+					//Change the side if bigger than PI
+					if (angleInRadian < -Math.PI) {
+						angleInRadian = angleInRadian + PIx2;
+					} else if (angleInRadian > Math.PI) {
+						angleInRadian = angleInRadian - PIx2;
 					}
 
 					//Set the value
@@ -45,6 +47,22 @@ const Angle = {
 				minus() {
 					this.angleInRadian = -this.angleInRadian;
 					return this;
+				},
+
+				add(angle) {
+					return Angle.create(this.get() + angle.get());
+				},
+
+				substract(angle) {
+					return Angle.create(this.get() - angle.get());
+				},
+
+				equals(angle) {
+					let deltaAngle = Angle.create(this.get() - angle.get()).get();
+					if (-EPSILON < deltaAngle && deltaAngle < EPSILON) {
+						return true;
+					}
+					return false;
 				}
 
 			}
