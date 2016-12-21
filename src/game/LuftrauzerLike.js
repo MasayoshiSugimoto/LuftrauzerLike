@@ -17,12 +17,14 @@ const LuftrauzerLike = {
 		let ship = Ship.create(shapeMap.get("ship"));
 		let drawObjectManager = DrawObjectManager.create();
 		let machineGun = MachineGun.create(ship, Bullet, drawObjectManager);
+		let enemy = SimpleEnemy.create(ship, {}, shapeMap.get("ship2"));
 
 		return Object.assign(
 			{
 				ship: ship,
 				drawObjectManager: drawObjectManager,
-				machineGun: machineGun
+				machineGun: machineGun,
+				enemy: enemy
 			}, 
 			{
 				getMachineGun() {
@@ -46,6 +48,9 @@ const LuftrauzerLike = {
 					this.ship.setDirection(-Math.PI / 2.0);
 					this.ship.velocity = Vector2D.create(0.0, -5);
 
+					//drawObjectManager setup
+					this.drawObjectManager.add(this.enemy);
+
 					let luftrauzerLike = this;
 					Scheduler.create(Time.create())
 						.callByInterval(
@@ -55,6 +60,8 @@ const LuftrauzerLike = {
 				},
 
 				gameLoop(elapsedTimeSecond) {
+
+					this.enemy.update(elapsedTimeSecond);
 
 					this.ship.updateControl(elapsedTimeSecond);
 					this.ship.updatePosition(elapsedTimeSecond);

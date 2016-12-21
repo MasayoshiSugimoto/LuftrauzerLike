@@ -1,7 +1,7 @@
 "use strict";
 
 const SIMPLE_ENEMY_MAX_ROTATION_SPEED_RADIAN_SECOND = Math.PI; //Radian per second
-const SIMPLE_ENEMY_VELOCITY_METER_SECOND = 1; //Meter per second
+const SIMPLE_ENEMY_VELOCITY_METER_SECOND = 1.0; //Meter per second
 const SIMPLE_ENEMY_FIRE_RATE = 10; //Bullets per second
 
 const SimpleEnemy = {

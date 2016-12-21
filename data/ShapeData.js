@@ -25,7 +25,7 @@ const SHAPES = {
 		]
 	},
 	ship2: {
-		position:		{x:400,y:300},
+		position:		{x:0,y:0},
 		size:       {x:60,y:10},
 		direction:  0,
 		type:				"Rectangle",
