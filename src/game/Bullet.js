@@ -13,7 +13,7 @@ const Bullet = {
 		return Object.assign(
 			state,
 			GameSpacePositionableComposite(state),
-			this.template);
+			this.proto);
 	},
 
 	fromData(position, direction) {
@@ -23,7 +23,7 @@ const Bullet = {
 		return bullet;
 	},
 
-	template: {
+	proto: {
 
 		getVelocity() {
 			return this.velocity;

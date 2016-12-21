@@ -7,7 +7,7 @@ const SHIP_BOOST_UNIT			= 0.1; //Velocity in meter/second
 const Ship = {
 
 	create(drawObject) {
-		let ship        =  Object.create(this.template);
+		let ship        =  Object.create(this.proto);
 		ship.isBoost    =  false;
 		ship.isLeft     =  false;
 		ship.isRight    =  false;
@@ -17,7 +17,7 @@ const Ship = {
 		return ship;
 	},
 
-	template: {
+	proto: {
 
 		getPosition() {
 			return this.position;

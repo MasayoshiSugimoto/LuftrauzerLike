@@ -5,13 +5,13 @@ const PIXEL_PER_METER							= 200;
 const Canvas = {
 
 	create(canvas) {
-		let canvasWrapper = Object.create(this.template);
+		let canvasWrapper = Object.create(this.proto);
 		canvasWrapper.canvas = canvas;
 		canvasWrapper.drawObjects = []; //List of objects to be drawn
 		return canvasWrapper;
 	},
 
-	template: {
+	proto: {
 
 		registerDrawObject(drawObject) {
 			this.drawObjects.push(drawObjects);

@@ -4,13 +4,13 @@
 const DrawObjectTree = {
 
 	fromData(drawObject) {
-		let node = Object.create(this.template);
+		let node = Object.create(this.proto);
 		node.drawObject = drawObject;
 		node.children = [];
 		return node;
 	},
 
-	template: {
+	proto: {
 
 		getPosition() {
 			return this.drawObject.getPosition();

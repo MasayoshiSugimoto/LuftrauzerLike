@@ -2,13 +2,13 @@
 
 const Vector2D = {
 	create(x,y) {
-		let v = Object.create(this.template);
+		let v = Object.create(this.proto);
 		v.x = x;
 		v.y = y;
 		return v;
 	},
 	fromData(vector2DData) {
-		let v = Object.create(this.template);
+		let v = Object.create(this.proto);
 		v.x = vector2DData.x;
 		v.y = vector2DData.y;
 		return v;
@@ -30,7 +30,7 @@ const Vector2D = {
 		return v1.substract(v2).distance();
 	},
 
-	template: {
+	proto: {
 
 		getX() {
 			return this.x;
