@@ -48,8 +48,8 @@ const TestImageDrawObject = {
 			TestImageDrawObject.util.assert(previousFunction == "");
 			previousFunction = "drawImage";
 			TestImageDrawObject.util.assert(image == expectedImage);
-			TestImageDrawObject.util.assert(x == 5);
-			TestImageDrawObject.util.assert(y == 10);
+			TestImageDrawObject.util.assert(x == -5);
+			TestImageDrawObject.util.assert(y == -10);
 		}
 	};
 

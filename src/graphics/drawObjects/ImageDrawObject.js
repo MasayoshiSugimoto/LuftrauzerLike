@@ -37,7 +37,7 @@ const ImageDrawObject = {
 				},
 
 				draw(canvasContext) {
-					canvasContext.drawImage(image, this.image.width / 2, this.image.height / 2);
+					canvasContext.drawImage(image, -this.image.width / 2, -this.image.height / 2);
 				}
 
 			}

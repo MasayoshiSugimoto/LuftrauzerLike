@@ -7,36 +7,22 @@ const SHIP_BOOST_UNIT			= 0.1; //Velocity in meter/second
 const Ship = {
 
 	create(drawObject) {
-		let ship        =  Object.create(this.proto);
-		ship.isBoost    =  false;
-		ship.isLeft     =  false;
-		ship.isRight    =  false;
-		ship.position		=  Vector2D.create(0,0); //Game coordinates in meter
-		ship.velocity   =  Vector2D.create(0,0); //Velocity in meter/second
-		ship.drawObject =  drawObject;
-		return ship;
+		let ship = {
+			isBoost    :  false,
+			isLeft     :  false,
+			isRight    :  false,
+			position	 :  Vector2D.create(0,0), //Game coordinates in meter
+			direction	 :  0, //Angle in radian
+			velocity   :  Vector2D.create(0,0), //Velocity in meter/second
+			drawObject :  drawObject
+		};
+		return Object.assign(ship, this.proto, GameSpacePositionableComposite(ship));
 	},
 
 	proto: {
 
-		getPosition() {
-			return this.position;
-		},
-
-		setPosition(position) {
-			this.position = position;
-		},
-
 		getVelocity() {
-			return this.velocity;
-		},
-
-		getDirection() {
-			return this.drawObject.getDirection();
-		},
-
-		setDirection(direction) {
-			this.drawObject.setDirection(direction);
+			return this.velocity;	
 		},
 
 		updatePosition(elapsedTime /*frame duration in second*/) {
@@ -62,15 +48,14 @@ const Ship = {
 
 			//Update boost
 			if (this.isBoost) {
-				let boost = SHIP_BOOST_UNIT * elapsedTime;
-				this.velocity = this.velocity
-					.add(Vector2D.create(boost,0).rotate(this.getDirection()));
+				this.velocity = this.velocity.add(
+					Vector2D.create(SHIP_BOOST_UNIT * elapsedTime,0).rotate(this.getDirection()));
 			}
 
 		},
 
 		draw(canvasContext) {
-			this.drawObject.setPosition(this.getPosition().scalarMultiply(PIXEL_PER_METER));
+			this.drawObject.placeOn(canvasContext);
 			this.drawObject.draw(canvasContext);
 		}
 

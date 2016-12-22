@@ -13,18 +13,15 @@ var frameCounterTimerMillisecond = 0;
 const LuftrauzerLike = {
 
 	create() {
-		let shapeMap = ShapeLoader.create().load(SHAPES);
-		let ship = Ship.create(shapeMap.get("ship"));
 		let drawObjectManager = DrawObjectManager.create();
-		let machineGun = MachineGun.create(ship, Bullet, drawObjectManager);
-		let enemy = SimpleEnemy.create(ship, {}, shapeMap.get("ship2"));
 
 		return Object.assign(
 			{
-				ship: ship,
-				drawObjectManager: drawObjectManager,
-				machineGun: machineGun,
-				enemy: enemy
+				ship              :  null,
+				drawObjectManager :  drawObjectManager,
+				machineGun        :  null,
+				enemy             :  null,
+				shipImage					:  new Image()
 			}, 
 			{
 				getMachineGun() {
@@ -40,6 +37,13 @@ const LuftrauzerLike = {
 
 					let canvas = document.getElementById("canvas");
 
+					this.ship = Ship.create(ImageDrawObject.create(this.shipImage));
+					this.drawObjectManager.add(this.ship);
+					this.machineGun = MachineGun.create(
+						this.ship, Bullet, this.drawObjectManager);
+					let shapeMap = ShapeLoader.create().load(SHAPES);
+					this.enemy = SimpleEnemy.create(this.ship, {}, shapeMap.get("ship2"));
+
 					//The ship starts at the bottom of the screen, horizontaly centered.
 					this.ship.setPosition(Vector2D.create(
 								pixel2Meter(canvas.width / 2),
@@ -51,11 +55,15 @@ const LuftrauzerLike = {
 					//drawObjectManager setup
 					this.drawObjectManager.add(this.enemy);
 
+					this.shipImage.src = 'images/Reisen.png';
+					//Start the game after loading the image
 					let luftrauzerLike = this;
-					Scheduler.create(Time.create())
-						.callByInterval(
-							(elapsedTimeSecond) => { luftrauzerLike.gameLoop(elapsedTimeSecond); },
-							FRAME_TIME_MILLISECOND);
+					this.shipImage.onload = () => {
+						Scheduler.create(Time.create())
+							.callByInterval(
+								(elapsedTimeSecond) => { luftrauzerLike.gameLoop(elapsedTimeSecond); },
+								FRAME_TIME_MILLISECOND);
+					};
 
 				},
 
@@ -96,8 +104,6 @@ const LuftrauzerLike = {
 
 					canvasContext.fillStyle = "#66ccff"; //Blue sky color
 					canvasContext.fillRect(0,0,canvas.width, canvas.height); //Blue sky background
-
-					this.ship.draw(canvasContext);
 
 					this.drawObjectManager.draw(canvasContext);
 				}
