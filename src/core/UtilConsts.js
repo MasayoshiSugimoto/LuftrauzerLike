@@ -1,1 +1,1 @@
-const STANDARD_FRAME_DURATION_SECOND = 1 / 30; 
+const EPSILON = 0.00001; //Small float used to compensate error intruced by floats.

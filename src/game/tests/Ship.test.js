@@ -1,3 +1,5 @@
+const STANDARD_FRAME_DURATION_SECOND = 1 / 30;
+
 {
 	//Test that the velocity does not get bigger than the max
 	let ship = Ship.create(TEST_SHAPE_MAP.getTestShip());
