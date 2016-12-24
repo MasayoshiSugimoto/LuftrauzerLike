@@ -1,6 +1,6 @@
 "use strict";
 
-const VELOCITY_MAX				= 4; //Velocity in meter/second
+const SHIP_VELOCITY_MAX		= 4; //Velocity in meter/second
 const SHIP_ROTATION_UNIT	= Math.PI * 2; //Rotation allowed per frame
 const SHIP_BOOST_UNIT			= 0.1; //Velocity in meter/second
 
@@ -34,7 +34,7 @@ const Ship = {
 			//Update velocity
 			this.velocity = (GRAVITY_VECTOR.scalarMultiply(elapsedTime))
 				.add(this.velocity)
-				.cut(VELOCITY_MAX);
+				.cut(SHIP_VELOCITY_MAX);
 			//Update position
 			this.setPosition(this.getPosition()
 				.add(this.velocity.scalarMultiply(elapsedTime)));
