@@ -8,6 +8,7 @@ const PositionableComposite = (state) => ({
 
 	setPosition(position) {
 		state.position = position;
+		return this;
 	},
 
 	getDirection() {
@@ -16,11 +17,13 @@ const PositionableComposite = (state) => ({
 
 	setDirection(direction) {
 		state.direction = direction;
+		return this;
 	},
 
 	placeOn(canvasContext) {
 		canvasContext.translate(state.getPosition().getX(), state.getPosition().getY());
 		canvasContext.rotate(state.getDirection());
+		return this;
 	}
 
 })
