@@ -4,7 +4,7 @@ const STANDARD_FRAME_DURATION_SECOND = 1 / 30;
 	//Test that the velocity does not get bigger than the max
 	let ship = Ship.create(TEST_SHAPE_MAP.getTestShip());
 	ship.updatePosition(50/*duration in second*/);	
-	Util.create().assert(ship.getVelocity().distance() <= VELOCITY_MAX);
+	Util.create().assert(ship.getVelocity().distance() <= SHIP_VELOCITY_MAX);
 }
 
 {
