@@ -39,13 +39,12 @@ const LuftrauzerLike = {
 					this.drawObjectManager.add(this.ship);
 					this.machineGun = MachineGun.create(
 						this.ship, Bullet, this.drawObjectManager);
-					let shapeMap = ShapeLoader.create().load(SHAPES);
+
+					//Enemy
 					this.enemy = SimpleEnemy.create(
 						this.ship,
 						{},
 						ImageDrawObject.create(this.reisenImage).setScale(0.4));
-
-					//drawObjectManager setup
 					this.drawObjectManager.add(this.enemy);
 
 					this.reisenImage.src = 'images/Reisen.png';
