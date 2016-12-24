@@ -1,5 +1,7 @@
 "use strict";
 
+const SCHEDULER_MAX_INTERVAL_MILLISECOND = 1000 / 30; //Maximum duration for a frame.
+
 const Scheduler = {
 
 	create(time) {
@@ -15,14 +17,14 @@ const Scheduler = {
 					//First thing to do on a frame update is to update the current time.
 					//Calculate the elapsed time
 					let frameStartTimeMillisecond = time.getCurrentTimeMillisecond();
-					let elapsedTimeSecond = Math.min(
-							(frameStartTimeMillisecond - lastTimeMillisecond) / 1000,
-							intervalMilliseconds / 1000.0); //Interval in seconds
+					let elapsedTimeMillisecond = Math.min(
+							(frameStartTimeMillisecond - lastTimeMillisecond),
+							SCHEDULER_MAX_INTERVAL_MILLISECOND); //Interval in seconds
 					lastTimeMillisecond = frameStartTimeMillisecond;
 
 					//Update frame counter
 					frameCounter++;
-					frameCounterTimerMillisecond = frameCounterTimerMillisecond + elapsedTimeSecond * 1000.0;
+					frameCounterTimerMillisecond = frameCounterTimerMillisecond + elapsedTimeMillisecond;
 
 					if (frameCounterTimerMillisecond >= 1000 /* 1 second */) {
 						//Update frame counter display
@@ -32,10 +34,10 @@ const Scheduler = {
 							//Reset frame counter
 							frameCounterTimerMillisecond = frameCounterTimerMillisecond - 1000;
 						}
-						frameCounter = 0
+						frameCounter = 0;
 					}
 
-					gameLoopFunction(elapsedTimeSecond);
+					gameLoopFunction(elapsedTimeMillisecond / 1000.0);
 
 					let scheduler = this;
 					window.setTimeout(
