@@ -42,7 +42,10 @@ const LuftrauzerLike = {
 					this.machineGun = MachineGun.create(
 						this.ship, Bullet, this.drawObjectManager);
 					let shapeMap = ShapeLoader.create().load(SHAPES);
-					this.enemy = SimpleEnemy.create(this.ship, {}, shapeMap.get("ship2"));
+					this.enemy = SimpleEnemy.create(
+						this.ship,
+						{},
+						ImageDrawObject.create(this.shipImage).setScale(0.4));
 
 					//The ship starts at the bottom of the screen, horizontaly centered.
 					this.ship.setPosition(Vector2D.create(
