@@ -4,11 +4,6 @@ const FRAME_TIME_MILLISECOND			= 1000.0 / 60.0;
 const FRAME_TIME_SECOND						= FRAME_TIME_MILLISECOND / 1000.0;
 const GRAVITY_CONSTANT						= 9.80665;
 const GRAVITY_VECTOR 							= Vector2D.create(0,GRAVITY_CONSTANT);
-const TIMEOUT_LATENCY_MILLISECOND = 10;
-
-var lastTimeMillisecond = (new Date()).getTime();
-var frameCounter = 0;
-var frameCounterTimerMillisecond = 0;
 
 const LuftrauzerLike = {
 

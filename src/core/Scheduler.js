@@ -18,23 +18,23 @@ const Scheduler = {
 					//Calculate the elapsed time
 					let frameStartTimeMillisecond = time.getCurrentTimeMillisecond();
 					let elapsedTimeMillisecond = Math.min(
-							(frameStartTimeMillisecond - lastTimeMillisecond),
+							(frameStartTimeMillisecond - this.lastTimeMillisecond),
 							SCHEDULER_MAX_INTERVAL_MILLISECOND); //Interval in seconds
-					lastTimeMillisecond = frameStartTimeMillisecond;
+					this.lastTimeMillisecond = frameStartTimeMillisecond;
 
 					//Update frame counter
-					frameCounter++;
-					frameCounterTimerMillisecond = frameCounterTimerMillisecond + elapsedTimeMillisecond;
+					this.frameCounter++;
+					this.frameCounterTimerMillisecond = this.frameCounterTimerMillisecond + elapsedTimeMillisecond;
 
-					if (frameCounterTimerMillisecond >= 1000 /* 1 second */) {
+					if (this.frameCounterTimerMillisecond >= 1000 /* 1 second */) {
 						//Update frame counter display
 						let debugDiv = document.getElementById("debug");
 						if (null != debugDiv) {
-							debugDiv.textContent = "Frame per second = " + frameCounter;
+							debugDiv.textContent = "Frame per second = " + this.frameCounter;
 							//Reset frame counter
-							frameCounterTimerMillisecond = frameCounterTimerMillisecond - 1000;
+							this.frameCounterTimerMillisecond = this.frameCounterTimerMillisecond - 1000;
 						}
-						frameCounter = 0;
+						this.frameCounter = 0;
 					}
 
 					gameLoopFunction(elapsedTimeMillisecond / 1000.0);
