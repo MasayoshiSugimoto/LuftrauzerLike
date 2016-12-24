@@ -14,7 +14,7 @@ const LuftrauzerLike = {
 				drawObjectManager :  DrawObjectManager.create(),
 				machineGun        :  null,
 				enemy             :  null,
-				shipImage					:  new Image()
+				reisenImage				:  new Image()
 			}, 
 			{
 				getMachineGun() {
@@ -30,13 +30,12 @@ const LuftrauzerLike = {
 
 					let canvas = document.getElementById("canvas");
 
-					this.ship = Ship.create(ImageDrawObject.create(this.shipImage))
+					this.ship = Ship.create(ImageDrawObject.create(this.reisenImage))
 						//The ship starts at the bottom of the screen, horizontaly centered.
 						.setPosition(Vector2D.create(pixel2Meter(canvas.width / 2), pixel2Meter(canvas.height - 1)))
 						//The ship starts by beeing thrown upward.
 						.setDirection(-Math.PI / 2.0)
 						.setVelocity(Vector2D.create(0.0, -5));
-
 					this.drawObjectManager.add(this.ship);
 					this.machineGun = MachineGun.create(
 						this.ship, Bullet, this.drawObjectManager);
@@ -44,15 +43,15 @@ const LuftrauzerLike = {
 					this.enemy = SimpleEnemy.create(
 						this.ship,
 						{},
-						ImageDrawObject.create(this.shipImage).setScale(0.4));
+						ImageDrawObject.create(this.reisenImage).setScale(0.4));
 
 					//drawObjectManager setup
 					this.drawObjectManager.add(this.enemy);
 
-					this.shipImage.src = 'images/Reisen.png';
+					this.reisenImage.src = 'images/Reisen.png';
 					//Start the game after loading the image
 					let luftrauzerLike = this;
-					this.shipImage.onload = () => {
+					this.reisenImage.onload = () => {
 						Scheduler.create(Time.create())
 							.callByInterval(
 								(elapsedTimeSecond) => { luftrauzerLike.gameLoop(elapsedTimeSecond); },

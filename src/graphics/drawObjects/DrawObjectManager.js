@@ -3,41 +3,46 @@
 const DrawObjectManager = {
 	
 	create() {
-		let state = {
-			drawObjects: []
-		};
 
-		let proto = {
-
-			add(drawObject) {
-				this.drawObjects.push(drawObject);
+		return Object.assign(
+			{
+				drawObjects: []
 			},
+			{
 
-			length() {
-				return this.drawObjects.length;
-			},
+				add(drawObject) {
+					this.drawObjects.push(drawObject);
+					return this;
+				},
 
-			get(index) {
-				return this.drawObjects[index];
-			},
+				length() {
+					return this.drawObjects.length;
+				},
 
-			remove(drawObject) {
-				this.drawObjects = this.drawObjects.filter( function(element) {
-					return element != drawObject;
-				} );
-			},
+				get(index) {
+					return this.drawObjects[index];
+				},
 
-			draw(canvasContext) {
-				this.drawObjects.forEach( function(drawObject) {
-					canvasContext.save();
-					drawObject.placeOn(canvasContext);
-					drawObject.draw(canvasContext);
-					canvasContext.restore();
-				} );
+				remove(drawObject) {
+					this.drawObjects = this.drawObjects.filter( function(element) {
+						return element != drawObject;
+					} );
+					return this;
+				},
+
+				draw(canvasContext) {
+					this.drawObjects.forEach( function(drawObject) {
+						canvasContext.save();
+						drawObject.placeOn(canvasContext);
+						drawObject.draw(canvasContext);
+						canvasContext.restore();
+					} );
+					return this;
+				}
+				
 			}
-		};
 
-		return Object.assign(state, proto);
+		);
 	}
 
 };
