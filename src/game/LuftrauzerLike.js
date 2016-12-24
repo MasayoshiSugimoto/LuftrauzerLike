@@ -1,19 +1,17 @@
 "use strict";
 
 const FRAME_TIME_MILLISECOND			= 1000.0 / 60.0;
-const FRAME_TIME_SECOND						= FRAME_TIME_MILLISECOND / 1000.0;
 const GRAVITY_CONSTANT						= 9.80665;
 const GRAVITY_VECTOR 							= Vector2D.create(0,GRAVITY_CONSTANT);
 
 const LuftrauzerLike = {
 
 	create() {
-		let drawObjectManager = DrawObjectManager.create();
 
 		return Object.assign(
 			{
 				ship              :  null,
-				drawObjectManager :  drawObjectManager,
+				drawObjectManager :  DrawObjectManager.create(),
 				machineGun        :  null,
 				enemy             :  null,
 				shipImage					:  new Image()
@@ -32,7 +30,13 @@ const LuftrauzerLike = {
 
 					let canvas = document.getElementById("canvas");
 
-					this.ship = Ship.create(ImageDrawObject.create(this.shipImage));
+					this.ship = Ship.create(ImageDrawObject.create(this.shipImage))
+						//The ship starts at the bottom of the screen, horizontaly centered.
+						.setPosition(Vector2D.create(pixel2Meter(canvas.width / 2), pixel2Meter(canvas.height - 1)))
+						//The ship starts by beeing thrown upward.
+						.setDirection(-Math.PI / 2.0)
+						.setVelocity(Vector2D.create(0.0, -5));
+
 					this.drawObjectManager.add(this.ship);
 					this.machineGun = MachineGun.create(
 						this.ship, Bullet, this.drawObjectManager);
@@ -41,14 +45,6 @@ const LuftrauzerLike = {
 						this.ship,
 						{},
 						ImageDrawObject.create(this.shipImage).setScale(0.4));
-
-					//The ship starts at the bottom of the screen, horizontaly centered.
-					this.ship.setPosition(Vector2D.create(
-								pixel2Meter(canvas.width / 2),
-								pixel2Meter(canvas.height - 1)));
-					//The ship starts by beeing thrown upward.
-					this.ship.setDirection(-Math.PI / 2.0);
-					this.ship.velocity = Vector2D.create(0.0, -5);
 
 					//drawObjectManager setup
 					this.drawObjectManager.add(this.enemy);
@@ -69,8 +65,7 @@ const LuftrauzerLike = {
 
 					this.enemy.update(elapsedTimeSecond);
 
-					this.ship.updateControl(elapsedTimeSecond);
-					this.ship.updatePosition(elapsedTimeSecond);
+					this.ship.update(elapsedTimeSecond);
 
 					this.machineGun.update(elapsedTimeSecond);
 

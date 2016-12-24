@@ -21,6 +21,11 @@ const Ship = {
 
 	proto: {
 
+		setVelocity(velocity) {
+			this.velocity = velocity;
+			return this;
+		},
+
 		getVelocity() {
 			return this.velocity;	
 		},
@@ -33,6 +38,7 @@ const Ship = {
 			//Update position
 			this.setPosition(this.getPosition()
 				.add(this.velocity.scalarMultiply(elapsedTime)));
+				return this;
 		},
 
 		updateControl(elapsedTime /*frame duration in second*/) {
@@ -52,11 +58,17 @@ const Ship = {
 					Vector2D.create(SHIP_BOOST_UNIT * elapsedTime,0).rotate(this.getDirection()));
 			}
 
+			return this;
+		},
+
+		update(elapsedTime) {
+			return this.updateControl(elapsedTime).updatePosition(elapsedTime);
 		},
 
 		draw(canvasContext) {
 			this.drawObject.placeOn(canvasContext);
 			this.drawObject.draw(canvasContext);
+			return this;
 		}
 
 	}
