@@ -39,21 +39,34 @@ const TestImageDrawObject = {
 		height: 20
 	};
 
-	let imageDrawObject = ImageDrawObject.create(expectedImage);
+	let imageDrawObject = ImageDrawObject.create(expectedImage).setScale(10);
 
 	let previousFunction = "";
 
 	let canvasContext = {
-		drawImage(image, x, y) {
+		drawImage(image, x, y, width, height) {
 			TestImageDrawObject.util.assert(previousFunction == "");
 			previousFunction = "drawImage";
 			TestImageDrawObject.util.assert(image == expectedImage);
-			TestImageDrawObject.util.assert(x == -5);
-			TestImageDrawObject.util.assert(y == -10);
+			TestImageDrawObject.util.assert(x == -50);
+			TestImageDrawObject.util.assert(y == -100);
+			TestImageDrawObject.util.assert(width == 100);
+			TestImageDrawObject.util.assert(height == 200);
 		}
 	};
 
 	imageDrawObject.draw(canvasContext);
 	TestImageDrawObject.util.assert(previousFunction == "drawImage");
 
+}
+
+{	//Test getSize
+	let image = {
+		width: 1,
+		height: 2
+	};
+	let size = ImageDrawObject.create(image).setScale(10).getSize();
+
+	TestImageDrawObject.util.assert(size.getX() == 10);
+	TestImageDrawObject.util.assert(size.getY() == 20);
 }

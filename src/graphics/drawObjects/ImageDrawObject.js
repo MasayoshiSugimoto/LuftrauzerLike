@@ -9,6 +9,7 @@ const ImageDrawObject = {
 			{
 				position: Vector2D.zero(),
 				direction: 0,
+				scale: 1.0,
 				image: image
 			},
 
@@ -19,6 +20,7 @@ const ImageDrawObject = {
 
 				setPosition(position) {
 					this.position = position;
+					return this;
 				},
 
 				getDirection() {
@@ -27,6 +29,16 @@ const ImageDrawObject = {
 
 				setDirection(direction) {
 					this.direction = direction;
+					return this;
+				},
+
+				setScale(scale) {
+					this.scale = scale;
+					return this;
+				},
+
+				getSize() {
+					return Vector2D.create(this.image.width * this.scale, this.image.height * this.scale);
 				},
 
 				placeOn(canvasContext) {
@@ -34,10 +46,18 @@ const ImageDrawObject = {
 						this.getPosition().getX(),
 						this.getPosition().getY());
 					canvasContext.rotate(this.getDirection());
+					return this;
 				},
 
 				draw(canvasContext) {
-					canvasContext.drawImage(image, -this.image.width / 2, -this.image.height / 2);
+					let size = this.getSize();
+					canvasContext.drawImage(
+						image, 
+						-size.getX() / 2,		//x coordinate
+						-size.getY() / 2,		//y coordinate
+						size.getX(),				//width
+						size.getY());				//height
+					return this;
 				}
 
 			}
