@@ -8,5 +8,17 @@
 |One simple ennemy 	    				 | DONE  |         |
 |Border collisions 	    				 | DONE  |         |
 |Game starts in the center  		 | DONE  |         |
-|Support image for draw object   |       | X       |
+|Support image for draw object   | DONE  |         |
+|Animated draw object            |       |         |
+|Collision manager               |       |         |
+|Camera                          |       |         |
+|Paralax                         |       |         |
+|Clouds                          |       |         |
+|Ground                          |       |         |
+|Enemy manager                   |       |         |
+|Particule manager               |       |         |
+|z axis                          |       |         |
+|Simple effect                   |       |         |
+|Explosion                       |       |         |
+|Circular map                    |       |         |
 

@@ -1,17 +1,13 @@
 "use strict";
 
 const Vector2D = {
-	create(x,y) {
-		let v = Object.create(this.proto);
-		v.x = x;
-		v.y = y;
-		return v;
+
+	create(x, y) {
+		return Object.assign( {x: x, y: y}, this.proto );
 	},
+
 	fromData(vector2DData) {
-		let v = Object.create(this.proto);
-		v.x = vector2DData.x;
-		v.y = vector2DData.y;
-		return v;
+		return this.create(vector2DData.x, vector2DData.y);
 	},
 
 	zero() {
@@ -41,24 +37,15 @@ const Vector2D = {
 		},
 
 		add(vector2D) {
-			let result = Vector2D.zero();
-			result.x = vector2D.x + this.x;
-			result.y = vector2D.y + this.y;
-			return result;
+			return Vector2D.create(vector2D.x + this.x, vector2D.y + this.y);
 		},
 
 		substract(vector2D) {
-			let result = Vector2D.zero();
-			result.x = this.x - vector2D.x;
-			result.y = this.y - vector2D.y;
-			return result;
+			return Vector2D.create(this.x - vector2D.x, this.y - vector2D.y);
 		},
 
 		scalarMultiply(scalar) {
-			let result = Vector2D.zero();
-			result.x = this.x * scalar;
-			result.y = this.y * scalar;
-			return result;
+			return Vector2D.create(this.x * scalar, this.y * scalar);
 		},
 
 		copy() {

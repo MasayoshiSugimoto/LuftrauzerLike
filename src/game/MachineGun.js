@@ -1,6 +1,6 @@
 "use strict";
 
-const MACHINE_GUN_FIRE_RATE = 0.05; //Time between bullets in seconds
+const MACHINE_GUN_FIRE_RATE_INTERVAL_SECOND = 0.05; //Time between bullets in seconds
 
 const MachineGun = {
 
@@ -19,7 +19,7 @@ const MachineGun = {
 			fire(elapsedTimeSecond) {
 				this.fireTimer += elapsedTimeSecond;
 				
-				if (this.fireTimer < MACHINE_GUN_FIRE_RATE) {
+				if (this.fireTimer < MACHINE_GUN_FIRE_RATE_INTERVAL_SECOND) {
 					return;
 				}
 

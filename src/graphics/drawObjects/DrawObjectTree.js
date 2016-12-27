@@ -4,10 +4,13 @@
 const DrawObjectTree = {
 
 	fromData(drawObject) {
-		let node = Object.create(this.proto);
-		node.drawObject = drawObject;
-		node.children = [];
-		return node;
+		return Object.assign(
+			{
+				drawObject: drawObject,
+				children:   []	
+			},
+			this.proto
+		);
 	},
 
 	proto: {

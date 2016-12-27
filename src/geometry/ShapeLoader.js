@@ -1,10 +1,9 @@
 "use strict";
 
 const ShapeLoader = {
+
 	create() {
-		let shapeLoader = Object.create(this.proto);
-		shapeLoader.util = Util.create();
-		return shapeLoader;
+		return Object.assign({util: Util.create()}, this.proto);
 	},
 
 	proto: {
