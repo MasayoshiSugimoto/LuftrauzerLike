@@ -5,8 +5,8 @@
   let imagesUrls = ["url1", "url2"];
   let lastFunction = "";
   let onFinishCallback = (images) => {
-    util.assert(images[0].src == "url1");
-    util.assert(images[1].src == "url2");
+    util.assert(images.get("url1").src == "url1");
+    util.assert(images.get("url2").src == "url2");
     lastFunction = "onFinishCallback";
   };
   
