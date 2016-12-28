@@ -5,7 +5,7 @@ const ImageLoader = {
   load(imageFactory, imageUrls, onFinishCallback) {
 
     let counter = 0;
-    let images = [];
+    let images = new Array();
 
     for (let index = 0; index < imageUrls.length; index++) {
       //Load all the registered images.

@@ -32,7 +32,9 @@ const LuftrauzerLike = {
 
 					this.ship = Ship.create(ImageDrawObject.create(this.reisenImage))
 						//The ship starts at the bottom of the screen, horizontaly centered.
-						.setPosition(Vector2D.create(pixel2Meter(canvas.width / 2), pixel2Meter(canvas.height - 1)))
+						.setPosition(Vector2D.create(
+								ScreenConversion.pixel2Meter(canvas.width / 2),
+								ScreenConversion.pixel2Meter(canvas.height - 1)))
 						//The ship starts by beeing thrown upward.
 						.setDirection(-Math.PI / 2.0)
 						.setVelocity(Vector2D.create(0.0, -5));
@@ -46,6 +48,9 @@ const LuftrauzerLike = {
 						{},
 						ImageDrawObject.create(this.reisenImage).setScale(0.4));
 					this.drawObjectManager.add(this.enemy);
+
+					//Clouds
+					CloudGenerator.create(this.drawObjectManager);
 
 					this.reisenImage.src = 'images/Reisen.png';
 					//Start the game after loading the image
@@ -69,8 +74,8 @@ const LuftrauzerLike = {
 
 					//Keep in the screen
 					let canvas = document.getElementById("canvas");
-					if (this.ship.getPosition().x >= pixel2Meter(canvas.width)) {
-						this.ship.getPosition().x = pixel2Meter(canvas.width - 1);
+					if (this.ship.getPosition().x >= ScreenConversion.pixel2Meter(canvas.width)) {
+						this.ship.getPosition().x = ScreenConversion.pixel2Meter(canvas.width - 1);
 						this.ship.velocity.x = 0;
 						this.ship.velocity.y = 0;
 					}
@@ -79,8 +84,8 @@ const LuftrauzerLike = {
 						this.ship.velocity.x = 0;
 						this.ship.velocity.y = 0;
 					}
-					if (this.ship.getPosition().y >= pixel2Meter(canvas.height)) {
-						this.ship.getPosition().y = pixel2Meter(canvas.height -1);
+					if (this.ship.getPosition().y >= ScreenConversion.pixel2Meter(canvas.height)) {
+						this.ship.getPosition().y = ScreenConversion.pixel2Meter(canvas.height -1);
 						this.ship.velocity.y = 0;
 						this.ship.velocity.x = 0;
 					}
