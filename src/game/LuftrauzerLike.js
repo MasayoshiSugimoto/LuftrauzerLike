@@ -13,8 +13,7 @@ const LuftrauzerLike = {
 				ship              :  null,
 				drawObjectManager :  DrawObjectManager.create(),
 				machineGun        :  null,
-				enemy             :  null,
-				reisenImage				:  new Image()
+				enemy             :  null
 			}, 
 			{
 				getMachineGun() {
@@ -25,12 +24,17 @@ const LuftrauzerLike = {
 				//Setup the game before starting the game loop
 				//This function is only called once at startup
 				startGame() {
+					let that = this;
+					ImageLoader.load(ImageFactory, IMAGE_DATA, (images) => { that.onImagesLoaded(images); });
+				},
+
+				onImagesLoaded(images) {
 
 					Keyboard.setup(this);
 
 					let canvas = document.getElementById("canvas");
 
-					this.ship = Ship.create(ImageDrawObject.create(this.reisenImage))
+					this.ship = Ship.create(ImageDrawObject.create(images.get('images/Reisen.png')))
 						//The ship starts at the bottom of the screen, horizontaly centered.
 						.setPosition(Vector2D.create(
 								ScreenConversion.pixel2Meter(canvas.width / 2),
@@ -46,21 +50,18 @@ const LuftrauzerLike = {
 					this.enemy = SimpleEnemy.create(
 						this.ship,
 						{},
-						ImageDrawObject.create(this.reisenImage).setScale(0.4));
+						ImageDrawObject.create(images.get('images/Reisen.png')).setScale(0.4));
 					this.drawObjectManager.add(this.enemy);
 
 					//Clouds
-					CloudGenerator.create(this.drawObjectManager);
+					//CloudGenerator.create(this.drawObjectManager);
 
-					this.reisenImage.src = 'images/Reisen.png';
 					//Start the game after loading the image
 					let luftrauzerLike = this;
-					this.reisenImage.onload = () => {
-						Scheduler.create(Time.create())
-							.callByInterval(
-								(elapsedTimeSecond) => { luftrauzerLike.gameLoop(elapsedTimeSecond); },
-								FRAME_TIME_MILLISECOND);
-					};
+					Scheduler.create(Time.create())
+						.callByInterval(
+							(elapsedTimeSecond) => { luftrauzerLike.gameLoop(elapsedTimeSecond); },
+							FRAME_TIME_MILLISECOND);
 
 				},
 
