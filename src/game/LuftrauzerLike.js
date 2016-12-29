@@ -34,6 +34,9 @@ const LuftrauzerLike = {
 
 					let canvas = document.getElementById("canvas");
 
+					//Clouds
+					CloudGenerator.create(this.drawObjectManager, images);
+
 					this.ship = Ship.create(ImageDrawObject.create(images.get('images/Reisen.png')))
 						//The ship starts at the bottom of the screen, horizontaly centered.
 						.setPosition(Vector2D.create(
@@ -52,9 +55,6 @@ const LuftrauzerLike = {
 						{},
 						ImageDrawObject.create(images.get('images/Reisen.png')).setScale(0.4));
 					this.drawObjectManager.add(this.enemy);
-
-					//Clouds
-					//CloudGenerator.create(this.drawObjectManager);
 
 					//Start the game after loading the image
 					let luftrauzerLike = this;

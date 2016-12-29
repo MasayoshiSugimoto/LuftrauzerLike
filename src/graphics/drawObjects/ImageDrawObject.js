@@ -10,6 +10,7 @@ const ImageDrawObject = {
 				position: Vector2D.zero(),
 				direction: 0,
 				scale: 1.0,
+				opacity: 1.0,
 				image: image
 			},
 
@@ -41,6 +42,11 @@ const ImageDrawObject = {
 					return Vector2D.create(this.image.width * this.scale, this.image.height * this.scale);
 				},
 
+				setOpacity(opacity) {
+					this.opacity = opacity;
+					return this;
+				},
+
 				placeOn(canvasContext) {
 					canvasContext.translate(
 						this.getPosition().getX(),
@@ -51,12 +57,15 @@ const ImageDrawObject = {
 
 				draw(canvasContext) {
 					let size = this.getSize();
+					let previousOpacity = canvasContext.globalAlpha;
+					canvasContext.globalAlpha = this.opacity;
 					canvasContext.drawImage(
 						image, 
 						-size.getX() / 2,		//x coordinate
 						-size.getY() / 2,		//y coordinate
 						size.getX(),				//width
 						size.getY());				//height
+					canvasContext.globalAlpha = previousOpacity;
 					return this;
 				}
 

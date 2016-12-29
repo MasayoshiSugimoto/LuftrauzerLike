@@ -1,20 +1,19 @@
 "use strict";
 
-const CLOUD_GENERATOR_SIZE_METER = 100.0;
-const CLOUD_SIZE_MIN_METER = 0.5;
-const CLOUD_SIZE_MAX_METER = 1.5;
+const CLOUD_GENERATOR_SIZE_METER = 30.0;
+const CLOUD_SIZE_MIN_SCALE = 1.0;
+const CLOUD_SIZE_MAX_SCALE = 2.0;
 
 const CloudGenerator = {
 
-  create(drawObjectManager) {
+  create(drawObjectManager, images) {
 
     let randomCoordinate = function() {
       return (Math.random() * CLOUD_GENERATOR_SIZE_METER) - (CLOUD_GENERATOR_SIZE_METER / 2.0);
     };
 
-    let randomSize = function() {
-      return ScreenConversion.meter2Pixel(
-        Math.random() * (CLOUD_SIZE_MAX_METER - CLOUD_SIZE_MIN_METER));
+    let randomScale = function() {
+      return Math.random() * (CLOUD_SIZE_MAX_SCALE - CLOUD_SIZE_MIN_SCALE) + CLOUD_SIZE_MIN_SCALE;
     };
 
     for (let index = 0; index < 100; index++) {
@@ -22,8 +21,9 @@ const CloudGenerator = {
       let cloud = {
         position: Vector2D.create(randomCoordinate(), randomCoordinate()),
         direction: 0,
-        drawObject: RectangleDrawObject.create()
-          .setSize(Vector2D.create(randomSize(), randomSize())),
+        drawObject: ImageDrawObject.create(images.get('images/Cloud.png'))
+          .setScale(randomScale())
+          .setOpacity(0.5),
 
         draw(canvasContext) {
           this.drawObject.draw(canvasContext);
