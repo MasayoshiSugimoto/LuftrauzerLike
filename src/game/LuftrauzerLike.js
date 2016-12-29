@@ -35,7 +35,7 @@ const LuftrauzerLike = {
 					let canvas = document.getElementById("canvas");
 
 					//Clouds
-					CloudGenerator.create(this.drawObjectManager, images);
+					CloudGenerator.create(this.drawObjectManager, images, Cloud, ImageDrawObject);
 
 					this.ship = Ship.create(ImageDrawObject.create(images.get('images/Reisen.png')))
 						//The ship starts at the bottom of the screen, horizontaly centered.
