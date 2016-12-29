@@ -13,12 +13,12 @@
 |Collision manager               |       |         |
 |Camera                          |       |         |
 |Paralax                         |       |         |
-|Clouds                          |       |         |
+|Clouds                          | DONE  |         |
 |Ground                          |       |         |
 |Enemy manager                   |       |         |
 |Particule manager               |       |         |
 |z axis                          |       |         |
 |Simple effect                   |       |         |
 |Explosion                       |       |         |
-|Circular map                    |       |         |
+|Circular map                    |       | X       |
 
