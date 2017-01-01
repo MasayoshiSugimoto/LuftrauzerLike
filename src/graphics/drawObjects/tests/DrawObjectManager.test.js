@@ -18,6 +18,16 @@
 		restore() {
 			util.assert(previousFunctionCalled == "draw");
 			previousFunctionCalled = "restore";
+		},
+
+		getContext() {
+
+		}
+	};
+
+	let canvasWrapper = {
+		getCanvas() {
+			return expectedCanvas;
 		}
 	};
 

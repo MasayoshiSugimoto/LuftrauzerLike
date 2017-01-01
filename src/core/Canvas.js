@@ -5,12 +5,6 @@ const Canvas = {
 	create(canvas) {
 		return {
 			canvas						: canvas,
-			drawObjectManager : drawObjectManager,
-
-			registerDrawObject(drawObject) {
-				this.drawObjectManager.add(drawObjects);
-				return this;
-			},
 
 			getWidth() {
 				return this.canvas.width;

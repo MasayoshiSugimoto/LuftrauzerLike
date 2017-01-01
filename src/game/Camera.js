@@ -20,6 +20,14 @@ const Camera = {
 				return this;
 			},
 
+			getCanvasTranslation() {
+				return ScreenConversion.vectorMeter2Pixel(this.getPosition()).minus();
+			},
+
+			getCanvas() {
+				return this.canvas;
+			},
+
 			update() {
 				let newX 		= this.position.getX();
 				let newY 		= this.position.getY();
