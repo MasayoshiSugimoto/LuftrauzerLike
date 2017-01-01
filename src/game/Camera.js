@@ -1,6 +1,6 @@
 "use strict";
 
-const CAMERA_LIMIT_FROM_BORDER_METER = ScreenConversion.pixel2Meter(100);
+const CAMERA_LIMIT_FROM_BORDER_METER = ScreenConversion.pixel2Meter(200);
 
 const Camera = {
 
