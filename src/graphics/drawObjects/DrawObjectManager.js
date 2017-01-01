@@ -31,7 +31,6 @@ const DrawObjectManager = {
 				},
 
 				draw(camera) {
-
 					let canvasContext = camera.getCanvas().getContext();
 					canvasContext.save();
 
@@ -40,7 +39,15 @@ const DrawObjectManager = {
 							camera.getCanvasTranslation().getX(),
 							camera.getCanvasTranslation().getY());
 
-					//Draw all the objects
+					this.drawAllObjects(canvasContext);
+
+					canvasContext.restore();
+
+					return this;
+				},
+
+				drawAllObjects(canvasContext) {
+
 					this.drawObjects.forEach( function(drawObject) {
 						canvasContext.save();
 						drawObject.placeOn(canvasContext);
@@ -48,10 +55,7 @@ const DrawObjectManager = {
 						canvasContext.restore();
 					} );
 
-					canvasContext.restore();
-
 					return this;
-
 				}
 				
 			}
