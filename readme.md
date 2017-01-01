@@ -11,7 +11,7 @@
 |Support image for draw object   | DONE  |         |
 |Animated draw object            |       |         |
 |Collision manager               |       |         |
-|Camera                          |       |         |
+|Camera                          | DONE  |         |
 |Paralax                         |       |         |
 |Clouds                          | DONE  |         |
 |Ground                          |       |         |
