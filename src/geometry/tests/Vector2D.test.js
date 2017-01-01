@@ -83,3 +83,9 @@
 		Vector2D.distanceBetween(Vector2D.create(1.0, 2.0), Vector2D.create(2.0, 2.0))
 	);
 }
+
+{ //Test equals
+	let util = Util.create();
+
+	util.assert(Vector2D.create(1.0, 2.0).equals(Vector2D.create(1.000001, 1.999999)));
+}
