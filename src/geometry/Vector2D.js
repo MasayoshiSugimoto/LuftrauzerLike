@@ -88,6 +88,10 @@ const Vector2D = {
 
 		getAngle() {
 			return Angle.create(Math.atan2(this.y, this.x));
+		},
+
+		minus() {
+			return this.scalarMultiply(-1.0);
 		}
 
 	}

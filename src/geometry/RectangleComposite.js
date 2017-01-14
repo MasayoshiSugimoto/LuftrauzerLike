@@ -8,6 +8,7 @@ const RectangleComposite = (state) => ({
 
 	setSize(size) {
 		this.size = size;
+		return this;
 	},
 
 	getGeometryType() {

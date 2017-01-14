@@ -2,18 +2,22 @@
 
 const PIXEL_PER_METER = 200;
 
-function meter2Pixel(distanceInMeter) {
-	return distanceInMeter * PIXEL_PER_METER;
-}
+const ScreenConversion = {
 
-function pixel2Meter(distanceInPixel) {
-	return distanceInPixel / PIXEL_PER_METER;
-}
+	meter2Pixel(distanceInMeter) {
+		return distanceInMeter * PIXEL_PER_METER;
+	},
 
-function vectorMeter2Pixel(v) {
-	return v.scalarMultiply(PIXEL_PER_METER);
-}
+	pixel2Meter(distanceInPixel) {
+		return distanceInPixel / PIXEL_PER_METER;
+	},
 
-function vectorPixel2Meter(v) {
-	return v.scalarMultiply(1 / PIXEL_PER_METER);
-}
+	vectorMeter2Pixel(v) {
+		return v.scalarMultiply(PIXEL_PER_METER);
+	},
+
+	vectorPixel2Meter(v) {
+		return v.scalarMultiply(1 / PIXEL_PER_METER);
+	}
+
+};
