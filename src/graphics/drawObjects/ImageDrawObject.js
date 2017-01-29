@@ -7,7 +7,7 @@ const ImageDrawObject = {
 		return Object.assign(
 
 			{
-				position: Vector2D.zero(),
+				position: Vector2D.zero(), //Screen coordinates
 				direction: 0,
 				scale: 1.0,
 				opacity: 1.0,
