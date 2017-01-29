@@ -79,26 +79,6 @@ const LuftrauzerLike = {
 
 				//Keep in the screen
 				let canvas = document.getElementById("canvas");
-//				if (this.ship.getPosition().x >= ScreenConversion.pixel2Meter(canvas.width)) {
-//					this.ship.getPosition().x = ScreenConversion.pixel2Meter(canvas.width - 1);
-//					this.ship.velocity.x = 0;
-//					this.ship.velocity.y = 0;
-//				}
-//				if (this.ship.getPosition().x < 0) {
-//					this.ship.getPosition().x = 0;	
-//					this.ship.velocity.x = 0;
-//					this.ship.velocity.y = 0;
-//				}
-//				if (this.ship.getPosition().y >= ScreenConversion.pixel2Meter(canvas.height)) {
-//					this.ship.getPosition().y = ScreenConversion.pixel2Meter(canvas.height -1);
-//					this.ship.velocity.y = 0;
-//					this.ship.velocity.x = 0;
-//				}
-//				if (this.ship.getPosition().y < 0) {
-//					this.ship.getPosition().y = 0;
-//					this.ship.velocity.y = 0;
-//					this.ship.velocity.x = 0;
-//				}
 
 				let canvasContext = canvas.getContext("2d"); //Get the draw context
 				canvasContext.clearRect(0,0,canvas.width, canvas.height); //Clear context
