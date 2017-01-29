@@ -37,7 +37,7 @@ const LuftrauzerLike = {
 				//Clouds
 				CloudGenerator.create(this.drawObjectManager, images, Cloud, ImageDrawObject);
 
-				this.ship = Ship.create(ImageDrawObject.create(images.get('images/Reisen.png')))
+				this.ship = Ship.create()
 					//The ship starts at the bottom of the screen, horizontaly centered.
 					.setPosition(Vector2D.create(
 							ScreenConversion.pixel2Meter(canvas.width / 2),
@@ -45,7 +45,9 @@ const LuftrauzerLike = {
 					//The ship starts by beeing thrown upward.
 					.setDirection(-Math.PI / 2.0)
 					.setVelocity(Vector2D.create(0.0, -5));
-				this.drawObjectManager.add(this.ship);
+				this.drawObjectManager.add(GameObjectDrawObject.create(
+					ImageDrawObject.create(images.get('images/Reisen.png')),
+					this.ship));
 				this.machineGun = MachineGun.create(
 					this.ship, Bullet, this.drawObjectManager);
 
