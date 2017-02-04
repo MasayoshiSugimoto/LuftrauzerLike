@@ -6,13 +6,12 @@ const SIMPLE_ENEMY_FIRE_RATE = 10; //Bullets per second
 
 const SimpleEnemy = {
 
-	create(target, machineGun, drawObject) {
+	create(target, machineGun) {
 
 		let enemy = {
 			position: Vector2D.zero(),
 			direction: 0, //Radian
 			target: target,
-			drawObject: drawObject,
 			machineGun: machineGun
 		};
 
@@ -56,10 +55,6 @@ const SimpleEnemy = {
 
 				//Fire
 			},
-
-			draw(canvasContext) {
-				this.drawObject.draw(canvasContext);
-			}
 
 		};
 

@@ -52,11 +52,11 @@ const LuftrauzerLike = {
             .createMachineGun(this.ship);
 
 				//Enemy
-				this.enemy = SimpleEnemy.create(
-					this.ship,
-					{},
-					ImageDrawObject.create(images.get('images/Reisen.png')).setScale(0.4));
-				this.drawObjectManager.add(this.enemy);
+				this.enemy = SimpleEnemy.create(this.ship, {});
+				this.drawObjectManager.add(GameObjectDrawObject.create(
+					ImageDrawObject.create(images.get('images/Reisen.png')).setScale(0.4),
+					this.enemy
+				));
 
 				//Camera
 				this.canvasWrapper = Canvas.create(canvas);
