@@ -6,7 +6,7 @@ const SHIP_BOOST_UNIT			= 0.1; //Velocity in meter/second
 
 const Ship = {
 
-	create(drawObject) {
+	create() {
 		let ship = {
 			isBoost    :  false,
 			isLeft     :  false,
@@ -14,7 +14,6 @@ const Ship = {
 			position	 :  Vector2D.create(0,0), //Game coordinates in meter
 			direction	 :  0, //Angle in radian
 			velocity   :  Vector2D.create(0,0), //Velocity in meter/second
-			drawObject :  drawObject
 		};
 		return Object.assign(ship, this.proto, GameSpacePositionableComposite(ship));
 	},
@@ -64,12 +63,6 @@ const Ship = {
 		update(elapsedTime) {
 			return this.updateControl(elapsedTime).updatePosition(elapsedTime);
 		},
-
-		draw(canvasContext) {
-			this.drawObject.placeOn(canvasContext);
-			this.drawObject.draw(canvasContext);
-			return this;
-		}
 
 	}
 
