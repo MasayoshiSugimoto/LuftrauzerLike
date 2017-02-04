@@ -6,10 +6,10 @@
 	let expectedCloud = {
 		setPositionCounter: 0,
 		setPosition(position) {
-			util.assert(position.getX() > -15);
-			util.assert(position.getX() < 15);
-			util.assert(position.getY() > -15);
-			util.assert(position.getY() < 15);
+			util.assert(position.getX() > -15 * PIXEL_PER_METER);
+			util.assert(position.getX() < 15 * PIXEL_PER_METER);
+			util.assert(position.getY() > -15 * PIXEL_PER_METER);
+			util.assert(position.getY() < 15 * PIXEL_PER_METER);
 			this.setPositionCounter++;
 			return this;
 		}

@@ -1,13 +1,13 @@
 "use strict";
 
-const CLOUD_GENERATOR_SIZE_METER = 30.0;
+const CLOUD_GENERATOR_SIZE_PIXEL = 30.0 * PIXEL_PER_METER;
 
 const CloudGenerator = {
 
   create(drawObjectManager, images, cloudFactory, imageDrawObjectFactory) {
 
     let randomCoordinate = function() {
-      return (Math.random() * CLOUD_GENERATOR_SIZE_METER) - (CLOUD_GENERATOR_SIZE_METER / 2.0);
+      return (Math.random() * CLOUD_GENERATOR_SIZE_PIXEL) - (CLOUD_GENERATOR_SIZE_PIXEL / 2.0);
     };
 
     for (let index = 0; index < 100; index++) {

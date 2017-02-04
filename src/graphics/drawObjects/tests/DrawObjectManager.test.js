@@ -8,6 +8,8 @@
 
 	let previousFunctionCalled = "";
 
+  let expectedAngle = { };
+
 	//Check that save is called before restore
 	let expectedCanvasContext = {
 		save() {
@@ -18,23 +20,39 @@
 		restore() {
 			util.assert(previousFunctionCalled == "draw");
 			previousFunctionCalled = "restore";
-		}
+		},
+
+    translate(x, y) {
+      util.assertEqualFloat(1.0, x);
+      util.assertEqualFloat(2.0, y);
+    },
+
+    rotate(angle) {
+      util.assert(angle == expectedAngle);
+    },
 	};
 
 	let drawObject = {
 		isCalled: false,
+
 		draw(canvasContext) {
 			util.assert(canvasContext == expectedCanvasContext);
-			util.assert(previousFunctionCalled == "placeOn");
+			util.assert(previousFunctionCalled == "getDirection");
 			this.isCalled = true;
 			previousFunctionCalled = "draw";
 		},
 
-		placeOn(canvasContext) {
-			util.assert(canvasContext == expectedCanvasContext);
-			util.assert(previousFunctionCalled == "save");
-			previousFunctionCalled = "placeOn";
-		}
+    getPosition() {
+      util.assert(previousFunctionCalled == "save");
+      previousFunctionCalled = "getPosition";
+      return Vector2D.create(1.0, 2.0);
+    },
+
+    getDirection() {
+      util.assert(previousFunctionCalled == "getPosition");
+      previousFunctionCalled = "getDirection";
+      return expectedAngle;
+    },
 
 	};
 
