@@ -1,43 +1,53 @@
 "use strict";
 
 { //Test that no bullet is created before the fire timer
-	let bulletFactory = {
-		isCreatedCalled: false,
-		create() { this.isCreateCalled = true; }
+	let util = Util.create();
+
+	let ship = {
+		position: { },
+		direction: { }
 	};
-	let machineGun = MachineGun.create({}, bulletFactory, {}, {});
+
+	let machineGunFactory = {
+		bulletFactory: {
+			isFromDataCalled: false,
+			fromData(position, direction) {
+				this.isFromDataCalled = true;
+				util.assert(position == ship.position);
+				util.assert(direction == ship.direction);
+			}
+		}
+	};
+
+	let machineGun = MachineGun.create(ship, machineGunFactory);
 
 	machineGun.fire(0.01 /*second*/);
-	let util = Util.create();
-	util.assert(!bulletFactory.isCreatedCalled);
+	util.assert(!machineGunFactory.bulletFactory.isFromDataCalled);
 }
 
 { //Test that a bullet is created at the fire rate
 	let util = Util.create();
 
-	//Create draw object
-	let expectedDrawObject = {};
-
 	//Create bullet
-	let bullet = {
-		getDrawObject() { return expectedDrawObject; }
-	};
+	let bullet = { };
 
 	//Create bullet factory
 	let bulletFactory = {
 		fromData() { return bullet; }
 	};
 
+  let expectedDrawObjectGameObject = { };
+
 	//Create drawObjectManager
 	let drawObjectManager = {
 		removeCounter: 0,
 		addDrawObjectCounter: 0,
 		add(drawObject) {
-			util.assert(drawObject == bullet);
+			util.assert(drawObject == expectedDrawObjectGameObject);
 			this.addDrawObjectCounter++;
 		},
 		remove(drawObject) {
-			util.assert(drawObject == bullet);
+			util.assert(drawObject == expectedDrawObjectGameObject);
 			this.removeCounter++;
 		}
 	};
@@ -48,8 +58,17 @@
 		getDirection() { }
 	};
 
+  let gameObjectDrawObjectFactory = {
+    create(drawObject, gameObject) {
+      util.assert(drawObject == SHAPE_MAP.get("bullet"));
+      util.assert(gameObject == bullet);
+      return expectedDrawObjectGameObject;
+    }
+  };
+
 	//Create machinegun
-	let machineGun = MachineGun.create(ship, bulletFactory, drawObjectManager);
+  let machineGun = MachineGunFactory.create(bulletFactory, drawObjectManager, gameObjectDrawObjectFactory)
+      .createMachineGun(ship);
 
 	//Fire for 0.05 second and check that the first bullet is created
 	machineGun.fire(0.05);
@@ -91,11 +110,10 @@
 	let util = Util.create();
 	let bulletFactory = {
 		fromDataCounter: 0,
-		fromData() {
+		fromData(position, direction) {
 			this.fromDataCounter++;
 			return {
-				getDrawObject() {},
-				updatePosition() {}
+				updatePosition(elapsedTimeSecond) {}
 			};
 		}
 	};
@@ -107,7 +125,19 @@
 		add() { },
 		remove() { }
 	};
-	let machineGun = MachineGun.create(ship, bulletFactory, drawObjectManager);
+
+  let gameObjectDrawObjectFactory = {
+    create(drawObject, bullet) {
+      return {
+        getGameObject() {
+          return bullet;
+        }
+      };
+    }
+  };
+
+  let machineGun = MachineGunFactory.create(bulletFactory, drawObjectManager, gameObjectDrawObjectFactory)
+      .createMachineGun(ship);
 
 	//Update more than 1 second and check than no bullet has been fired.
 	machineGun.update(1.1 /* second */);

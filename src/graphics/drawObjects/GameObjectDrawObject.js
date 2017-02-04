@@ -15,6 +15,9 @@ const GameObjectDrawObject = {
   },
   
   proto: {
+    getGameObject() {
+      return this.gameObject;
+    },
     getPosition() {
 		  return this.gameObject.getPosition().scalarMultiply(PIXEL_PER_METER);
     },

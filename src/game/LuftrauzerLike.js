@@ -48,8 +48,8 @@ const LuftrauzerLike = {
 				this.drawObjectManager.add(GameObjectDrawObject.create(
 					ImageDrawObject.create(images.get('images/Reisen.png')),
 					this.ship));
-				this.machineGun = MachineGun.create(
-					this.ship, Bullet, this.drawObjectManager);
+        this.machineGun = MachineGunFactory.create(Bullet, this.drawObjectManager, GameObjectDrawObject)
+            .createMachineGun(this.ship);
 
 				//Enemy
 				this.enemy = SimpleEnemy.create(

@@ -1,3 +1,11 @@
+{ //Test 'getGameObject'
+  let util = Util.create();
+
+  let gameObject = { };
+
+  util.assert(gameObject == GameObjectDrawObject.create({ }, gameObject).getGameObject());
+}
+
 { //Test 'getPosition'
   let util = Util.create();
 
