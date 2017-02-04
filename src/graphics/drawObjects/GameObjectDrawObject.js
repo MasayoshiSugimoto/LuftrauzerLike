@@ -25,6 +25,12 @@ const GameObjectDrawObject = {
       this.gameObject.setPosition(position.scalarMultiply(1.0 / PIXEL_PER_METER));
       return this;
     },
+    getDirection() {
+      return this.gameObject.getDirection();
+    },
+    setDirection(direction) {
+      return this.gameObject.setDirection(direction);
+    },
     setScale(scale) {
       this.drawObject.setScale(scale);
       return this;

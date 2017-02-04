@@ -48,6 +48,25 @@
   util.assert(gameObjectDrawObject.setScale(1.0) == gameObjectDrawObject);
 }
 
+{ //Test 'getDirection' and setDirection
+  let util = Util.create();
+
+  let gameObject = {
+    direction: 0.0,
+    getDirection() {
+      return this.direction;
+    },
+    setDirection(direction) {
+      this.direction = direction;
+      return this;
+    },
+  };
+
+  let gameObjectDrawObject = GameObjectDrawObject.create({ }, gameObject)
+      .setDirection(2.0);
+  util.assertEqualFloat(2.0, gameObjectDrawObject.getDirection());
+}
+
 { //Test 'getSize'
   let util = Util.create();
 
