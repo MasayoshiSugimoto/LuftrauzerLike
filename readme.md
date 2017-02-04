@@ -20,6 +20,6 @@
 |z axis                                 |       |         |
 |Simple effect                          |       |         |
 |Explosion                              |       |         |
+|Decouple gameObjects and DrawObjects   | DONE  |         |
 |Circular map                           |       |         |
-|Decouple gameObjects and DrawObjects   |       |         |
-
+|Map limit                              |       |         |
