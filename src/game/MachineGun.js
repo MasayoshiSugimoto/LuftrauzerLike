@@ -4,76 +4,99 @@ const MACHINE_GUN_FIRE_RATE_INTERVAL_SECOND = 0.05; //Time between bullets in se
 
 const MachineGun = {
 
-	create(ship, bulletFactory, drawObjectManager) {
+	create(ship, machineGunFactoryIn) {
 
-		let proto = {
+		return Object.assign({
+        fireTimer      		: 0.0,
+        bullets        		: [],
+        ship           		: ship,
+        machineGunFactory : machineGunFactoryIn,
+        updateFunction		: this.proto.clear,
+      },
+      this.proto
+    );
 
-			getBulletsLength() {
-				return this.bullets.length;
-			},
+	},
 
-			getFireTimer() {
-				return this.fireTimer;
-			},
+  proto: {
 
-			fire(elapsedTimeSecond) {
-				this.fireTimer += elapsedTimeSecond;
-				
-				if (this.fireTimer < MACHINE_GUN_FIRE_RATE_INTERVAL_SECOND) {
-					return;
-				}
+    getBulletsLength() {
+      return this.bullets.length;
+    },
 
-				this.fireTimer = 0.0;
-				let bullet = this.bulletFactory.fromData(
-					this.ship.getPosition(), this.ship.getDirection());
+    getFireTimer() {
+      return this.fireTimer;
+    },
 
-				//Add bullets
-				this.bullets.push(bullet);
-				this.drawObjectManager.add(bullet);
+    fire(elapsedTimeSecond) {
+      this.fireTimer += elapsedTimeSecond;
+      
+      if (this.fireTimer < MACHINE_GUN_FIRE_RATE_INTERVAL_SECOND) {
+        return;
+      }
 
-				//Set an event to delete the bullets after some time
-				let that = this;
-				setTimeout(
-					() => {
-						that.bullets = that.bullets.filter( (b) => { return b != bullet; } );
-						that.drawObjectManager.remove(bullet);
-					},
-					5000 /*Life time of the bullet created in millisecond.*/
-				);
-			},
+      this.fireTimer = 0.0;
+      let bullet = this.machineGunFactory.bulletFactory.fromData(
+        this.ship.getPosition(), this.ship.getDirection());
 
-			clear(elapsedTime) {
-				this.fireTimer = 0.0;
-			},
+      //Add bullets
+      let drawObject = this.machineGunFactory.gameObjectDrawObjectFactory
+          .create(SHAPE_MAP.get("bullet"), bullet);
+      this.bullets.push(drawObject);
+      this.machineGunFactory.drawObjectManager.add(drawObject);
 
-			onFireStart() {
-				this.updateFunction = this.fire;
-			},
+      //Set an event to delete the bullets after some time
+      let that = this;
+      setTimeout(
+        () => {
+          that.bullets = that.bullets.filter( (b) => { return b != drawObject; } );
+          that.machineGunFactory.drawObjectManager.remove(drawObject);
+        },
+        5000 /*Life time of the bullet created in millisecond.*/
+      );
+    },
 
-			onFireStop() {
-				this.updateFunction = this.clear;
-			},
+    clear(elapsedTime) {
+      this.fireTimer = 0.0;
+    },
 
-			update(elapsedTimeSecond) {
-				this.updateFunction(elapsedTimeSecond);
+    onFireStart() {
+      this.updateFunction = this.fire;
+    },
 
-				this.bullets.forEach( function(bullet) {
-					bullet.updatePosition(elapsedTimeSecond);
-				} );
-			}
+    onFireStop() {
+      this.updateFunction = this.clear;
+    },
 
-		};
+    update(elapsedTimeSecond) {
+      this.updateFunction(elapsedTimeSecond);
 
-		let state = {
-			fireTimer      		: 0.0,
-			bullets        		: [],
-			ship           		: ship,
-			bulletFactory  		: bulletFactory,
-			drawObjectManager	: drawObjectManager,
-			updateFunction		: proto.clear
-		};
+      this.bullets.forEach( function(bullet) {
+        bullet.getGameObject().updatePosition(elapsedTimeSecond);
+      } );
+    }
 
-		return Object.assign(state, proto);
-	}
+  }
 
 };
+
+const MachineGunFactory = {
+  create(bulletFactoryIn, drawObjectManagerIn, gameObjectDrawObjectFactoryIn) {
+    return Object.assign(
+      {
+        bulletFactory                :  bulletFactoryIn,
+        drawObjectManager            :  drawObjectManagerIn,
+        gameObjectDrawObjectFactory  :  gameObjectDrawObjectFactoryIn,
+      },
+      this.proto
+    );
+  },
+
+  proto: {
+    createMachineGun(ship) {
+      return MachineGun.create(ship, this);
+    },
+  }
+
+};
+

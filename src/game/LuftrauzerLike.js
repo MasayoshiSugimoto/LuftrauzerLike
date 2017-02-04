@@ -37,7 +37,7 @@ const LuftrauzerLike = {
 				//Clouds
 				CloudGenerator.create(this.drawObjectManager, images, Cloud, ImageDrawObject);
 
-				this.ship = Ship.create(ImageDrawObject.create(images.get('images/Reisen.png')))
+				this.ship = Ship.create()
 					//The ship starts at the bottom of the screen, horizontaly centered.
 					.setPosition(Vector2D.create(
 							ScreenConversion.pixel2Meter(canvas.width / 2),
@@ -45,9 +45,11 @@ const LuftrauzerLike = {
 					//The ship starts by beeing thrown upward.
 					.setDirection(-Math.PI / 2.0)
 					.setVelocity(Vector2D.create(0.0, -5));
-				this.drawObjectManager.add(this.ship);
-				this.machineGun = MachineGun.create(
-					this.ship, Bullet, this.drawObjectManager);
+				this.drawObjectManager.add(GameObjectDrawObject.create(
+					ImageDrawObject.create(images.get('images/Reisen.png')),
+					this.ship));
+        this.machineGun = MachineGunFactory.create(Bullet, this.drawObjectManager, GameObjectDrawObject)
+            .createMachineGun(this.ship);
 
 				//Enemy
 				this.enemy = SimpleEnemy.create(
@@ -79,26 +81,6 @@ const LuftrauzerLike = {
 
 				//Keep in the screen
 				let canvas = document.getElementById("canvas");
-//				if (this.ship.getPosition().x >= ScreenConversion.pixel2Meter(canvas.width)) {
-//					this.ship.getPosition().x = ScreenConversion.pixel2Meter(canvas.width - 1);
-//					this.ship.velocity.x = 0;
-//					this.ship.velocity.y = 0;
-//				}
-//				if (this.ship.getPosition().x < 0) {
-//					this.ship.getPosition().x = 0;	
-//					this.ship.velocity.x = 0;
-//					this.ship.velocity.y = 0;
-//				}
-//				if (this.ship.getPosition().y >= ScreenConversion.pixel2Meter(canvas.height)) {
-//					this.ship.getPosition().y = ScreenConversion.pixel2Meter(canvas.height -1);
-//					this.ship.velocity.y = 0;
-//					this.ship.velocity.x = 0;
-//				}
-//				if (this.ship.getPosition().y < 0) {
-//					this.ship.getPosition().y = 0;
-//					this.ship.velocity.y = 0;
-//					this.ship.velocity.x = 0;
-//				}
 
 				let canvasContext = canvas.getContext("2d"); //Get the draw context
 				canvasContext.clearRect(0,0,canvas.width, canvas.height); //Clear context

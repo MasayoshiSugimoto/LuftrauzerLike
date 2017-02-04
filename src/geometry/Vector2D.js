@@ -1,5 +1,7 @@
 "use strict";
 
+const VECTOR_2D_EPSILON = 0.00001;
+
 const Vector2D = {
 
 	create(x, y) {
@@ -92,6 +94,13 @@ const Vector2D = {
 
 		minus() {
 			return this.scalarMultiply(-1.0);
+		},
+
+		equals(vector2D) {
+			let dx = this.getX() - vector2D.getX();
+			let dy = this.getY() - vector2D.getY(); 
+			return -VECTOR_2D_EPSILON < dx &&  dx < VECTOR_2D_EPSILON
+					&& -VECTOR_2D_EPSILON < dy && dy < VECTOR_2D_EPSILON;
 		}
 
 	}
