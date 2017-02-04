@@ -21,5 +21,5 @@
 |Simple effect                          |       |         |
 |Explosion                              |       |         |
 |Circular map                           |       |         |
-|Decouple gameObjects and DrawObjects   |       |         |
+|Decouple gameObjects and DrawObjects   | DONE  |         |
 
