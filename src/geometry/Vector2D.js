@@ -101,7 +101,11 @@ const Vector2D = {
 			let dy = this.getY() - vector2D.getY(); 
 			return -VECTOR_2D_EPSILON < dx &&  dx < VECTOR_2D_EPSILON
 					&& -VECTOR_2D_EPSILON < dy && dy < VECTOR_2D_EPSILON;
-		}
+		},
+
+    distanceTo(vector) {
+      return Vector2D.distanceBetween(this, vector);
+    }
 
 	}
 };
