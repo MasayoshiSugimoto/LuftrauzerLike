@@ -1,102 +1,111 @@
 "use strict";
 
-{ //Test projectCoordinatesOnMap
-	let util = Util.create();
+{
+  let util = Util.create();
 
-	//Test zero
-	util.assert(GameMap.projectCoordinatesOnMap(Vector2D.create(0.0, 0.0))
-		.equals(Vector2D.create(0.0, 0.0)));
-	//Test the center of the map
-	let mapCenter = Vector2D.create(GAME_MAP_MAP_X_SIZE_METER / 2.0, GAME_MAP_BLOCK_SIZE_METER / 2.0);
-	util.assert(GameMap.projectCoordinatesOnMap(mapCenter).equals(mapCenter));
-	//Test a point on the left
-	util.assert(GameMap.projectCoordinatesOnMap(Vector2D.create(-1.0, 0.0))
-		.equals(Vector2D.create(GAME_MAP_MAP_X_SIZE_METER - 1.0, 0.0)));
-	//Test a point on the right	
-	util.assert(GameMap.projectCoordinatesOnMap(Vector2D.create(GAME_MAP_MAP_X_SIZE_METER + 1.0, 0.0))
-		.equals(Vector2D.create(1.0, 0.0)));
-	//Test a point above the map
-	util.assert(GameMap.projectCoordinatesOnMap(Vector2D.create(0.0, -1.0))
-		.equals(Vector2D.create(0.0, 0.0)));
-	//Test a point below the map
-	util.assert(GameMap.projectCoordinatesOnMap(Vector2D.create(0.0, GAME_MAP_BLOCK_SIZE_METER + 1.0))
-		.equals(Vector2D.create(0.0, GAME_MAP_BLOCK_SIZE_METER)));
+  let gameMap = GameMap.create();
+
+  //Test 'getSize'
+  util.assertEqualFloat(gameMap.getXSizeMeter(), gameMap.getSize().getX());
+  util.assertEqualFloat(gameMap.getYSizeMeter(), gameMap.getSize().getY());
+
+  //Test 'getXSizeMeter'
+  util.assertEqualFloat(gameMap.getXSizeMeter(), gameMap.getXSizeMeter());
+
+  //Test 'getYSizeMeter'
+  util.assertEqualFloat(gameMap.getYSizeMeter(), gameMap.getYSizeMeter());
 }
 
-{ //Test projectAllOnMap
-	let util = Util.create();
+{ //Test 'keepInMap'
+  let util = Util.create();
 
-	let gameObjectManager = new Array(
-		{
-			position: Vector2D.create(0.0, -1.0),
-			setPosition(position) {
-				this.position = position;
-			},
-			getPosition() {
-				return this.position;
-			}
-		},
-		{
-			position: Vector2D.create(0.0, -1.0),
-			setPosition(position) {
-				this.position = position;
-			},
-			getPosition() {
-				return this.position;
-			}
-		}
-	);
+  let gameObject = {
+    position: null,
+    getPosition() {
+      return this.position;
+    },
+    setPosition(position) {
+      this.position = position;
+      return this;
+    }
+  };
 
-	let gameMap = GameMap.create(gameObjectManager, { });
-	util.assert(gameMap.projectAllOnMap() == gameMap);
+  let gameMap = GameMap.create();
 
-	gameObjectManager.forEach( (gameObject) => {
-		util.assertEqualFloat(0.0, gameObject.getPosition().getY());
-	} );
+  gameObject.position = Vector2D.create(0.0, 0.0);
+
+  util.assert(gameMap == gameMap.keepInMap(gameObject));
+
+  //gameObject is already inside
+  util.assert(gameObject.getPosition().equals(Vector2D.create(0.0, 0.0)));
+
+  //gameObject is on left side
+  gameObject.position = Vector2D.create(-gameMap.getXSizeMeter() - 0.1, 0.0);
+  gameMap.keepInMap(gameObject);
+  util.assert(gameObject.position.equals(Vector2D.create(-gameMap.getXSizeMeter(), 0.0)));
+
+  //gameObject is on top/left side
+  gameObject.position = Vector2D.create(-gameMap.getXSizeMeter() - 0.1, -gameMap.getYSizeMeter() - 0.1);
+  gameMap.keepInMap(gameObject);
+  util.assert(gameObject.position.equals(Vector2D.create(-gameMap.getXSizeMeter(), -gameMap.getYSizeMeter())));
+
+  //gameObject is on top side
+  gameObject.position = Vector2D.create(0.0, -gameMap.getYSizeMeter() - 0.1);
+  gameMap.keepInMap(gameObject);
+  util.assert(gameObject.position.equals(Vector2D.create(0.0, -gameMap.getYSizeMeter())));
+
+  //gameObject is on top/right side
+  gameObject.position = Vector2D.create(gameMap.getXSizeMeter() + 0.1, -gameMap.getYSizeMeter() - 0.1);
+  gameMap.keepInMap(gameObject);
+  util.assert(gameObject.position.equals(Vector2D.create(gameMap.getXSizeMeter(), -gameMap.getYSizeMeter())));
+
+  //gameObject is on right side
+  gameObject.position = Vector2D.create(gameMap.getXSizeMeter() + 0.1, 0.0);
+  gameMap.keepInMap(gameObject);
+  util.assert(gameObject.position.equals(Vector2D.create(gameMap.getXSizeMeter(), 0.0)));
+
+  //gameObject is on bottom/right side
+  gameObject.position = Vector2D.create(gameMap.getXSizeMeter() + 0.1, gameMap.getYSizeMeter() + 0.1);
+  gameMap.keepInMap(gameObject);
+  util.assert(gameObject.position.equals(Vector2D.create(gameMap.getXSizeMeter(), gameMap.getYSizeMeter())));
+
+  //gameObject is on bottom side
+  gameObject.position = Vector2D.create(0.0, gameMap.getYSizeMeter() + 0.1);
+  gameMap.keepInMap(gameObject);
+  util.assert(gameObject.position.equals(Vector2D.create(0.0, gameMap.getYSizeMeter())));
+
+  //gameObject is on bottom/left side
+  gameObject.position = Vector2D.create(-gameMap.getXSizeMeter() - 0.1, 0.0);
+  gameMap.keepInMap(gameObject);
+  util.assert(gameObject.position.equals(Vector2D.create(-gameMap.getXSizeMeter(), 0.0)));
 }
 
-{ //Test getTranslation
-	let util = Util.create();
-	let gameObjectManager = {};
-	let camera = {
-		position: Vector2D.create(0.0, 0.0),
-		getPosition() {
-			return this.position;
-		},
-		setPosition(newPosition) {
-			this.position = newPosition;
-			return this;
-		}
-	};
+{ //Test 'keepAllGameObjectsInMap'
+  let util = Util.create();
 
-	let gameMap = GameMap.create(gameObjectManager, camera);
+  let gameObjectFactory = () => {
+    return {
+      position: Vector2D.create(GameMap.getXSizeMeter() + 0.1, GameMap.getYSizeMeter() + 0.1),
+      getPosition() {
+        return this.position;
+      },
+      setPosition(position) {
+        this.position = position;
+        return this;
+      }
+    };
+  };
 
-	let gameObjectFactory = (blockIndex) => {
-		return {
-			position: Vector2D.create(GAME_MAP_BLOCK_SIZE_METER * blockIndex + 1.0, 0.0),
-			getPosition() {
-				return this.position;
-			},
-			setPosition(newPosition) {
-				this.position = newPosition;
-				return this;
-			}
-		};
-	};
+  let gameObjectManager = [
+    gameObjectFactory(),
+    gameObjectFactory(),
+    gameObjectFactory()
+  ];
 
-	util.assertEqualFloat(0.0, gameMap.getXTranslation(gameObjectFactory(0)));
-	util.assertEqualFloat(0.0 , gameMap.getXTranslation(gameObjectFactory(1)));
-	util.assertEqualFloat(-GAME_MAP_X_SIZE_PIXEL, gameMap.getXTranslation(gameObjectFactory(2)));
+  let gameMap = GameMap.create(gameObjectManager).keepAllGameObjectsInMap();
 
-	//Move the camera in the middle block
-	camera.setPosition(Vector2D.create(GAME_MAP_BLOCK_SIZE_METER, 0.0));
-	util.assertEqualFloat(0.0, gameMap.getXTranslation(gameObjectFactory(0)));
-	util.assertEqualFloat(0.0, gameMap.getXTranslation(gameObjectFactory(1)));
-	util.assertEqualFloat(0.0, gameMap.getXTranslation(gameObjectFactory(2)));
-
-	//Move the camera in the right block
-	camera.setPosition(Vector2D.create(GAME_MAP_BLOCK_SIZE_METER * 2.0, 0.0));
-	util.assertEqualFloat(GAME_MAP_X_SIZE_PIXEL, gameMap.getXTranslation(gameObjectFactory(0)));
-	util.assertEqualFloat(0.0, gameMap.getXTranslation(gameObjectFactory(1)));
-	util.assertEqualFloat(0.0, gameMap.getXTranslation(gameObjectFactory(2)));
+  gameObjectManager.forEach( (gameObject) => {
+    util.assert(gameObject.getPosition().getX() == GameMap.getXSizeMeter());
+    util.assert(gameObject.getPosition().getY() == GameMap.getYSizeMeter());
+  } );
 }

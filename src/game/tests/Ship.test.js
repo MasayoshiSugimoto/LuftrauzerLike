@@ -70,3 +70,13 @@ const STANDARD_FRAME_DURATION_SECOND = 1 / 30;
 	util.assert(ship.getPosition().getY() == 0);
 	util.assert(ship.getDirection() > 0);
 }
+
+{ //Test 'ShipFactory'
+  let util = Util.create();
+
+  let gameObjectManager = [ ];
+  let ship = ShipFactory(gameObjectManager).createShip();
+  
+   //Test that the created ship is returned and contained in the gameObjectManager
+  util.assert(ship == gameObjectManager[0]);
+}

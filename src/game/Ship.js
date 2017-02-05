@@ -68,3 +68,13 @@ const Ship = {
 
 };
 
+const ShipFactory = (gameObjectManager) => {
+  return {
+    gameObjectManager: gameObjectManager,
+    createShip() {
+      let ship = Ship.create();
+      this.gameObjectManager.push(ship);
+      return ship;
+    }
+  };
+};

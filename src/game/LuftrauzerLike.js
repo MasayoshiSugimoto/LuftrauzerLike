@@ -8,6 +8,8 @@ const LuftrauzerLike = {
 
 	create() {
 
+    let gameObjectManager = new Array();
+
 		return {
 			ship              :  null,
 			drawObjectManager :  DrawObjectManager.create(),
@@ -15,6 +17,8 @@ const LuftrauzerLike = {
 			enemy             :  null,
 			camera						:  null,
 			canvasWrapper			:  null,
+      gameObjectManager :  gameObjectManager,
+      gameMap           :  GameMap.create(gameObjectManager),
 
 			getMachineGun() {
 				return this.machineGun;
@@ -37,7 +41,7 @@ const LuftrauzerLike = {
 				//Clouds
 				CloudGenerator.create(this.drawObjectManager, images, Cloud, ImageDrawObject);
 
-				this.ship = Ship.create()
+        this.ship = ShipFactory(this.gameObjectManager).createShip()
 					//The ship starts at the bottom of the screen, horizontaly centered.
 					.setPosition(Vector2D.create(
 							ScreenConversion.pixel2Meter(canvas.width / 2),
@@ -73,11 +77,10 @@ const LuftrauzerLike = {
 
 			gameLoop(elapsedTimeSecond) {
 
-				this.enemy.update(elapsedTimeSecond);
-
 				this.ship.update(elapsedTimeSecond);
-
+				this.enemy.update(elapsedTimeSecond);
 				this.machineGun.update(elapsedTimeSecond);
+        this.gameMap.keepAllGameObjectsInMap();
 
 				//Keep in the screen
 				let canvas = document.getElementById("canvas");

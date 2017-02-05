@@ -1,56 +1,61 @@
 "use strict";
 
-const GAME_MAP_BLOCK_SIZE_PIXEL = 3000;
-const GAME_MAP_X_SIZE_PIXEL = 3 * GAME_MAP_BLOCK_SIZE_PIXEL;
-const GAME_MAP_BLOCK_SIZE_METER = ScreenConversion.pixel2Meter(GAME_MAP_BLOCK_SIZE_PIXEL);
-const GAME_MAP_MAP_X_SIZE_METER = ScreenConversion.pixel2Meter(GAME_MAP_X_SIZE_PIXEL);
-
-/**
-* This is an implementation of a circular map on X axis and bounded on y axis.
-* The map is divided in 3 blocks. The block are reordered to maintain the camera always
-* the middle block.
-**/
 const GameMap = {
-	create(gameObjectManager, camera) {
-		return {
+  
+  create(gameObjectManager) {
+    return Object.assign({gameObjectManager: gameObjectManager}, this.proto);
+  },
 
-			gameObjectManager	: gameObjectManager,
-			camera						: camera,
+  getXSizeMeter() {
+    return 10;
+  },
 
-			projectAllOnMap() {
-				this.gameObjectManager.forEach( (gameObject) => {
-					gameObject.setPosition(
-						GameMap.projectCoordinatesOnMap(gameObject.getPosition()));
-				} );
-				return this;
-			},
+  getYSizeMeter() {
+    return 10;
+  },
 
-			//Return the map translation for a game object
-			getXTranslation(gameObject) {
+  proto: {
 
-				let cameraCurrentBlock = Math.floor(this.camera.getPosition().getX() / GAME_MAP_BLOCK_SIZE_METER);
+    getSize() {
+      return Vector2D.create(GameMap.getXSizeMeter(), GameMap.getYSizeMeter());
+    },
 
-				//Reorder the block to keep the camera in the block in the middle.
-				if (cameraCurrentBlock == 0
-						&& gameObject.getPosition().getX() >= 2 * GAME_MAP_BLOCK_SIZE_METER) {
-					return  - GAME_MAP_X_SIZE_PIXEL;	
-				} else if (cameraCurrentBlock == 2
-						&& gameObject.getPosition().getX() < GAME_MAP_BLOCK_SIZE_METER) {
-					return  + GAME_MAP_X_SIZE_PIXEL;	
-				}
+    getXSizeMeter() {
+      return GameMap.getXSizeMeter();
+    },
 
-				return 0.0;
-			},
+    getYSizeMeter() {
+      return GameMap.getYSizeMeter();
+    },
 
-		};
-	}
+    //Keep an object inside the map
+    keepInMap(gameObject) {
+      let position = gameObject.getPosition();
+      let x = position.getX();
+      let y = position.getY();
+
+      if (position.getX() > this.getXSizeMeter()) {
+        x = this.getXSizeMeter();
+      }
+      if (position.getX() < -this.getXSizeMeter()) {
+        x = -this.getXSizeMeter();
+      }
+      if (position.getY() > this.getYSizeMeter()) {
+        y = this.getYSizeMeter();
+      }
+      if (position.getY() < -this.getYSizeMeter()) {
+        y = -this.getYSizeMeter();
+      }
+      gameObject.setPosition(Vector2D.create(x, y));
+      return this;
+    },
+
+    keepAllGameObjectsInMap() {
+      this.gameObjectManager.forEach( (gameObject) => {
+        this.keepInMap(gameObject);
+      } );
+    }
+
+  }
+
 };
-
-//Keep the coordinates inside the map.
-GameMap.projectCoordinatesOnMap = (vector2DMeter) => {
-	return Vector2D.create(
-		//Add one block and remove it later to do the % modulo calculation on positive values
-		(vector2DMeter.getX() + GAME_MAP_MAP_X_SIZE_METER) % GAME_MAP_MAP_X_SIZE_METER,
-		MathUtil.clamp(0, vector2DMeter.getY(), GAME_MAP_BLOCK_SIZE_METER)
-	);
-}
