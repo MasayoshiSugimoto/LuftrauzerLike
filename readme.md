@@ -22,4 +22,4 @@
 |Explosion                              |       |         |
 |Decouple gameObjects and DrawObjects   | DONE  |         |
 |Circular map                           |       |         |
-|Map limit                              |       |         |
+|Map limit                              | DONE  |         |
