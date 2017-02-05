@@ -3,9 +3,20 @@
 const CollisionManager = {
 
   create(gameObjects) {
+
+    //Filter only gameObjects which collision are applied to
+    let collisionableObjects = {
+      forEach(callback) {
+        gameObjects.filter( (gameObject) => {
+            return gameObject.isCollisionable();
+          } )
+          .forEach(callback);
+      }
+    };
+
     return Object.assign(
       {
-        gameObjects: gameObjects
+        collisionableObjects: collisionableObjects
       },
       this.proto
     );
@@ -14,8 +25,8 @@ const CollisionManager = {
   proto: {
 
     applyCollision() {
-      this.gameObjects.forEach( (gameObject1) => {
-        this.gameObjects.forEach( (gameObject2) => {
+      this.collisionableObjects.forEach( (gameObject1) => {
+        this.collisionableObjects.forEach( (gameObject2) => {
           if (gameObject1 == gameObject2) {
             return;
           }

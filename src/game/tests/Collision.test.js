@@ -20,6 +20,9 @@
       collide() {
         this.counter++;
         return this;
+      },
+      isCollisionable() {
+        return true;
       }
     };
   }
@@ -39,3 +42,42 @@
   util.assert(gameObjects[3].counter == 1);
 }
 
+{ //Test 'create' test
+  let util = Util.create();
+
+  let gameObjectFactory = {
+    
+    create(collidable) {
+      return {
+        collidable: collidable,
+        isCollisionable() {
+          return collidable;
+        }
+      };
+    }
+  };
+
+  let gameObjects = [
+    gameObjectFactory.create(true),
+    gameObjectFactory.create(false),
+    gameObjectFactory.create(true),
+    gameObjectFactory.create(false),
+    gameObjectFactory.create(true)
+  ];
+
+  let collisionManager = CollisionManager.create(gameObjects);
+
+  let callbackObject = {
+    counter: 0,
+    create() {
+      let factory = this;
+      return () => {
+        factory.counter++;
+      };
+    }
+  };
+
+  collisionManager.collisionableObjects.forEach(callbackObject.create());
+
+  util.assert(callbackObject.counter == 3);
+}
