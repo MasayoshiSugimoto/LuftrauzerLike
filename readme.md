@@ -23,3 +23,4 @@
 |Decouple gameObjects and DrawObjects   | DONE  |         |
 |Circular map                           |       |         |
 |Map limit                              | DONE  |         |
+|HP                                     |       | X       |
