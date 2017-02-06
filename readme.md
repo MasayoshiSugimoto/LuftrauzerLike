@@ -9,7 +9,7 @@
 |Border collisions 	    				        | DONE  |         |
 |Game starts in the center  		        | DONE  |         |
 |Support image for draw object          | DONE  |         |
-|Animated draw object                   |       |         |
+|Animated draw object                   |       | X       |
 |Collision manager                      |       |         |
 |Camera                                 | DONE  |         |
 |Paralax                                |       |         |
@@ -23,4 +23,4 @@
 |Decouple gameObjects and DrawObjects   | DONE  |         |
 |Circular map                           |       |         |
 |Map limit                              | DONE  |         |
-|HP                                     |       | X       |
+|HP                                     |       |         |
