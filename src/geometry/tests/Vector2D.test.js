@@ -89,3 +89,9 @@
 
 	util.assert(Vector2D.create(1.0, 2.0).equals(Vector2D.create(1.000001, 1.999999)));
 }
+
+{ //Test 'distanceTo'
+  let util = Util.create();
+
+  util.assertEqualFloat(5.0, Vector2D.create(5.0, 0.0).distanceTo(Vector2D.zero()));
+}
