@@ -24,3 +24,4 @@
 |Circular map                           |       |         |
 |Map limit                              | DONE  |         |
 |HP                                     |       |         |
+|Refactor LufrauzerLike.js              |       |         |
