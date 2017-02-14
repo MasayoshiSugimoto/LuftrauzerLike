@@ -126,3 +126,50 @@
 
   util.assert(gameObjectDrawObject.draw(expectedCanvasContext) == gameObjectDrawObject);
 }
+
+{ //Test 'GameObjectDrawObjectFactory'
+  let util = Util.create();
+
+  let explosionDrawObject = { };
+  let emptyGameObject = { };
+  let drawObject = { };
+  let gameObject = { };
+
+  let factory = GameObjectDrawObjectFactory(explosionDrawObject, emptyGameObject);
+  let gameObjectDrawObject = factory.create(drawObject, gameObject);
+
+  util.assert(gameObjectDrawObject.drawObject == drawObject);
+  util.assert(gameObjectDrawObject.gameObject == gameObject);
+  util.assert(gameObjectDrawObject.factory == factory);
+  util.assert(gameObjectDrawObject.activeDrawObject == drawObject);
+  util.assert(gameObjectDrawObject.activeGameObject == gameObject);
+  util.assert(gameObjectDrawObject.factory.getExplosionDrawObject() == explosionDrawObject);
+  util.assert(gameObjectDrawObject.factory.getEmptyGameObject() == emptyGameObject);
+}
+
+{ //Test 'update'
+  let util = Util.create();
+
+  let explosionDrawObject = { };
+  let emptyGameObject = {
+    update(elapsedTime) {
+    }
+  };
+  let drawObject = { };
+  let gameObject = {
+    died: false,
+    isDead() {
+      return this.died;
+    }
+  };
+
+  let gameObjectDrawObject = GameObjectDrawObjectFactory(explosionDrawObject, emptyGameObject)
+      .create(drawObject, gameObject);
+
+  util.assert(gameObjectDrawObject.activeDrawObject == drawObject);
+  util.assert(gameObjectDrawObject.activeGameObject == gameObject);
+  gameObject.died = true;
+  gameObjectDrawObject.update(0);
+  util.assert(gameObjectDrawObject.activeDrawObject == explosionDrawObject);
+  util.assert(gameObjectDrawObject.activeGameObject == emptyGameObject);
+}
