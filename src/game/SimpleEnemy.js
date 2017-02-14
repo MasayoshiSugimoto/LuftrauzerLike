@@ -12,7 +12,8 @@ const SimpleEnemy = {
 			position: Vector2D.zero(),
 			direction: 0, //Radian
 			target: target,
-			machineGun: machineGun
+			machineGun: machineGun,
+      hp: 1
 		};
 
 		let proto = {
@@ -55,6 +56,15 @@ const SimpleEnemy = {
 
 				//Fire
 			},
+
+      collide() {
+        this.hp--;
+        return this;
+      },
+
+      isDead() {
+        return this.hp <= 0;
+      }
 
 		};
 
