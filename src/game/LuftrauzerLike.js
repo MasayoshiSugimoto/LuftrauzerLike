@@ -8,17 +8,10 @@ const LuftrauzerLike = {
 
 	create() {
 
-    let gameObjectManager = new Array();
-
 		return {
-			ship              :  null,
-			drawObjectManager :  DrawObjectManager.create(),
+      initializer       :  Initializer,
 			machineGun        :  null,
 			enemy             :  null,
-			camera						:  null,
-			canvasWrapper			:  null,
-      gameObjectManager :  gameObjectManager,
-      gameMap           :  GameMap.create(gameObjectManager),
 
 			getMachineGun() {
 				return this.machineGun;
@@ -39,9 +32,9 @@ const LuftrauzerLike = {
 				let canvas = document.getElementById("canvas");
 
 				//Clouds
-				CloudGenerator.create(this.drawObjectManager, images, Cloud, ImageDrawObject);
+				CloudGenerator.create(this.initializer.getDrawObjectManager(), images, Cloud, ImageDrawObject);
 
-        this.ship = ShipFactory(this.gameObjectManager).createShip()
+        this.initializer.getShip()
 					//The ship starts at the bottom of the screen, horizontaly centered.
 					.setPosition(Vector2D.create(
 							ScreenConversion.pixel2Meter(canvas.width / 2),
@@ -49,22 +42,18 @@ const LuftrauzerLike = {
 					//The ship starts by beeing thrown upward.
 					.setDirection(-Math.PI / 2.0)
 					.setVelocity(Vector2D.create(0.0, -5));
-				this.drawObjectManager.add(GameObjectDrawObject.create(
+				this.initializer.getDrawObjectManager().add(GameObjectDrawObject.create(
 					ImageDrawObject.create(images.get('images/Reisen.png')),
-					this.ship));
-        this.machineGun = MachineGunFactory.create(Bullet, this.drawObjectManager, GameObjectDrawObject)
-            .createMachineGun(this.ship);
+					this.initializer.getShip()));
+        this.machineGun = MachineGunFactory.create(Bullet, this.initializer.getDrawObjectManager(), GameObjectDrawObject)
+            .createMachineGun(this.initializer.getShip());
 
 				//Enemy
-				this.enemy = SimpleEnemy.create(this.ship, {});
-				this.drawObjectManager.add(GameObjectDrawObject.create(
+				this.enemy = SimpleEnemy.create(this.initializer.getShip(), {});
+				this.initializer.getDrawObjectManager().add(GameObjectDrawObject.create(
 					ImageDrawObject.create(images.get('images/Reisen.png')).setScale(0.4),
 					this.enemy
 				));
-
-				//Camera
-				this.canvasWrapper = Canvas.create(canvas);
-				this.camera = Camera.create(this.canvasWrapper, this.ship);
 
 				//Start the game after loading the image
 				let luftrauzerLike = this;
@@ -77,10 +66,10 @@ const LuftrauzerLike = {
 
 			gameLoop(elapsedTimeSecond) {
 
-				this.ship.update(elapsedTimeSecond);
+				this.initializer.getShip().update(elapsedTimeSecond);
 				this.enemy.update(elapsedTimeSecond);
 				this.machineGun.update(elapsedTimeSecond);
-        this.gameMap.keepAllGameObjectsInMap();
+        this.initializer.getGameMap().keepAllGameObjectsInMap();
 
 				//Keep in the screen
 				let canvas = document.getElementById("canvas");
@@ -91,8 +80,8 @@ const LuftrauzerLike = {
 				canvasContext.fillStyle = "#66ccff"; //Blue sky color
 				canvasContext.fillRect(0,0,canvas.width, canvas.height); //Blue sky background
 
-				this.camera.update();	
-				this.drawObjectManager.draw(this.camera);
+				this.initializer.getCamera().update();	
+				this.initializer.getDrawObjectManager().draw(this.initializer.getCamera());
 			}
 		};
 	}
