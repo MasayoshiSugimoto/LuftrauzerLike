@@ -114,3 +114,11 @@ const TestSimpleEnemy = {
 
 	TestSimpleEnemy.util.assertEqualFloat(0.0, enemy.getPosition().getX());
 }
+
+{ //Test 'isDead'
+  let util = Util.create();
+
+  let enemy = SimpleEnemy.create({ }, { });
+  util.assert(!enemy.isDead());
+  util.assert(enemy.collide().isDead());
+}

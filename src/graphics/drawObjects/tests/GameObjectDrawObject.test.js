@@ -122,7 +122,74 @@
     }    
   };
 
-  let gameObjectDrawObject = GameObjectDrawObject.create(drawObject, { });
+  let gameObject = {
+    isDead() {
+      return false;
+    }
+  };
+
+  let gameObjectDrawObject = GameObjectDrawObject.create(drawObject, gameObject);
 
   util.assert(gameObjectDrawObject.draw(expectedCanvasContext) == gameObjectDrawObject);
+}
+
+{ //Test 'GameObjectDrawObjectFactory'
+  let util = Util.create();
+
+  let explosionDrawObject = { };
+  let emptyGameObjectFactory = { };
+  let drawObject = { };
+  let gameObject = { };
+
+  let factory = GameObjectDrawObjectFactory(explosionDrawObject, emptyGameObjectFactory);
+  let gameObjectDrawObject = factory.create(drawObject, gameObject);
+
+  util.assert(gameObjectDrawObject.drawObject == drawObject);
+  util.assert(gameObjectDrawObject.gameObject == gameObject);
+  util.assert(gameObjectDrawObject.factory == factory);
+  util.assert(gameObjectDrawObject.activeDrawObject == drawObject);
+  util.assert(gameObjectDrawObject.activeGameObject == gameObject);
+  util.assert(gameObjectDrawObject.factory.getExplosionDrawObject() == explosionDrawObject);
+  util.assert(gameObjectDrawObject.factory.getEmptyGameObjectFactory() == emptyGameObjectFactory);
+}
+
+{ //Test 'update'
+  let util = Util.create();
+
+  let explosionDrawObject = {
+    isDrawCalled: false,
+    draw(canvasContext) {
+      this.isDrawCalled = true;
+    }
+  };
+  let expectedEmptyGameObject = { };
+  let emptyGameObjectFactory = {
+    create(position, direction) {
+      return expectedEmptyGameObject;
+    }
+  };
+  let drawObject = { };
+  let gameObject = {
+    died: false,
+    isDead() {
+      return this.died;
+    },
+    getPosition() {
+      return Vector2D.zero();
+    },
+    getDirection() {
+      return 0.0;
+    }
+  };
+
+  let gameObjectDrawObject = GameObjectDrawObjectFactory(explosionDrawObject, emptyGameObjectFactory)
+      .create(drawObject, gameObject);
+
+  util.assert(gameObjectDrawObject.activeDrawObject == drawObject);
+  util.assert(gameObjectDrawObject.activeGameObject == gameObject);
+  gameObject.died = true;
+  gameObjectDrawObject.draw( { } );
+  util.assert(gameObjectDrawObject.activeDrawObject == explosionDrawObject);
+  util.assert(gameObjectDrawObject.activeGameObject == expectedEmptyGameObject);
+  util.assert(explosionDrawObject.isDrawCalled);
 }

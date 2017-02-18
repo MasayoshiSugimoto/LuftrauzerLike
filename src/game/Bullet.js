@@ -39,6 +39,13 @@ const Bullet = {
 				elapsedTimeSecond * this.velocity));
 		},
 
+    collide() {
+    },
+
+    isDead() {
+      return false;
+    }
+
 	}
 
 };

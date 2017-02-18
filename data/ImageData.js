@@ -2,5 +2,6 @@
 
 const IMAGE_DATA = [
   "images/Cloud.png",
-  "images/Reisen.png"
+  "images/Reisen.png",
+  "images/Explosion.png"
 ];

@@ -12,6 +12,7 @@ const LuftrauzerLike = {
       initializer       :  Initializer,
 			machineGun        :  null,
 			enemy             :  null,
+      collisionManager  :  null,
 
 			getMachineGun() {
 				return this.machineGun;
@@ -42,7 +43,10 @@ const LuftrauzerLike = {
 					//The ship starts by beeing thrown upward.
 					.setDirection(-Math.PI / 2.0)
 					.setVelocity(Vector2D.create(0.0, -5));
-				this.initializer.getDrawObjectManager().add(GameObjectDrawObject.create(
+        let gameObjectDrawObjectFactory = GameObjectDrawObjectFactory(
+            ExplosionDrawObject.create(images.get('images/Explosion.png')),
+            EmptyGameObject);
+				this.initializer.getDrawObjectManager().add(gameObjectDrawObjectFactory.create(
 					ImageDrawObject.create(images.get('images/Reisen.png')),
 					this.initializer.getShip()));
         this.machineGun = MachineGunFactory.create(Bullet, this.initializer.getDrawObjectManager(), GameObjectDrawObject)
@@ -50,10 +54,14 @@ const LuftrauzerLike = {
 
 				//Enemy
 				this.enemy = SimpleEnemy.create(this.initializer.getShip(), {});
-				this.initializer.getDrawObjectManager().add(GameObjectDrawObject.create(
+				this.initializer.getDrawObjectManager().add(gameObjectDrawObjectFactory.create(
 					ImageDrawObject.create(images.get('images/Reisen.png')).setScale(0.4),
 					this.enemy
 				));
+        this.initializer.getGameObjectManager().push(this.enemy);
+
+        //CollisionManager
+        this.collisionManager = CollisionManager.create(this.initializer.getGameObjectManager());
 
 				//Start the game after loading the image
 				let luftrauzerLike = this;
@@ -70,6 +78,7 @@ const LuftrauzerLike = {
 				this.enemy.update(elapsedTimeSecond);
 				this.machineGun.update(elapsedTimeSecond);
         this.initializer.getGameMap().keepAllGameObjectsInMap();
+        this.collisionManager.applyCollision();
 
 				//Keep in the screen
 				let canvas = document.getElementById("canvas");

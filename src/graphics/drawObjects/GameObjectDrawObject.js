@@ -4,11 +4,14 @@
  * Simple draw object which associates a gameObject and a draw object.
  */
 const GameObjectDrawObject = {
-  create(drawObjectIn, gameObjectIn) {
+  create(drawObject, gameObject, factory) {
     return Object.assign(
       {
-        drawObject  : drawObjectIn,
-        gameObject  : gameObjectIn,
+        drawObject        :  drawObject,
+        gameObject        :  gameObject,
+        factory           :  factory,
+        activeDrawObject  :  drawObject,
+        activeGameObject  :  gameObject,
       },
       this.proto
     );
@@ -16,40 +19,61 @@ const GameObjectDrawObject = {
   
   proto: {
     getGameObject() {
-      return this.gameObject;
+      return this.activeGameObject;
     },
     getPosition() {
-		  return this.gameObject.getPosition().scalarMultiply(PIXEL_PER_METER);
+		  return this.activeGameObject.getPosition().scalarMultiply(PIXEL_PER_METER);
     },
     setPosition(position) {
-      this.gameObject.setPosition(position.scalarMultiply(1.0 / PIXEL_PER_METER));
+      this.activeGameObject.setPosition(position.scalarMultiply(1.0 / PIXEL_PER_METER));
       return this;
     },
     getDirection() {
-      return this.gameObject.getDirection();
+      return this.activeGameObject.getDirection();
     },
     setDirection(direction) {
-      return this.gameObject.setDirection(direction);
+      return this.activeGameObject.setDirection(direction);
     },
     setScale(scale) {
-      this.drawObject.setScale(scale);
+      this.activeDrawObject.setScale(scale);
       return this;
     },
     getSize() {
-      return this.drawObject.getSize();
+      return this.activeDrawObject.getSize();
     },
     setOpacity(opacity) {
-      this.drawObject.setOpacity(opacity);
+      this.activeDrawObject.setOpacity(opacity);
       return this;
     },
     placeOn(canvasContext) {
-      this.gameObject.placeOn(canvasContext);
+      this.activeGameObject.placeOn(canvasContext);
       return this;
     },
     draw(canvasContext) {
-      this.drawObject.draw(canvasContext);
+      if (this.gameObject.isDead() && this.activeDrawObject != this.factory.getExplosionDrawObject()) {
+        this.activeDrawObject = this.factory.getExplosionDrawObject();
+        this.activeGameObject = this.factory.getEmptyGameObjectFactory()
+            .create(this.gameObject.getPosition(), this.gameObject.getDirection());
+      }
+      this.activeDrawObject.draw(canvasContext);
       return this;
     },
   },
 };
 
+const GameObjectDrawObjectFactory = (explosionDrawObject, emptyGameObjectFactory) => {
+  return {
+    explosionDrawObject: explosionDrawObject,
+    emptyGameObjectFactory: emptyGameObjectFactory,
+
+    create(drawObject, gameObject) {
+      return GameObjectDrawObject.create(drawObject, gameObject, this);
+    },
+    getExplosionDrawObject() {
+      return this.explosionDrawObject;
+    },
+    getEmptyGameObjectFactory() {
+      return this.emptyGameObjectFactory;
+    }
+  };
+};

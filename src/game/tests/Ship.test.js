@@ -80,3 +80,34 @@ const STANDARD_FRAME_DURATION_SECOND = 1 / 30;
    //Test that the created ship is returned and contained in the gameObjectManager
   util.assert(ship == gameObjectManager[0]);
 }
+
+{ //Test 'isDead'
+  let util = Util.create();
+
+  let ship = Ship.create();
+  for (index = 0; index < 9; index++) {
+    ship.collide();
+  }
+  util.assert(!ship.isDead());
+  ship.collide();
+  util.assert(ship.isDead());
+}
+
+{ //Test 'getRadius'
+  let util = Util.create();
+
+  let ship = Ship.create();
+  let called = false;
+  ship.updateControl = (elapsedTime) => {
+    called = true;
+    return ship;
+  }
+  ship.update(0);
+  util.assert(called);
+  ship.hp = 0;
+  ship.updateControl = (elapsedTime) => {
+    util.assert(false);
+    return ship;
+  }
+  ship.update(0);
+}

@@ -14,6 +14,7 @@ const Ship = {
 			position	 :  Vector2D.create(0,0), //Game coordinates in meter
 			direction	 :  0, //Angle in radian
 			velocity   :  Vector2D.create(0,0), //Velocity in meter/second
+      hp         :  10, //Starting HP
 		};
 		return Object.assign(ship, this.proto, GameSpacePositionableComposite(ship));
 	},
@@ -61,9 +62,28 @@ const Ship = {
 		},
 
 		update(elapsedTime) {
-			return this.updateControl(elapsedTime).updatePosition(elapsedTime);
+      if (!this.isDead()) {
+			  this.updateControl(elapsedTime).updatePosition(elapsedTime);
+      }
+      return this;
 		},
 
+    collide() {
+      this.hp--;
+      return this;
+    },
+
+    isDead() {
+      return this.hp <= 0;
+    },
+
+    getRadius() {
+      return 0.5;
+    },
+
+    isCollisionable() {
+      return !this.isDead();
+    }
 	}
 
 };
