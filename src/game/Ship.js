@@ -62,7 +62,10 @@ const Ship = {
 		},
 
 		update(elapsedTime) {
-			return this.updateControl(elapsedTime).updatePosition(elapsedTime);
+      if (!this.isDead()) {
+			  this.updateControl(elapsedTime).updatePosition(elapsedTime);
+      }
+      return this;
 		},
 
     collide() {
@@ -72,6 +75,14 @@ const Ship = {
 
     isDead() {
       return this.hp <= 0;
+    },
+
+    getRadius() {
+      return 0.5;
+    },
+
+    isCollisionable() {
+      return !this.isDead();
     }
 	}
 

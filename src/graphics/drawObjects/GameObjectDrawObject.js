@@ -50,23 +50,21 @@ const GameObjectDrawObject = {
       return this;
     },
     draw(canvasContext) {
+      if (this.gameObject.isDead() && this.activeDrawObject != this.factory.getExplosionDrawObject()) {
+        this.activeDrawObject = this.factory.getExplosionDrawObject();
+        this.activeGameObject = this.getEmptyGameObjectFactory()
+            .create(this.gameObject.getPosition(), this.gameObject.getDirection());
+      }
       this.activeDrawObject.draw(canvasContext);
       return this;
-    },
-    update(elapsedTime) {
-      if (this.gameObject.isDead()) {
-        this.activeDrawObject = this.factory.getExplosionDrawObject();
-        this.activeGameObject = this.factory.getEmptyGameObject();
-      }
-      this.activeGameObject.update(elapsedTime);
     },
   },
 };
 
-const GameObjectDrawObjectFactory = (explosionDrawObject, emptyGameObject) => {
+const GameObjectDrawObjectFactory = (explosionDrawObject, emptyGameObjectFactory) => {
   return {
     explosionDrawObject: explosionDrawObject,
-    emptyGameObject: emptyGameObject,
+    emptyGameObjectFactory: emptyGameObjectFactory,
 
     create(drawObject, gameObject) {
       return GameObjectDrawObject.create(drawObject, gameObject, this);
@@ -74,8 +72,8 @@ const GameObjectDrawObjectFactory = (explosionDrawObject, emptyGameObject) => {
     getExplosionDrawObject() {
       return this.explosionDrawObject;
     },
-    getEmptyGameObject() {
-      return this.emptyGameObject;
-    },
+    getEmptyGameObjectFactory() {
+      return this.emptyGameObjectFactory;
+    }
   };
 };

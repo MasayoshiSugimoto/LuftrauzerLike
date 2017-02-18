@@ -92,3 +92,22 @@ const STANDARD_FRAME_DURATION_SECOND = 1 / 30;
   ship.collide();
   util.assert(ship.isDead());
 }
+
+{ //Test 'getRadius'
+  let util = Util.create();
+
+  let ship = Ship.create();
+  let called = false;
+  ship.updateControl = (elapsedTime) => {
+    called = true;
+    return ship;
+  }
+  ship.update(0);
+  util.assert(called);
+  ship.hp = 0;
+  ship.updateControl = (elapsedTime) => {
+    util.assert(false);
+    return ship;
+  }
+  ship.update(0);
+}

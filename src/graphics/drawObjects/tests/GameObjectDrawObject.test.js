@@ -122,7 +122,13 @@
     }    
   };
 
-  let gameObjectDrawObject = GameObjectDrawObject.create(drawObject, { });
+  let gameObject = {
+    isDead() {
+      return false;
+    }
+  };
+
+  let gameObjectDrawObject = GameObjectDrawObject.create(drawObject, gameObject);
 
   util.assert(gameObjectDrawObject.draw(expectedCanvasContext) == gameObjectDrawObject);
 }
@@ -169,7 +175,7 @@
   util.assert(gameObjectDrawObject.activeDrawObject == drawObject);
   util.assert(gameObjectDrawObject.activeGameObject == gameObject);
   gameObject.died = true;
-  gameObjectDrawObject.update(0);
+  gameObjectDrawObject.draw( { } );
   util.assert(gameObjectDrawObject.activeDrawObject == explosionDrawObject);
   util.assert(gameObjectDrawObject.activeGameObject == emptyGameObject);
 }

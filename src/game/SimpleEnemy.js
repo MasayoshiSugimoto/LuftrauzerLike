@@ -46,6 +46,9 @@ const SimpleEnemy = {
 			},
 
 			update(elapsedTime) {
+        if (this.isDead()) {
+          return this;
+        }
 
 				//Follow the target (Update rotation first)
 				let newDirection = this.newDirection(elapsedTime);
@@ -54,7 +57,9 @@ const SimpleEnemy = {
 				//Follow the target (Update position)
 				this.setPosition(this.newPosition(elapsedTime, newDirection));
 
-				//Fire
+        //TODO: Fire
+
+        return this;
 			},
 
       collide() {
@@ -64,6 +69,14 @@ const SimpleEnemy = {
 
       isDead() {
         return this.hp <= 0;
+      },
+
+      getRadius() {
+        return 0.2;
+      },
+
+      isCollisionable() {
+        return !this.isDead();
       }
 
 		};
