@@ -58,6 +58,13 @@ const Initializer = {
           .createMachineGun(this.getShip());
     }
     return this.machineGun;
+  },
+
+  getSimpleEnemyFactory() {
+    if (null == this.simpleEnemyFactory) {
+      this.simpleEnemyFactory = SimpleEnemyFactory(this.getGameObjectManager(), this.getShip());
+    }
+    return this.simpleEnemyFactory;
   }
 
 };

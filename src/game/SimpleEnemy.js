@@ -86,3 +86,13 @@ const SimpleEnemy = {
 	},
 
 };
+
+const SimpleEnemyFactory = (gameObjectManager, target) => {
+  return {
+    create() {
+      let simpleEnemy = SimpleEnemy.create(target, { });
+      gameObjectManager.push(simpleEnemy);
+      return simpleEnemy;
+    }
+  };
+};

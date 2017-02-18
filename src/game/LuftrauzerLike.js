@@ -43,12 +43,11 @@ const LuftrauzerLike = {
 					this.initializer.getShip()));
 
 				//Enemy
-				this.enemy = SimpleEnemy.create(this.initializer.getShip(), {});
+        this.enemy = this.initializer.getSimpleEnemyFactory().create();
 				this.initializer.getDrawObjectManager().add(gameObjectDrawObjectFactory.create(
 					ImageDrawObject.create(images.get('images/Reisen.png')).setScale(0.4),
 					this.enemy
 				));
-        this.initializer.getGameObjectManager().push(this.enemy);
 
 				//Start the game after loading the image
 				let luftrauzerLike = this;

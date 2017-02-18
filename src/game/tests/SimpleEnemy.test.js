@@ -122,3 +122,14 @@ const TestSimpleEnemy = {
   util.assert(!enemy.isDead());
   util.assert(enemy.collide().isDead());
 }
+
+{ //Test 'SimpleEnemyFactory'
+  let util = Util.create();
+
+  let gameObjectManager = new Array();
+  let target = { };
+
+  let enemy = SimpleEnemyFactory(gameObjectManager, target).create();
+  util.assert(gameObjectManager[0].target == target);
+  util.assert(enemy.target == target);
+}

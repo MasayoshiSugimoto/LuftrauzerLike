@@ -24,5 +24,5 @@
 |Circular map                           |       |         |
 |Map limit                              | DONE  |         |
 |HP                                     | DONE  |         |
-|Refactor LufrauzerLike.js (singleton)  |       |         |
+|Refactor LufrauzerLike.js (singleton)  | DONE  |         |
 |Implement 'getRadius' from image size  |       |         |
