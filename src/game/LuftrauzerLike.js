@@ -29,16 +29,14 @@ const LuftrauzerLike = {
 
 				Keyboard.setup(this);
 
-				let canvas = document.getElementById("canvas");
-
 				//Clouds
 				CloudGenerator.create(this.initializer.getDrawObjectManager(), images, Cloud, ImageDrawObject);
 
         this.initializer.getShip()
 					//The ship starts at the bottom of the screen, horizontaly centered.
 					.setPosition(Vector2D.create(
-							ScreenConversion.pixel2Meter(canvas.width / 2),
-							ScreenConversion.pixel2Meter(canvas.height - 1)))
+							ScreenConversion.pixel2Meter(this.initializer.getCanvas().getWidth() / 2),
+							ScreenConversion.pixel2Meter(this.initializer.getCanvas().getHeight() - 1)))
 					//The ship starts by beeing thrown upward.
 					.setDirection(-Math.PI / 2.0)
 					.setVelocity(Vector2D.create(0.0, -5));
