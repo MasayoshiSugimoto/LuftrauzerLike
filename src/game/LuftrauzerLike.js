@@ -42,11 +42,7 @@ const LuftrauzerLike = {
 					this.initializer.getShip()));
 
 				//Enemy
-        this.enemy = this.initializer.getSimpleEnemyFactory().create();
-				this.initializer.getDrawObjectManager().add(this.initializer.getGameObjectDrawObjectFactory().create(
-					ImageDrawObject.create(images.get('images/Reisen.png')).setScale(0.4),
-					this.enemy
-				));
+        this.enemy = this.initializer.getSimpleEnemyCompositeFactory().create();
 
 				//Start the game after loading the image
 				let luftrauzerLike = this;
@@ -60,7 +56,7 @@ const LuftrauzerLike = {
 			gameLoop(elapsedTimeSecond) {
 
 				this.initializer.getShip().update(elapsedTimeSecond);
-				this.enemy.update(elapsedTimeSecond);
+				this.enemy.getGameObject().update(elapsedTimeSecond);
 				this.initializer.getMachineGun().update(elapsedTimeSecond);
         this.initializer.getGameMap().keepAllGameObjectsInMap();
         this.initializer.getCollisionManager().applyCollision();

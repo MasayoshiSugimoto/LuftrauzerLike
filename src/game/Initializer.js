@@ -71,6 +71,19 @@ const Initializer = (images) => {
       return this.simpleEnemyFactory;
     },
 
+    getSimpleEnemyCompositeFactory() {
+      if (null == this.simpleEnemyCompositeFactory) {
+        this.simpleEnemyCompositeFactory = SimpleEnemyCompositeFactory(
+          this.getSimpleEnemyFactory(),
+          ImageDrawObject,
+          this.getGameObjectDrawObjectFactory(),
+          this.images,
+          this.getDrawObjectManager()
+        );
+      }
+      return this.simpleEnemyCompositeFactory;
+    },
+
     getGameObjectDrawObjectFactory() {
       if (null == this.gameObjectDrawObjectFactory) {
         this.gameObjectDrawObjectFactory = GameObjectDrawObjectFactory(
