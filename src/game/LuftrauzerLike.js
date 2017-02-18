@@ -9,7 +9,7 @@ const LuftrauzerLike = {
 	create() {
 
 		return {
-      initializer       :  Initializer,
+      initializer       :  null,
 			enemy             :  null,
 
 			//First function to be called.
@@ -21,6 +21,8 @@ const LuftrauzerLike = {
 			},
 
 			onImagesLoaded(images) {
+
+        this.initializer = Initializer(images);
 
 				Keyboard.setup(this.initializer);
 
@@ -35,16 +37,13 @@ const LuftrauzerLike = {
 					//The ship starts by beeing thrown upward.
 					.setDirection(-Math.PI / 2.0)
 					.setVelocity(Vector2D.create(0.0, -5));
-        let gameObjectDrawObjectFactory = GameObjectDrawObjectFactory(
-            ExplosionDrawObject.create(images.get('images/Explosion.png')),
-            EmptyGameObject);
-				this.initializer.getDrawObjectManager().add(gameObjectDrawObjectFactory.create(
+				this.initializer.getDrawObjectManager().add(this.initializer.getGameObjectDrawObjectFactory().create(
 					ImageDrawObject.create(images.get('images/Reisen.png')),
 					this.initializer.getShip()));
 
 				//Enemy
         this.enemy = this.initializer.getSimpleEnemyFactory().create();
-				this.initializer.getDrawObjectManager().add(gameObjectDrawObjectFactory.create(
+				this.initializer.getDrawObjectManager().add(this.initializer.getGameObjectDrawObjectFactory().create(
 					ImageDrawObject.create(images.get('images/Reisen.png')).setScale(0.4),
 					this.enemy
 				));

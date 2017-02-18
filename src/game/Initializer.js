@@ -1,70 +1,85 @@
 "use strict";
 
 //This class declare lazy getters to chain object creations
-const Initializer = {
-  
-  getDrawObjectManager() {
-    if (null == this.drawObjectManager) {
-      this.drawObjectManager = DrawObjectManager.create();
-    }
-    return this.drawObjectManager;
-  },
+const Initializer = (images) => {
 
-  getGameObjectManager() {
-    if (null == this.gameObjectManager) {
-      this.gameObjectManager = new Array();
-    }
-    return this.gameObjectManager;
-  },
+  return {
 
-  getShip() {
-    if (null == this.ship) {
-      this.ship = ShipFactory(this.getGameObjectManager()).createShip()
-    }
-    return this.ship;
-  },
+    images: images,
 
-  getCanvas() {
-    if (null == this.canvas) {
-      this.canvas = Canvas.create(document.getElementById("canvas"));
-    }
-    return this.canvas;
-  },
+    getDrawObjectManager() {
+      if (null == this.drawObjectManager) {
+        this.drawObjectManager = DrawObjectManager.create();
+      }
+      return this.drawObjectManager;
+    },
 
-  getCamera() {
-    if (null == this.camera) {
-      this.camera = Camera.create(this.getCanvas(), this.getShip());
-    }
-    return this.camera;
-  },
+    getGameObjectManager() {
+      if (null == this.gameObjectManager) {
+        this.gameObjectManager = new Array();
+      }
+      return this.gameObjectManager;
+    },
 
-  getGameMap() {
-    if (null == this.gameMap) {
-      this.gameMap = GameMap.create(this.getGameObjectManager());
-    }
-    return this.gameMap;
-  },
+    getShip() {
+      if (null == this.ship) {
+        this.ship = ShipFactory(this.getGameObjectManager()).createShip()
+      }
+      return this.ship;
+    },
 
-  getCollisionManager() {
-    if (null == this.collisionManager) {
-      this.collisionManager = CollisionManager.create(this.getGameObjectManager());
-    }
-    return this.collisionManager;
-  },
+    getCanvas() {
+      if (null == this.canvas) {
+        this.canvas = Canvas.create(document.getElementById("canvas"));
+      }
+      return this.canvas;
+    },
 
-  getMachineGun() {
-    if (null == this.machineGun) {
-      this.machineGun = MachineGunFactory.create(Bullet, this.getDrawObjectManager(), GameObjectDrawObject)
-          .createMachineGun(this.getShip());
-    }
-    return this.machineGun;
-  },
+    getCamera() {
+      if (null == this.camera) {
+        this.camera = Camera.create(this.getCanvas(), this.getShip());
+      }
+      return this.camera;
+    },
 
-  getSimpleEnemyFactory() {
-    if (null == this.simpleEnemyFactory) {
-      this.simpleEnemyFactory = SimpleEnemyFactory(this.getGameObjectManager(), this.getShip());
+    getGameMap() {
+      if (null == this.gameMap) {
+        this.gameMap = GameMap.create(this.getGameObjectManager());
+      }
+      return this.gameMap;
+    },
+
+    getCollisionManager() {
+      if (null == this.collisionManager) {
+        this.collisionManager = CollisionManager.create(this.getGameObjectManager());
+      }
+      return this.collisionManager;
+    },
+
+    getMachineGun() {
+      if (null == this.machineGun) {
+        this.machineGun = MachineGunFactory.create(Bullet, this.getDrawObjectManager(), GameObjectDrawObject)
+            .createMachineGun(this.getShip());
+      }
+      return this.machineGun;
+    },
+
+    getSimpleEnemyFactory() {
+      if (null == this.simpleEnemyFactory) {
+        this.simpleEnemyFactory = SimpleEnemyFactory(this.getGameObjectManager(), this.getShip());
+      }
+      return this.simpleEnemyFactory;
+    },
+
+    getGameObjectDrawObjectFactory() {
+      if (null == this.gameObjectDrawObjectFactory) {
+        this.gameObjectDrawObjectFactory = GameObjectDrawObjectFactory(
+              ExplosionDrawObject.create(this.images.get('images/Explosion.png')),
+              EmptyGameObject);
+      }
+      return this.gameObjectDrawObjectFactory;
     }
-    return this.simpleEnemyFactory;
-  }
+
+  };
 
 };
