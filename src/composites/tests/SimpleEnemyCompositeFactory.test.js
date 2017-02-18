@@ -33,9 +33,21 @@
   };
   let images = new Map();
   images.set('images/Reisen.png', expectedImage);
+  let drawObjectManager = {
+    drawObject: null,
+    add(drawObject) {
+      this.drawObject = drawObject;
+    }
+  }
 
-  let simpleEnemyComposite = SimpleEnemyCompositeFactory(simpleEnemyFactory, imageDrawObjectFactory, gameObjectDrawObjectFactory, images)
+  let simpleEnemyComposite = SimpleEnemyCompositeFactory(
+        simpleEnemyFactory,
+        imageDrawObjectFactory,
+        gameObjectDrawObjectFactory,
+        images,
+        drawObjectManager)
       .create();
   util.assert(simpleEnemyComposite.drawObject.scale == 0.4);
   util.assert(simpleEnemyComposite.gameObject == simpleEnemy);
+  util.assert(drawObjectManager.drawObject == simpleEnemyComposite);
 }

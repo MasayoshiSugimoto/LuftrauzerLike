@@ -1,11 +1,18 @@
 "use strict";
 
-const SimpleEnemyCompositeFactory = (simpleEnemyFactory, imageDrawObjectFactory, gameObjectDrawObjectFactory, images) => {
+const SimpleEnemyCompositeFactory = (
+    simpleEnemyFactory,
+    imageDrawObjectFactory,
+    gameObjectDrawObjectFactory,
+    images,
+    drawObjectManager) => {
   return {
     create() {
-      return gameObjectDrawObjectFactory.create(
-          imageDrawObjectFactory.create(images.get('images/Reisen.png')).setScale(0.4), 
+      let simpleEnemyComposite = gameObjectDrawObjectFactory.create(
+          imageDrawObjectFactory.create(images.get('images/Reisen.png')).setScale(0.4),
           simpleEnemyFactory.create());
+      drawObjectManager.add(simpleEnemyComposite);
+      return simpleEnemyComposite;
     }
   };
 };
