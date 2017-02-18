@@ -9,8 +9,8 @@
 |Border collisions 	    				        | DONE  |         |
 |Game starts in the center  		        | DONE  |         |
 |Support image for draw object          | DONE  |         |
-|Animated draw object                   |       | X       |
-|Collision manager                      |       |         |
+|Animated draw object                   |       |         |
+|Collision manager                      | DONE  |         |
 |Camera                                 | DONE  |         |
 |Paralax                                |       |         |
 |Clouds                                 | DONE  |         |
@@ -19,9 +19,10 @@
 |Particule manager                      |       |         |
 |z axis                                 |       |         |
 |Simple effect                          |       |         |
-|Explosion                              |       |         |
+|Explosion                              | DONE  |         |
 |Decouple gameObjects and DrawObjects   | DONE  |         |
 |Circular map                           |       |         |
 |Map limit                              | DONE  |         |
-|HP                                     |       |         |
-|Refactor LufrauzerLike.js              |       |         |
+|HP                                     | DONE  |         |
+|Refactor LufrauzerLike.js (singleton)  |       |         |
+|Implement 'getRadius' from image size  |       |         |
