@@ -20,7 +20,6 @@ const Canvas = {
 
 			getGameSpaceHeight() {
 				return ScreenConversion.pixel2Meter(this.canvas.height);
-;
 			},
 
 			getGameSpaceSize() {
@@ -32,7 +31,18 @@ const Canvas = {
 
 			getContext() {
 				return this.canvas.getContext("2d");
-			}
+			},
+
+      clear() {
+        this.getContext().clearRect(0, 0, this.getWidth(), this.getHeight());
+        return this;
+      },
+
+      setBackgroundColor(color) {
+        this.getContext().fillStyle = color;
+        this.getContext().fillRect(0, 0, this.getWidth(), this.getHeight());
+        return this;
+      }
 
 		}
 	}

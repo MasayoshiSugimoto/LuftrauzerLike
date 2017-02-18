@@ -74,14 +74,9 @@ const LuftrauzerLike = {
         this.initializer.getGameMap().keepAllGameObjectsInMap();
         this.initializer.getCollisionManager().applyCollision();
 
-				//Keep in the screen
-				let canvas = document.getElementById("canvas");
-
-				let canvasContext = canvas.getContext("2d"); //Get the draw context
-				canvasContext.clearRect(0,0,canvas.width, canvas.height); //Clear context
-
-				canvasContext.fillStyle = "#66ccff"; //Blue sky color
-				canvasContext.fillRect(0,0,canvas.width, canvas.height); //Blue sky background
+				this.initializer.getCanvas()
+            .clear()
+            .setBackgroundColor("#66ccff");
 
 				this.initializer.getCamera().update();	
 				this.initializer.getDrawObjectManager().draw(this.initializer.getCamera());
