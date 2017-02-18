@@ -10,12 +10,7 @@ const LuftrauzerLike = {
 
 		return {
       initializer       :  Initializer,
-			machineGun        :  null,
 			enemy             :  null,
-
-			getMachineGun() {
-				return this.machineGun;
-			},
 
 			//First function to be called.
 			//Setup the game before starting the game loop
@@ -27,7 +22,7 @@ const LuftrauzerLike = {
 
 			onImagesLoaded(images) {
 
-				Keyboard.setup(this);
+				Keyboard.setup(this.initializer);
 
 				//Clouds
 				CloudGenerator.create(this.initializer.getDrawObjectManager(), images, Cloud, ImageDrawObject);
@@ -46,8 +41,6 @@ const LuftrauzerLike = {
 				this.initializer.getDrawObjectManager().add(gameObjectDrawObjectFactory.create(
 					ImageDrawObject.create(images.get('images/Reisen.png')),
 					this.initializer.getShip()));
-        this.machineGun = MachineGunFactory.create(Bullet, this.initializer.getDrawObjectManager(), GameObjectDrawObject)
-            .createMachineGun(this.initializer.getShip());
 
 				//Enemy
 				this.enemy = SimpleEnemy.create(this.initializer.getShip(), {});
@@ -70,7 +63,7 @@ const LuftrauzerLike = {
 
 				this.initializer.getShip().update(elapsedTimeSecond);
 				this.enemy.update(elapsedTimeSecond);
-				this.machineGun.update(elapsedTimeSecond);
+				this.initializer.getMachineGun().update(elapsedTimeSecond);
         this.initializer.getGameMap().keepAllGameObjectsInMap();
         this.initializer.getCollisionManager().applyCollision();
 

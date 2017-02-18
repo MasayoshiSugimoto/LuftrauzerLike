@@ -52,4 +52,12 @@ const Initializer = {
     return this.collisionManager;
   },
 
+  getMachineGun() {
+    if (null == this.machineGun) {
+      this.machineGun = MachineGunFactory.create(Bullet, this.getDrawObjectManager(), GameObjectDrawObject)
+          .createMachineGun(this.getShip());
+    }
+    return this.machineGun;
+  }
+
 };

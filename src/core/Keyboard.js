@@ -7,22 +7,22 @@ const KEYBOARD_KEY_SPACE  = 32;
 
 const Keyboard = {
 
-	setup(gameContext) {
+	setup(initializer) {
 
 		//Set the handles when a key is pressed
 		window.onkeydown = function(event) {
 			switch (event.which) {
 				case KEYBOARD_KEY_E:
-					gameContext.ship.isBoost = true;
+					initializer.getShip().isBoost = true;
 					break;
 				case KEYBOARD_KEY_A:
-					gameContext.ship.isLeft = true;
+					initializer.getShip().isLeft = true;
 					break;
 				case KEYBOARD_KEY_D:
-					gameContext.ship.isRight = true;
+					initializer.getShip().isRight = true;
 					break;
 				case KEYBOARD_KEY_SPACE:
-					gameContext.getMachineGun().onFireStart();
+					initializer.getMachineGun().onFireStart();
 					break;
 			}
 		}
@@ -31,16 +31,16 @@ const Keyboard = {
 		window.onkeyup = function(event) {
 			switch (event.which) {
 				case KEYBOARD_KEY_E:
-					gameContext.ship.isBoost = false;
+					initializer.getShip().isBoost = false;
 					break;
 				case KEYBOARD_KEY_A:
-					gameContext.ship.isLeft = false;
+					initializer.getShip().isLeft = false;
 					break;
 				case KEYBOARD_KEY_D:
-					gameContext.ship.isRight = false;
+					initializer.getShip().isRight = false;
 					break;
 				case KEYBOARD_KEY_SPACE:
-					gameContext.getMachineGun().onFireStop();
+					initializer.getMachineGun().onFireStop();
 					break;
 			}
 		}
