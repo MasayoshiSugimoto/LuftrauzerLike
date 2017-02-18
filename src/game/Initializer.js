@@ -45,4 +45,11 @@ const Initializer = {
     return this.gameMap;
   },
 
+  getCollisionManager() {
+    if (null == this.collisionManager) {
+      this.collisionManager = CollisionManager.create(this.getGameObjectManager());
+    }
+    return this.collisionManager;
+  },
+
 };

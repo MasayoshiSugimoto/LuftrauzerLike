@@ -12,7 +12,6 @@ const LuftrauzerLike = {
       initializer       :  Initializer,
 			machineGun        :  null,
 			enemy             :  null,
-      collisionManager  :  null,
 
 			getMachineGun() {
 				return this.machineGun;
@@ -60,9 +59,6 @@ const LuftrauzerLike = {
 				));
         this.initializer.getGameObjectManager().push(this.enemy);
 
-        //CollisionManager
-        this.collisionManager = CollisionManager.create(this.initializer.getGameObjectManager());
-
 				//Start the game after loading the image
 				let luftrauzerLike = this;
 				Scheduler.create(Time.create())
@@ -78,7 +74,7 @@ const LuftrauzerLike = {
 				this.enemy.update(elapsedTimeSecond);
 				this.machineGun.update(elapsedTimeSecond);
         this.initializer.getGameMap().keepAllGameObjectsInMap();
-        this.collisionManager.applyCollision();
+        this.initializer.getCollisionManager().applyCollision();
 
 				//Keep in the screen
 				let canvas = document.getElementById("canvas");
