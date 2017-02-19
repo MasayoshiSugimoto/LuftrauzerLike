@@ -3,10 +3,25 @@
 const GameObjectManager = {
 
   create() {
-    return Object.assign({ }, this.proto);
+    return Object.assign({
+        gameObjects: [],
+      }, this.proto);
   },
 
   proto: {
-    get:
+    push(gameObject) {
+      this.gameObjects.push(gameObject);
+      return this;
+    },
+    clean() {
+      this.gameObjects = this.gameObjects.filter( (gameObject) => {
+          return !gameObject.toDelete();
+        } );
+      return this;
+    },
+    forEach(callback) {
+      this.gameObjects.forEach(callback);
+      return this;
+    },
   }
 };
