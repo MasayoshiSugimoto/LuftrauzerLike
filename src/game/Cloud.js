@@ -20,7 +20,10 @@ const Cloud = {
 
 			draw(canvasContext) {
 				this.drawObject.draw(canvasContext);
-			}
+			},
+      toDelete() {
+        return false;
+      }
 		};
 
 		return Object.assign(cloud, GameSpacePositionableComposite(cloud));

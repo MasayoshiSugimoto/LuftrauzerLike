@@ -30,7 +30,17 @@ const DrawObjectManager = {
 					return this;
 				},
 
+        clean() {
+          this.drawObjects = this.drawObjects.filter( (drawObject) => {
+            return !drawObject.toDelete();
+          } );
+          return this;
+        },
+
 				draw(camera, elapsedTimeSecond) {
+          //Clean the list of draw objects
+          this.clean();
+
 					let canvasContext = camera.getCanvas().getContext();
 					canvasContext.save();
 

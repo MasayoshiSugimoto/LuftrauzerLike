@@ -121,6 +121,7 @@ const TestSimpleEnemy = {
   let enemy = SimpleEnemy.create({ }, { });
   util.assert(!enemy.isDead());
   util.assert(enemy.collide().isDead());
+  util.assert(enemy.toDelete());
 }
 
 { //Test 'SimpleEnemyFactory'

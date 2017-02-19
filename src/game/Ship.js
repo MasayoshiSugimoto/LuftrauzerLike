@@ -70,6 +70,10 @@ const Ship = {
 
     collide() {
       this.hp--;
+      this.hp = Math.max(this.hp, 0);
+      if (this.isDead()) {
+        this.markForDeletion();
+      }
       return this;
     },
 

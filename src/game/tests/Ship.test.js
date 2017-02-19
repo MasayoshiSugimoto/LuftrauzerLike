@@ -91,6 +91,7 @@ const STANDARD_FRAME_DURATION_SECOND = 1 / 30;
   util.assert(!ship.isDead());
   ship.collide();
   util.assert(ship.isDead());
+  util.assert(ship.toDelete());
 }
 
 { //Test 'getRadius'

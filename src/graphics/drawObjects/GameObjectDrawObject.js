@@ -58,6 +58,9 @@ const GameObjectDrawObject = {
       this.activeDrawObject.draw(canvasContext, elapsedTimeSecond);
       return this;
     },
+    toDelete() {
+      return this.gameObject.isDead() && this.activeDrawObject.toDelete();
+    },
   },
 };
 

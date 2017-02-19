@@ -69,6 +69,9 @@ const ImageDrawObject = {
 					return this;
 				},
 
+        toDelete() {
+          return false;
+        }
 			}
 
 		);

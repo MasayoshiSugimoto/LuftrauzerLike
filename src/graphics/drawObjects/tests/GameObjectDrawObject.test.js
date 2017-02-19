@@ -198,3 +198,31 @@
   util.assert(gameObjectDrawObject.activeGameObject == expectedEmptyGameObject);
   util.assert(explosionDrawObject.isDrawCalled);
 }
+
+{ //Test 'toDelete'
+  let util = Util.create();
+
+  let drawObject = {
+    toBeDeleted: false,
+    toDelete() {
+      return this.toBeDeleted;
+    }
+  };
+
+  let gameObject = {
+    dead: false,
+    isDead() {
+      return this.dead;
+    }
+  };
+
+  let factory = {
+  };
+
+  let gameObjectDrawObject = GameObjectDrawObject.create(drawObject, gameObject, factory);
+
+  util.assert(!gameObjectDrawObject.toDelete());
+  gameObject.dead = true;
+  drawObject.toBeDeleted = true;
+  util.assert(gameObjectDrawObject.toDelete());
+}

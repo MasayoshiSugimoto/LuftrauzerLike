@@ -55,7 +55,7 @@ const ExplosionDrawObject = {
       return this;
     },
 
-    toDispose() {
+    toDelete() {
       return this.remainingTimeSecond <= 0.0;
     }
 

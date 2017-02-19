@@ -2,5 +2,6 @@
 
 //This empty draw object does nothing.
 const EmptyDrawObject = {
-	draw() { /* Do nothing */ }
+	draw() { /* Do nothing */ },
+  toDelete() { }
 }

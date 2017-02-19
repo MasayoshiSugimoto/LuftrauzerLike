@@ -146,3 +146,55 @@
 
   util.assert(drawObject.called);
 }
+
+{ // Test 'clean'
+  let util = Util.create();
+
+  let drawObjectManager = DrawObjectManager.create()
+      .add( {
+        toDelete() {
+          return false;
+        }
+      } )
+      .add( {
+        toDelete() {
+          return true;
+        }
+      } )
+      .clean();
+  util.assert(drawObjectManager.drawObjects.length == 1);
+}
+
+{ // Test that the list objects in cleaned up when draw is called.
+  let util = Util.create();
+
+  let camera = {
+    getCanvas() {
+      return {
+        getContext() {
+          return {
+            save() { },
+            translate() { },
+            restore() { }
+          };
+        }
+      };
+    },
+    getCanvasTranslation() {
+      return Vector2D.zero();
+    }
+  };
+
+  let drawObjectManager = DrawObjectManager.create();
+  let counter = 0;
+  drawObjectManager.clean = () => {
+    util.assert(counter == 0);
+    counter++;
+  }
+  drawObjectManager.drawAllObjects = () => {
+    util.assert(counter == 1);
+    counter++;
+  }
+  drawObjectManager.draw(camera, 0.0);
+  util.assert(counter == 2);
+}

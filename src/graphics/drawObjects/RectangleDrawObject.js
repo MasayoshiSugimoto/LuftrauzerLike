@@ -17,7 +17,11 @@ const RectangleDrawObject = {
 					-this.getSize().getY()/2,
 					this.getSize().getX(),
 					this.getSize().getY());
-			}
+			},
+
+      toDelete() {
+        return false;
+      }
 
 		};
 
