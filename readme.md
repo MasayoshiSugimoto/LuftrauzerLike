@@ -28,10 +28,3 @@ Tasks
 |Refactor LufrauzerLike.js (singleton)  | DONE  |         |
 |Implement *getRadius* from image size  |       |         |
 
-Enemy Manager
-=============
-
-* Creates an enemy every 10 seconds.
-* Creates enemies if there are less than 20 enemies alive.
-* Removes the dead enemies after 3 seconds.
-* Starting position is outside of the screen on the left.
