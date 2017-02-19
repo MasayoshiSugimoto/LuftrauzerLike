@@ -3,10 +3,11 @@
 const EmptyGameObject = {
 
   create(position, direction) {
-    return Object.assign({
-        position: position,
-        direction: direction
-      }, this.proto);
+    let emptyGameObject = {
+      position: position,
+      direction: direction,
+    };
+    return Object.assign(emptyGameObject, this.proto, Disposable(emptyGameObject));
   },
   proto: {
     update() {

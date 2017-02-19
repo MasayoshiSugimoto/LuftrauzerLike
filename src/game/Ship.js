@@ -16,7 +16,7 @@ const Ship = {
 			velocity   :  Vector2D.create(0,0), //Velocity in meter/second
       hp         :  10, //Starting HP
 		};
-		return Object.assign(ship, this.proto, GameSpacePositionableComposite(ship));
+		return Object.assign(ship, this.proto, GameSpacePositionableComposite(ship), Disposable(ship));
 	},
 
 	proto: {

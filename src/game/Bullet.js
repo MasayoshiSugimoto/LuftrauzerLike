@@ -12,7 +12,8 @@ const Bullet = {
 		return Object.assign(
 			state,
 			GameSpacePositionableComposite(state),
-			this.proto);
+			this.proto,
+      Disposable(state));
 	},
 
 	fromData(position, direction) {

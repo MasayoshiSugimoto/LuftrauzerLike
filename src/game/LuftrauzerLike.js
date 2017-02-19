@@ -55,9 +55,7 @@ const LuftrauzerLike = {
 			gameLoop(elapsedTimeSecond) {
 
 				this.initializer.getMachineGun().update(elapsedTimeSecond);
-        this.initializer.getGameObjectManager().forEach( (gameObject) => {
-          gameObject.update(elapsedTimeSecond);
-        } );
+        this.initializer.getGameObjectManager().update(elapsedTimeSecond);
         this.initializer.getCollisionManager().applyCollision();
         this.initializer.getGameMap().keepAllGameObjectsInMap();
 

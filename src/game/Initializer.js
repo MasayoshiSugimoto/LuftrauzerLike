@@ -16,7 +16,7 @@ const Initializer = (images) => {
 
     getGameObjectManager() {
       if (null == this.gameObjectManager) {
-        this.gameObjectManager = new Array();
+        this.gameObjectManager = GameObjectManager.create();
       }
       return this.gameObjectManager;
     },
