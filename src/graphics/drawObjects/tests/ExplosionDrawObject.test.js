@@ -45,3 +45,21 @@
   util.assertEqualFloat(3.0, canvas.globalAlpha);
   util.assert(canvas.called);
 }
+
+{ // Test opacity update
+  let util = Util.create();
+
+  let image = { };
+
+  let canvasContext = {
+    drawImage() {
+    }
+  };
+
+  let explosionDrawObject = ExplosionDrawObject.create(image);
+  util.assert(explosionDrawObject.getOpacity() == 1.0);
+  explosionDrawObject.draw(canvasContext, EXPLOSION_DRAW_OBJECT_ANIMATION_TIME_SECONDS / 2.0);
+  util.assertEqualFloat(0.5, explosionDrawObject.getOpacity());
+  explosionDrawObject.draw(canvasContext, EXPLOSION_DRAW_OBJECT_ANIMATION_TIME_SECONDS / 2.0);
+  util.assertEqualFloat(0.0, explosionDrawObject.getOpacity());
+}

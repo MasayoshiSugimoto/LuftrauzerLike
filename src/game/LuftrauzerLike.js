@@ -66,7 +66,7 @@ const LuftrauzerLike = {
             .setBackgroundColor("#66ccff");
 
 				this.initializer.getCamera().update();	
-				this.initializer.getDrawObjectManager().draw(this.initializer.getCamera());
+				this.initializer.getDrawObjectManager().draw(this.initializer.getCamera(), elapsedTimeSecond);
 			}
 		};
 	}

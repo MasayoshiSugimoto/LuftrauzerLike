@@ -30,7 +30,7 @@ const DrawObjectManager = {
 					return this;
 				},
 
-				draw(camera) {
+				draw(camera, elapsedTimeSecond) {
 					let canvasContext = camera.getCanvas().getContext();
 					canvasContext.save();
 
@@ -39,21 +39,21 @@ const DrawObjectManager = {
 							camera.getCanvasTranslation().getX(),
 							camera.getCanvasTranslation().getY());
 
-					this.drawAllObjects(canvasContext);
+					this.drawAllObjects(canvasContext, elapsedTimeSecond);
 
 					canvasContext.restore();
 
 					return this;
 				},
 
-				drawAllObjects(canvasContext) {
+				drawAllObjects(canvasContext, elapsedTimeSecond) {
 
 					this.drawObjects.forEach( function(drawObject) {
 						canvasContext.save();
             let position = drawObject.getPosition();
 						canvasContext.translate(position.getX(), position.getY());
 						canvasContext.rotate(drawObject.getDirection());
-						drawObject.draw(canvasContext);
+						drawObject.draw(canvasContext, elapsedTimeSecond);
 						canvasContext.restore();
 					} );
 

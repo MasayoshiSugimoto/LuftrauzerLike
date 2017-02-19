@@ -136,12 +136,12 @@
 { //Test 'GameObjectDrawObjectFactory'
   let util = Util.create();
 
-  let explosionDrawObject = { };
+  let explosionDrawObjectFactory = { };
   let emptyGameObjectFactory = { };
   let drawObject = { };
   let gameObject = { };
 
-  let factory = GameObjectDrawObjectFactory(explosionDrawObject, emptyGameObjectFactory);
+  let factory = GameObjectDrawObjectFactory(explosionDrawObjectFactory, emptyGameObjectFactory);
   let gameObjectDrawObject = factory.create(drawObject, gameObject);
 
   util.assert(gameObjectDrawObject.drawObject == drawObject);
@@ -149,7 +149,7 @@
   util.assert(gameObjectDrawObject.factory == factory);
   util.assert(gameObjectDrawObject.activeDrawObject == drawObject);
   util.assert(gameObjectDrawObject.activeGameObject == gameObject);
-  util.assert(gameObjectDrawObject.factory.getExplosionDrawObject() == explosionDrawObject);
+  util.assert(gameObjectDrawObject.factory.getExplosionDrawObjectFactory() == explosionDrawObjectFactory);
   util.assert(gameObjectDrawObject.factory.getEmptyGameObjectFactory() == emptyGameObjectFactory);
 }
 
@@ -160,6 +160,11 @@
     isDrawCalled: false,
     draw(canvasContext) {
       this.isDrawCalled = true;
+    }
+  };
+  let explosionDrawObjectFactory = {
+    create() {
+      return explosionDrawObject;
     }
   };
   let expectedEmptyGameObject = { };
@@ -182,7 +187,7 @@
     }
   };
 
-  let gameObjectDrawObject = GameObjectDrawObjectFactory(explosionDrawObject, emptyGameObjectFactory)
+  let gameObjectDrawObject = GameObjectDrawObjectFactory(explosionDrawObjectFactory, emptyGameObjectFactory)
       .create(drawObject, gameObject);
 
   util.assert(gameObjectDrawObject.activeDrawObject == drawObject);

@@ -67,7 +67,7 @@ const ImageDrawObject = {
 						size.getY());				//height
 					canvasContext.globalAlpha = previousOpacity;
 					return this;
-				}
+				},
 
 			}
 

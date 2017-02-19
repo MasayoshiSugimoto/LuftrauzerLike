@@ -87,7 +87,7 @@ const Initializer = (images) => {
     getGameObjectDrawObjectFactory() {
       if (null == this.gameObjectDrawObjectFactory) {
         this.gameObjectDrawObjectFactory = GameObjectDrawObjectFactory(
-              ExplosionDrawObject.create(this.images.get('images/Explosion.png')),
+              ExplosionDrawObjectFactory(this.images),
               EmptyGameObject);
       }
       return this.gameObjectDrawObjectFactory;

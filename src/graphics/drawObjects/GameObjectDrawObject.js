@@ -49,28 +49,28 @@ const GameObjectDrawObject = {
       this.activeGameObject.placeOn(canvasContext);
       return this;
     },
-    draw(canvasContext) {
-      if (this.gameObject.isDead() && this.activeDrawObject != this.factory.getExplosionDrawObject()) {
-        this.activeDrawObject = this.factory.getExplosionDrawObject();
+    draw(canvasContext, elapsedTimeSecond) {
+      if (this.gameObject.isDead() && this.gameObject == this.activeGameObject) {
+        this.activeDrawObject = this.factory.getExplosionDrawObjectFactory().create();
         this.activeGameObject = this.factory.getEmptyGameObjectFactory()
             .create(this.gameObject.getPosition(), this.gameObject.getDirection());
       }
-      this.activeDrawObject.draw(canvasContext);
+      this.activeDrawObject.draw(canvasContext, elapsedTimeSecond);
       return this;
     },
   },
 };
 
-const GameObjectDrawObjectFactory = (explosionDrawObject, emptyGameObjectFactory) => {
+const GameObjectDrawObjectFactory = (explosionDrawObjectFactory, emptyGameObjectFactory) => {
   return {
-    explosionDrawObject: explosionDrawObject,
+    explosionDrawObjectFactory: explosionDrawObjectFactory,
     emptyGameObjectFactory: emptyGameObjectFactory,
 
     create(drawObject, gameObject) {
       return GameObjectDrawObject.create(drawObject, gameObject, this);
     },
-    getExplosionDrawObject() {
-      return this.explosionDrawObject;
+    getExplosionDrawObjectFactory() {
+      return this.explosionDrawObjectFactory;
     },
     getEmptyGameObjectFactory() {
       return this.emptyGameObjectFactory;

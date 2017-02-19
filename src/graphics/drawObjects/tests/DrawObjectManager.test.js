@@ -103,13 +103,46 @@
 	};
 
 	let drawObjectManager = DrawObjectManager.create();
-	drawObjectManager.drawAllObjects = (canvasContext) => {
+	drawObjectManager.drawAllObjects = (canvasContext, elapsedTimeSecond) => {
 		util.assert(canvasContext == expectedCanvasContext);
 		util.assert(previousFunction == "translate");
+    util.assert(elapsedTimeSecond == 1.23);
 		previousFunction = "drawAllObjects";
 	}
 
-	drawObjectManager.draw(camera);
+	drawObjectManager.draw(camera, 1.23);
 
 	util.assert(previousFunction == "restore");
+}
+
+{ //Test 'drawAllObjects'
+  let util = Util.create();
+
+  let drawObject = {
+    called: false,
+    draw(canvasContext, elapsedTimeSecond) {
+      util.assert(elapsedTimeSecond == 1.23);
+      this.called = true;
+    },
+    getPosition() {
+      return Vector2D.zero();
+    },
+    getDirection() {
+      return 0.0;
+    }
+  };
+
+  let drawObjectManager = DrawObjectManager.create()
+      .add(drawObject);
+
+  let canvasContext = {
+    save() { },
+    translate(x, y) { },
+    rotate(angle) { },
+    restore() { }
+  };
+
+  drawObjectManager.drawAllObjects(canvasContext, 1.23);
+
+  util.assert(drawObject.called);
 }
