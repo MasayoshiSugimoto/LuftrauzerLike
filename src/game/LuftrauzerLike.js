@@ -10,7 +10,6 @@ const LuftrauzerLike = {
 
 		return {
       initializer       :  null,
-			enemy             :  null,
 
 			//First function to be called.
 			//Setup the game before starting the game loop
@@ -42,7 +41,7 @@ const LuftrauzerLike = {
 					this.initializer.getShip()));
 
 				//Enemy
-        this.enemy = this.initializer.getSimpleEnemyCompositeFactory().create();
+        EnemyPopper.create(this.initializer.getSimpleEnemyCompositeFactory(), window);
 
 				//Start the game after loading the image
 				let luftrauzerLike = this;
@@ -55,11 +54,12 @@ const LuftrauzerLike = {
 
 			gameLoop(elapsedTimeSecond) {
 
-				this.initializer.getShip().update(elapsedTimeSecond);
-				this.enemy.getGameObject().update(elapsedTimeSecond);
 				this.initializer.getMachineGun().update(elapsedTimeSecond);
-        this.initializer.getGameMap().keepAllGameObjectsInMap();
+        this.initializer.getGameObjectManager().forEach( (gameObject) => {
+          gameObject.update(elapsedTimeSecond);
+        } );
         this.initializer.getCollisionManager().applyCollision();
+        this.initializer.getGameMap().keepAllGameObjectsInMap();
 
 				this.initializer.getCanvas()
             .clear()
