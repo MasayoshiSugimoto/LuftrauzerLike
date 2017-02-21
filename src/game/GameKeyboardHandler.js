@@ -1,6 +1,6 @@
 "use strict";
 
-const Keyboard = {
+const GameKeyboardHandler = {
 
 	setup(initializer) {
 

@@ -20,10 +20,12 @@ const LuftrauzerLike = {
 			},
 
 			onImagesLoaded(images) {
+//        StartMenu.create().setup(images);
+//        return;
 
         this.initializer = Initializer(images);
 
-				Keyboard.setup(this.initializer);
+				GameKeyboardHandler.setup(this.initializer);
 
 				//Clouds
 				CloudGenerator.create(this.initializer.getDrawObjectManager(), images, Cloud, ImageDrawObject);
