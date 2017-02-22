@@ -14,6 +14,10 @@ const Canvas = {
 				return this.canvas.height;
 			},
 
+      getCenter() {
+        return Vector2D.create(this.getWidth(), this.getHeight()).scalarMultiply(0.5);
+      },
+
 			getGameSpaceWidth() {
 				return ScreenConversion.pixel2Meter(this.canvas.width);
 			},
@@ -42,7 +46,12 @@ const Canvas = {
         this.getContext().fillStyle = color;
         this.getContext().fillRect(0, 0, this.getWidth(), this.getHeight());
         return this;
-      }
+      },
+
+      center(drawObject) {
+        drawObject.setPosition(this.getCenter());
+        return this;
+      },
 
 		}
 	}
