@@ -2,11 +2,12 @@
 
 const Bullet = {
 
-  create() {
+  create(position, direction, inertiaVectorMeterPerSecond) {
     let state = {
-      position    :  Vector2D.zero(),
-      direction   :  0,    //Radian
-      velocity    :  5.0,  //meter  per  second
+      position                    :  position,
+      direction                   :  direction,    //Radian
+      velocity                    :  5.0,  //meter  per  second
+      inertiaVectorMeterPerSecond :  inertiaVectorMeterPerSecond,
     };
 
     return Object.assign(
@@ -14,13 +15,6 @@ const Bullet = {
       GameSpacePositionableComposite(state),
       this.proto,
       Disposable(state));
-  },
-
-  fromData(position, direction) {
-    let bullet = this.create();
-    bullet.position = position.copy();
-    bullet.direction = direction;
-    return bullet;
   },
 
   proto: {
@@ -36,14 +30,18 @@ const Bullet = {
     updatePosition(elapsedTimeSecond) {
       //Update the coordinates. Gravity does not apply to bullets.
       let velocityVector = Vector2D.create(1.0, 0.0).rotate(this.direction);
-      this.position = this.position.add(velocityVector.scalarMultiply(
-        elapsedTimeSecond * this.velocity));
+      this.position = this.position
+          .add(velocityVector.scalarMultiply(elapsedTimeSecond * this.velocity))
+          .add(this.inertiaVectorMeterPerSecond.scalarMultiply(elapsedTimeSecond));
+      return this;
     },
 
     update(elapsedTimeSecond) {
+      return this;
     },
 
     collide() {
+      return this;
     },
 
     isDead() {
@@ -52,4 +50,22 @@ const Bullet = {
 
   }
 
+};
+
+const BulletFactory = () => {
+  return {
+
+    create() {
+      return Bullet.create(
+          this.weapon.getPosition(),
+          this.weapon.getDirection(),
+          this.weapon.getInertiaVectorMeterPerSecond());
+    },
+
+    setWeapon(weapon) {
+      this.weapon = weapon;
+      return this;
+    },
+
+  };
 };

@@ -36,8 +36,7 @@ const MachineGun = {
       }
 
       this.fireTimer = 0.0;
-      let bullet = this.machineGunFactory.bulletFactory.fromData(
-        this.ship.getPosition(), this.ship.getDirection());
+      let bullet = this.machineGunFactory.bulletFactory.create();
 
       //Add bullets
       let drawObject = this.machineGunFactory.gameObjectDrawObjectFactory
@@ -74,7 +73,19 @@ const MachineGun = {
       this.bullets.forEach( function(bullet) {
         bullet.getGameObject().updatePosition(elapsedTimeSecond);
       } );
-    }
+    },
+
+    getInertiaVectorMeterPerSecond() {
+      return this.ship.getVelocity();
+    },
+
+    getPosition() {
+      return this.ship.getPosition();
+    },
+
+    getDirection() {
+      return this.ship.getDirection();
+    },
 
   }
 
@@ -94,7 +105,9 @@ const MachineGunFactory = {
 
   proto: {
     createMachineGun(ship) {
-      return MachineGun.create(ship, this);
+      const machinegun = MachineGun.create(ship, this);
+      this.bulletFactory.setWeapon(machinegun);
+      return machinegun;
     },
   }
 

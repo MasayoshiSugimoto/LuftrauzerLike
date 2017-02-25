@@ -1,14 +1,14 @@
 "use strict";
 
 { //Test that no bullet is created before the fire timer
-  let util = Util.create();
+  const util = Util.create();
 
-  let ship = {
+  const ship = {
     position: { },
     direction: { }
   };
 
-  let machineGunFactory = {
+  const machineGunFactory = {
     bulletFactory: {
       isFromDataCalled: false,
       fromData(position, direction) {
@@ -19,27 +19,32 @@
     }
   };
 
-  let machineGun = MachineGun.create(ship, machineGunFactory);
+  const machineGun = MachineGun.create(ship, machineGunFactory);
 
   machineGun.fire(0.01 /*second*/);
   util.assert(!machineGunFactory.bulletFactory.isFromDataCalled);
 }
 
 { //Test that a bullet is created at the fire rate
-  let util = Util.create();
+  const util = Util.create();
 
   //Create bullet
-  let bullet = { };
+  const bullet = { };
+
 
   //Create bullet factory
-  let bulletFactory = {
-    fromData() { return bullet; }
+  const bulletFactory = {
+    setWeapon(weapon) {
+    },
+    create() {
+      return bullet;
+    },
   };
 
-  let expectedDrawObjectGameObject = { };
+  const expectedDrawObjectGameObject = { };
 
   //Create drawObjectManager
-  let drawObjectManager = {
+  const drawObjectManager = {
     removeCounter: 0,
     addDrawObjectCounter: 0,
     add(drawObject) {
@@ -53,12 +58,12 @@
   };
 
   //Create ship
-  let ship = {
+  const ship = {
     getPosition() { },
     getDirection() { }
   };
 
-  let gameObjectDrawObjectFactory = {
+  const gameObjectDrawObjectFactory = {
     create(drawObject, gameObject) {
       util.assert(drawObject == SHAPE_MAP.get("bullet"));
       util.assert(gameObject == bullet);
@@ -67,7 +72,7 @@
   };
 
   //Create machinegun
-  let machineGun = MachineGunFactory.create(bulletFactory, drawObjectManager, gameObjectDrawObjectFactory)
+  const machineGun = MachineGunFactory.create(bulletFactory, drawObjectManager, gameObjectDrawObjectFactory)
       .createMachineGun(ship);
 
   //Fire for 0.05 second and check that the first bullet is created
@@ -93,9 +98,9 @@
 }
 
 { //Test clear function
-  let util = Util.create();
+  const util = Util.create();
 
-  let machineGun = MachineGun.create({}, {}, {}, {});
+  const machineGun = MachineGun.create({}, {}, {}, {});
 
   //Fire for 0.01 seconds
   machineGun.fire(0.01);
@@ -107,26 +112,32 @@
 }
 
 { //Test onFireStart and onFireStop events
-  let util = Util.create();
-  let bulletFactory = {
-    fromDataCounter: 0,
-    fromData(position, direction) {
-      this.fromDataCounter++;
+  const util = Util.create();
+
+  const bulletFactory = {
+
+    createCounter: 0,
+    create() {
+      this.createCounter++;
       return {
         updatePosition(elapsedTimeSecond) {}
       };
-    }
+    },
+
+    setWeapon(weapon) { }
+
   };
-  let ship = {
+
+  const ship = {
     getPosition() { },
     getDirection() { }
   };
-  let drawObjectManager = {
+  const drawObjectManager = {
     add() { },
     remove() { }
   };
 
-  let gameObjectDrawObjectFactory = {
+  const gameObjectDrawObjectFactory = {
     create(drawObject, bullet) {
       return {
         getGameObject() {
@@ -136,23 +147,23 @@
     }
   };
 
-  let machineGun = MachineGunFactory.create(bulletFactory, drawObjectManager, gameObjectDrawObjectFactory)
+  const machineGun = MachineGunFactory.create(bulletFactory, drawObjectManager, gameObjectDrawObjectFactory)
       .createMachineGun(ship);
 
   //Update more than 1 second and check than no bullet has been fired.
   machineGun.update(1.1 /* second */);
-  util.assert(bulletFactory.fromDataCounter == 0);
+  util.assert(bulletFactory.createCounter == 0);
 
   //Raise fire start event.
   machineGun.onFireStart();
 
   //Update more than 1 second and check that a bullet has been fired.
   machineGun.update(1.1 /* second */);
-  util.assert(bulletFactory.fromDataCounter == 1);
+  util.assert(bulletFactory.createCounter == 1);
 
   //Raise fire stop event.
   machineGun.onFireStop();
-  util.assert(bulletFactory.fromDataCounter == 1);
+  util.assert(bulletFactory.createCounter == 1);
 
   //Update more than 1 second and check than no bullet has been fired.
   machineGun.update(1.1 /* second */);
@@ -162,5 +173,33 @@
 
   //Update more than 1 second and check that a bullet has been fired.
   machineGun.update(1.1 /* second */);
-  util.assert(bulletFactory.fromDataCounter == 2);
+  util.assert(bulletFactory.createCounter == 2);
+}
+
+{ // Test 'MachineGunFactory.createMachineGun'
+  const util = Util.create();
+
+  const bulletFactory = {
+    weapon: null,
+    setWeapon(weapon) {
+      this.weapon = weapon;
+    }
+  };
+
+  const drawObjectManager = {
+  };
+
+  const gameObjectDrawObjectFactory = {
+  };
+
+  const ship = {
+  };
+
+  const machineGunFactory = MachineGunFactory.create(bulletFactory, drawObjectManager, gameObjectDrawObjectFactory)
+
+  util.assert(bulletFactory == machineGunFactory.bulletFactory);
+  util.assert(drawObjectManager == machineGunFactory.drawObjectManager);
+  util.assert(gameObjectDrawObjectFactory == machineGunFactory.gameObjectDrawObjectFactory);
+  const machinegun = machineGunFactory.createMachineGun(ship);
+  util.assert(machinegun == bulletFactory.weapon);
 }
