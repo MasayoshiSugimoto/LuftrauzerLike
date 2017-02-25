@@ -54,3 +54,18 @@
   util.assert(canvas.getHeight() == 2.0);
   util.assert(underlyingCanvas.parentElement.style.margin == 0);
 }
+
+{ //Test 'getGameSpaceCenter'
+  const util = Util.create();
+
+  const canvas = {
+    width: ScreenConversion.meter2Pixel(1.0),
+    height: ScreenConversion.meter2Pixel(2.0),
+  };
+
+  const center = Canvas.create(canvas, { })
+      .getGameSpaceCenter();
+
+  util.assertEqualFloat(center.getX(), 0.5);
+  util.assertEqualFloat(center.getY(), 1.0);
+}

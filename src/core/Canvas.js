@@ -31,6 +31,10 @@ const Canvas = {
 				);
 			},
 
+      getGameSpaceCenter() {
+        return this.getGameSpaceSize().scalarMultiply(0.5);
+      },
+
 			getContext() {
 				return canvas.getContext("2d");
 			},
