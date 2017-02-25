@@ -34,10 +34,6 @@ const Camera = {
 				return this;
 			},
 
-			toCameraCoordinates(drawObject) {
-				return drawObject.getPosition().substract(this.position);
-			}
-
 		};
 	}
 
