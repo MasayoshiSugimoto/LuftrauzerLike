@@ -3,7 +3,8 @@
 const StartMenu = {
   create(images, windowObject, onEnterPressedCallback) {
 
-    const canvas = Canvas.create(document.getElementById("canvas"))
+    const canvas = Canvas.create(document.getElementById("canvas"), window)
+      .fullScreen()
       .clear()
       .setBackgroundColor("#66ccff"); //Blue sky background
 

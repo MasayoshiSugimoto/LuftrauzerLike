@@ -2,9 +2,10 @@
 
 const Canvas = {
 
-	create(canvas) {
+	create(canvas, windowObject) {
 		return {
 			canvas						: canvas,
+      windowObject      : windowObject,
 
 			getWidth() {
 				return this.canvas.width;
@@ -52,6 +53,13 @@ const Canvas = {
         drawObject.setPosition(this.getCenter());
         return this;
       },
+
+      fullScreen() {
+        this.canvas.width = windowObject.innerWidth;
+        this.canvas.height = windowObject.innerHeight;
+        this.canvas.parentElement.style.margin = 0;
+        return this;
+      }
 
 		}
 	}

@@ -63,6 +63,7 @@ const LuftrauzerLike = {
         this.initializer.getGameMap().keepAllGameObjectsInMap();
 
 				this.initializer.getCanvas()
+            .fullScreen()
             .clear()
             .setBackgroundColor("#66ccff");
 

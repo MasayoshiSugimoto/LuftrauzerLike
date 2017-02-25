@@ -32,3 +32,25 @@
 
   util.assert(drawObject.position.equals(Vector2D.create(5, 10)));
 }
+
+{ //Test 'fullScreen'
+  const util = Util.create();
+
+  const underlyingCanvas = {
+    parentElement: {
+      style: {
+        margin: -1,
+      }
+    }
+  };
+  const windowObject = {
+    innerWidth: 1.0,
+    innerHeight: 2.0,
+  };
+
+  const canvas = Canvas.create(underlyingCanvas, windowObject).fullScreen();
+
+  util.assert(canvas.getWidth() == 1.0);
+  util.assert(canvas.getHeight() == 2.0);
+  util.assert(canvas.canvas.parentElement.style.margin == 0);
+}

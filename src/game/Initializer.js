@@ -30,7 +30,7 @@ const Initializer = (images) => {
 
     getCanvas() {
       if (null == this.canvas) {
-        this.canvas = Canvas.create(document.getElementById("canvas"));
+        this.canvas = Canvas.create(document.getElementById("canvas"), window);
       }
       return this.canvas;
     },
