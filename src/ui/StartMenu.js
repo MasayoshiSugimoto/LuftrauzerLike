@@ -27,19 +27,39 @@ const StartMenu = {
     //Clouds
     CloudGenerator.create(drawObjectManager, images, Cloud, ImageDrawObject);
 
-    drawObjectManager.draw(Camera.create(canvas, target));
+    const camera = Camera.create(canvas, target);
+    drawObjectManager.draw(camera);
+
+    const startMenu = Object.assign({
+        titleImageDrawObject: titleImageDrawObject,
+        drawObjectManager: drawObjectManager,
+        canvas: canvas,
+        camera: camera,
+      }, this.proto);
+
+    const scheduler = Scheduler.create(Time.create());
 
     //Setup keyboard handlers.
     windowObject.onkeydown = (event) => {
       if (event.which == KEYBOARD_KEY_ENTER) {
+        scheduler.cancel();
         onEnterPressedCallback();
       }
     }
-    return Object.assign({ }, this.proto);
+
+    scheduler.callByInterval(
+        (elapsedTimeSecond) => { startMenu.update(elapsedTimeSecond); },
+        FRAME_TIME_MILLISECOND);
+
+    return startMenu;
   },
   proto: {
     update(elapsedTimeSecond) {
-      //Play effect on the title
+      this.canvas.fullScreen()
+        .clear()
+        .setBackgroundColor("#66ccff"); //Blue sky background
+      this.canvas.center(this.titleImageDrawObject);
+      this.drawObjectManager.draw(this.camera);
     }
   }
 };

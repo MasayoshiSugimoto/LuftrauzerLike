@@ -41,16 +41,22 @@ const Scheduler = {
           gameLoopFunction(elapsedTimeMillisecond / 1000.0);
 
           let scheduler = this;
-          window.setTimeout(
+          this.callbackHandle = window.setTimeout(
             () => { scheduler.callByInterval(gameLoopFunction, intervalMilliseconds); },
             //Remaining time before frame update in millisecond
             intervalMilliseconds
                 - (time.getCurrentTimeMillisecond() - frameStartTimeMillisecond) 
                 - SCHEDULER_MARGIN_MILLISECOND
           );
-        }
+        },
+
+        cancel() {
+          clearTimeout(this.callbackHandle);
+        },
+
       }
     );
-  }
+  },
+
 };
 
