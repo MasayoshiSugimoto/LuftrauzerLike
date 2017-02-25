@@ -4,15 +4,12 @@ const Canvas = {
 
 	create(canvas, windowObject) {
 		return {
-			canvas						: canvas,
-      windowObject      : windowObject,
-
 			getWidth() {
-				return this.canvas.width;
+				return canvas.width;
 			},
 
 			getHeight() {
-				return this.canvas.height;
+				return canvas.height;
 			},
 
       getCenter() {
@@ -20,22 +17,22 @@ const Canvas = {
       },
 
 			getGameSpaceWidth() {
-				return ScreenConversion.pixel2Meter(this.canvas.width);
+				return ScreenConversion.pixel2Meter(canvas.width);
 			},
 
 			getGameSpaceHeight() {
-				return ScreenConversion.pixel2Meter(this.canvas.height);
+				return ScreenConversion.pixel2Meter(canvas.height);
 			},
 
 			getGameSpaceSize() {
 				return Vector2D.create(
-					ScreenConversion.pixel2Meter(this.canvas.width),
-					ScreenConversion.pixel2Meter(this.canvas.height)
+					ScreenConversion.pixel2Meter(canvas.width),
+					ScreenConversion.pixel2Meter(canvas.height)
 				);
 			},
 
 			getContext() {
-				return this.canvas.getContext("2d");
+				return canvas.getContext("2d");
 			},
 
       clear() {
@@ -55,9 +52,9 @@ const Canvas = {
       },
 
       fullScreen() {
-        this.canvas.width = windowObject.innerWidth;
-        this.canvas.height = windowObject.innerHeight;
-        this.canvas.parentElement.style.margin = 0;
+        canvas.width = windowObject.innerWidth;
+        canvas.height = windowObject.innerHeight;
+        canvas.parentElement.style.margin = 0;
         return this;
       }
 

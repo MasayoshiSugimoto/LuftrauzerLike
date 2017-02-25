@@ -52,5 +52,5 @@
 
   util.assert(canvas.getWidth() == 1.0);
   util.assert(canvas.getHeight() == 2.0);
-  util.assert(canvas.canvas.parentElement.style.margin == 0);
+  util.assert(underlyingCanvas.parentElement.style.margin == 0);
 }
