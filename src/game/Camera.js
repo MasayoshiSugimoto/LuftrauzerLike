@@ -5,36 +5,36 @@ Center the subject inside the canvas.
 ********************************************************************************/
 const Camera = {
 
-	create(canvas, subject) {
-		return {
+  create(canvas, subject) {
+    return {
 
-			position	: Vector2D.zero(),
-			canvas		: canvas,
-			subject		: subject,
+      position  : Vector2D.zero(),
+      canvas    : canvas,
+      subject   : subject,
 
-			getPosition() {
-				return this.position;
-			},
+      getPosition() {
+        return this.position;
+      },
 
-			setPosition(position) {
-				this.position = position;
-				return this;
-			},
+      setPosition(position) {
+        this.position = position;
+        return this;
+      },
 
-			getCanvasTranslation() {
-				return ScreenConversion.vectorMeter2Pixel(this.getPosition()).minus();
-			},
+      getCanvasTranslation() {
+        return ScreenConversion.vectorMeter2Pixel(this.getPosition()).minus();
+      },
 
-			getCanvas() {
-				return this.canvas;
-			},
+      getCanvas() {
+        return this.canvas;
+      },
 
-			update() {
+      update() {
         this.position = this.subject.getPosition().substract(this.canvas.getGameSpaceCenter());
-				return this;
-			},
+        return this;
+      },
 
-		};
-	}
+    };
+  }
 
 };
