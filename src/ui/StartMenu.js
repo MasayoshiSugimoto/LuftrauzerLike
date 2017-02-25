@@ -23,7 +23,7 @@ const StartMenu = {
 
     //Draw title
     const drawObjectManager = DrawObjectManager.create().add(titleImageDrawObject);
-    
+
     //Clouds
     CloudGenerator.create(drawObjectManager, images, Cloud, ImageDrawObject);
 

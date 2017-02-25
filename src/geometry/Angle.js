@@ -5,72 +5,72 @@
  */
 const Angle = {
 
-	create(angleInRadian) {
+  create(angleInRadian) {
 
-		let angleObject = Object.assign(
-			{
-				angleInRadian: angleInRadian
-			},
-			{
+    let angleObject = Object.assign(
+      {
+        angleInRadian: angleInRadian
+      },
+      {
 
-				//Convert the angle set to fit within -PI and PI.
-				set(angleInRadian) {
+        //Convert the angle set to fit within -PI and PI.
+        set(angleInRadian) {
 
-					let divisor = 0;
-					//Round to zero
-					if (angleInRadian > 0.0) {
-						divisor = Math.floor(angleInRadian / PIx2);
-					} else {
-						divisor = Math.ceil(angleInRadian / PIx2);
-					}
+          let divisor = 0;
+          //Round to zero
+          if (angleInRadian > 0.0) {
+            divisor = Math.floor(angleInRadian / PIx2);
+          } else {
+            divisor = Math.ceil(angleInRadian / PIx2);
+          }
 
-					//Remove modulo
-					angleInRadian = angleInRadian - divisor * PIx2;
+          //Remove modulo
+          angleInRadian = angleInRadian - divisor * PIx2;
 
-					//Change the side if bigger than PI
-					if (angleInRadian < -Math.PI) {
-						angleInRadian = angleInRadian + PIx2;
-					} else if (angleInRadian > Math.PI) {
-						angleInRadian = angleInRadian - PIx2;
-					}
+          //Change the side if bigger than PI
+          if (angleInRadian < -Math.PI) {
+            angleInRadian = angleInRadian + PIx2;
+          } else if (angleInRadian > Math.PI) {
+            angleInRadian = angleInRadian - PIx2;
+          }
 
-					//Set the value
-					this.angleInRadian = angleInRadian;
+          //Set the value
+          this.angleInRadian = angleInRadian;
 
-					return this;
-				},
+          return this;
+        },
 
-				get() {
-					return this.angleInRadian;
-				},
+        get() {
+          return this.angleInRadian;
+        },
 
-				minus() {
-					this.angleInRadian = -this.angleInRadian;
-					return this;
-				},
+        minus() {
+          this.angleInRadian = -this.angleInRadian;
+          return this;
+        },
 
-				add(angle) {
-					return Angle.create(this.get() + angle.get());
-				},
+        add(angle) {
+          return Angle.create(this.get() + angle.get());
+        },
 
-				substract(angle) {
-					return Angle.create(this.get() - angle.get());
-				},
+        substract(angle) {
+          return Angle.create(this.get() - angle.get());
+        },
 
-				equals(angle) {
-					let deltaAngle = Angle.create(this.get() - angle.get()).get();
-					if (-EPSILON < deltaAngle && deltaAngle < EPSILON) {
-						return true;
-					}
-					return false;
-				}
+        equals(angle) {
+          let deltaAngle = Angle.create(this.get() - angle.get()).get();
+          if (-EPSILON < deltaAngle && deltaAngle < EPSILON) {
+            return true;
+          }
+          return false;
+        }
 
-			}
-		);
+      }
+    );
 
-		return angleObject.set(angleInRadian);
+    return angleObject.set(angleInRadian);
 
-	},
+  },
 
 };
 

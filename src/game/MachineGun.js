@@ -4,19 +4,19 @@ const MACHINE_GUN_FIRE_RATE_INTERVAL_SECOND = 0.05; //Time between bullets in se
 
 const MachineGun = {
 
-	create(ship, machineGunFactoryIn) {
+  create(ship, machineGunFactoryIn) {
 
-		return Object.assign({
-        fireTimer      		: 0.0,
-        bullets        		: [],
-        ship           		: ship,
+    return Object.assign({
+        fireTimer          : 0.0,
+        bullets            : [],
+        ship               : ship,
         machineGunFactory : machineGunFactoryIn,
-        updateFunction		: this.proto.clear,
+        updateFunction    : this.proto.clear,
       },
       this.proto
     );
 
-	},
+  },
 
   proto: {
 
@@ -30,7 +30,7 @@ const MachineGun = {
 
     fire(elapsedTimeSecond) {
       this.fireTimer += elapsedTimeSecond;
-      
+
       if (this.fireTimer < MACHINE_GUN_FIRE_RATE_INTERVAL_SECOND) {
         return;
       }

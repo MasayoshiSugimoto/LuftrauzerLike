@@ -6,21 +6,21 @@ const SIMPLE_ENEMY_FIRE_RATE = 10; //Bullets per second
 
 const SimpleEnemy = {
 
-	create(target, machineGun) {
+  create(target, machineGun) {
 
-		let enemy = {
+    let enemy = {
       position :    Vector2D.zero(),
       direction :   0,                //Radian
       target :      target,
       machineGun :  machineGun,
       hp :          1,
-		};
+    };
 
-		return Object.assign(enemy,
+    return Object.assign(enemy,
         this.proto,
         GameSpacePositionableComposite(enemy),
         Disposable(enemy));
-	},
+  },
 
   proto: {
 

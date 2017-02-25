@@ -119,7 +119,7 @@
   let drawObject = {
     draw(canvasContext) {
       util.assert(canvasContext == expectedCanvasContext);
-    }    
+    }
   };
 
   let gameObject = {

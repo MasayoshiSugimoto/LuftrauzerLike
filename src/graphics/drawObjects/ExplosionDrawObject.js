@@ -46,11 +46,11 @@ const ExplosionDrawObject = {
       canvasContext.globalAlpha = this.opacity;
       let size = this.getSize();
       canvasContext.drawImage(
-        this.image, 
-        -size.getX() / 2,		//x coordinate
-        -size.getY() / 2,		//y coordinate
-        size.getX(),				//width
-        size.getY());				//height
+        this.image,
+        -size.getX() / 2,    //x coordinate
+        -size.getY() / 2,    //y coordinate
+        size.getX(),        //width
+        size.getY());        //height
       canvasContext.globalAlpha = previousOpacity;
       return this;
     },

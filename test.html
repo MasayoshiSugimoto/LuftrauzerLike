@@ -1,92 +1,92 @@
 <!DOCTYPE html>
 <html lang="en">
 
-	<head>
-		<meta charset="utf-8">
-		<title>Test Runner</title>
+  <head>
+    <meta charset="utf-8">
+    <title>Test Runner</title>
 
-		<!-- Data -->
-		<script src="data/ShapeData.js"></script>
+    <!-- Data -->
+    <script src="data/ShapeData.js"></script>
 
-		<!-- Test Data -->
-		<script src="data/tests/TestData.js"></script>
+    <!-- Test Data -->
+    <script src="data/tests/TestData.js"></script>
 
-		<!-- Imports -->
-		<script src="src/geometry/Angle.js"></script>
-		<script src="src/geometry/Vector2D.js"></script>
-		<script src="src/geometry/PositionableComposite.js"></script>
-		<script src="src/geometry/GameSpacePositionableComposite.js"></script>
-		<script src="src/geometry/RectangleComposite.js"></script>
-		<script src="src/game/Ship.js"></script>
-		<script src="src/graphics/ScreenConversion.js"></script>
-		<script src="src/game/Camera.js"></script>
-		<script src="src/core/MathConsts.js"></script>
-		<script src="src/core/Util.js"></script>
-		<script src="src/core/Time.js"></script>
-		<script src="src/core/Scheduler.js"></script>
-		<script src="src/core/ImageFactory.js"></script>
-		<script src="src/core/ImageLoader.js"></script>
-		<script src="src/core/Canvas.js"></script>
-		<script src="src/core/MathUtil.js"></script>
-		<script src="src/game/Disposable.js"></script>
-		<script src="src/game/GameMap.js"></script>
-		<script src="src/game/LuftrauzerLike.js"></script>
-		<script src="src/geometry/Rectangle.js"></script>
-		<script src="src/graphics/drawObjects/EmptyDrawObject.js"></script>
-		<script src="src/graphics/drawObjects/DrawObjectTree.js"></script>
-		<script src="src/graphics/drawObjects/RectangleDrawObject.js"></script>
-		<script src="src/graphics/drawObjects/DrawObjectManager.js"></script>
-		<script src="src/graphics/drawObjects/ImageDrawObject.js"></script>
-		<script src="src/graphics/drawObjects/GameObjectDrawObject.js"></script>
-		<script src="src/graphics/drawObjects/ExplosionDrawObject.js"></script>
-		<script src="src/geometry/ShapeLoader.js"></script>
-		<script src="src/game/Bullet.js"></script>
-		<script src="src/game/MachineGun.js"></script>
-		<script src="src/game/SimpleEnemy.js"></script>
-		<script src="src/game/Cloud.js"></script>
-		<script src="src/game/CloudGenerator.js"></script>
-		<script src="src/game/Collision.js"></script>
-		<script src="src/game/EnemyPopper.js"></script>
-		<script src="src/game/GameObjectManager.js"></script>
-		<script src="src/composites/SimpleEnemyCompositeFactory.js"></script>
+    <!-- Imports -->
+    <script src="src/geometry/Angle.js"></script>
+    <script src="src/geometry/Vector2D.js"></script>
+    <script src="src/geometry/PositionableComposite.js"></script>
+    <script src="src/geometry/GameSpacePositionableComposite.js"></script>
+    <script src="src/geometry/RectangleComposite.js"></script>
+    <script src="src/game/Ship.js"></script>
+    <script src="src/graphics/ScreenConversion.js"></script>
+    <script src="src/game/Camera.js"></script>
+    <script src="src/core/MathConsts.js"></script>
+    <script src="src/core/Util.js"></script>
+    <script src="src/core/Time.js"></script>
+    <script src="src/core/Scheduler.js"></script>
+    <script src="src/core/ImageFactory.js"></script>
+    <script src="src/core/ImageLoader.js"></script>
+    <script src="src/core/Canvas.js"></script>
+    <script src="src/core/MathUtil.js"></script>
+    <script src="src/game/Disposable.js"></script>
+    <script src="src/game/GameMap.js"></script>
+    <script src="src/game/LuftrauzerLike.js"></script>
+    <script src="src/geometry/Rectangle.js"></script>
+    <script src="src/graphics/drawObjects/EmptyDrawObject.js"></script>
+    <script src="src/graphics/drawObjects/DrawObjectTree.js"></script>
+    <script src="src/graphics/drawObjects/RectangleDrawObject.js"></script>
+    <script src="src/graphics/drawObjects/DrawObjectManager.js"></script>
+    <script src="src/graphics/drawObjects/ImageDrawObject.js"></script>
+    <script src="src/graphics/drawObjects/GameObjectDrawObject.js"></script>
+    <script src="src/graphics/drawObjects/ExplosionDrawObject.js"></script>
+    <script src="src/geometry/ShapeLoader.js"></script>
+    <script src="src/game/Bullet.js"></script>
+    <script src="src/game/MachineGun.js"></script>
+    <script src="src/game/SimpleEnemy.js"></script>
+    <script src="src/game/Cloud.js"></script>
+    <script src="src/game/CloudGenerator.js"></script>
+    <script src="src/game/Collision.js"></script>
+    <script src="src/game/EnemyPopper.js"></script>
+    <script src="src/game/GameObjectManager.js"></script>
+    <script src="src/composites/SimpleEnemyCompositeFactory.js"></script>
 
-		<!-- Test files -->
-		<script src="src/geometry/tests/Angle.test.js"></script>
-		<script src="src/geometry/tests/ShapeLoader.test.js"></script>
-		<script src="src/game/tests/Ship.test.js"></script>
-		<script src="src/game/tests/Collision.test.js"></script>
-		<script src="src/geometry/tests/Rectangle.test.js"></script>
-		<script src="src/geometry/tests/Vector2D.test.js"></script>
-		<script src="src/graphics/drawObjects/tests/DrawObjectTree.test.js"></script>
-		<script src="src/graphics/drawObjects/tests/RectangleDrawObject.test.js"></script>
-		<script src="src/graphics/drawObjects/tests/DrawObjectManager.test.js"></script>
-		<script src="src/graphics/drawObjects/tests/ImageDrawObject.test.js"></script>
-		<script src="src/graphics/drawObjects/tests/GameObjectDrawObject.test.js"></script>
-		<script src="src/graphics/drawObjects/tests/ExplosionDrawObject.test.js"></script>
-		<script src="src/game/tests/Bullet.test.js"></script>
-		<script src="src/game/tests/MachineGun.test.js"></script>
-		<script src="src/game/tests/SimpleEnemy.test.js"></script>
-		<script src="src/game/tests/Cloud.test.js"></script>
-		<script src="src/game/tests/CloudGenerator.test.js"></script>
-		<script src="src/game/tests/Camera.test.js"></script>
-		<script src="src/game/tests/GameMap.test.js"></script>
-		<script src="src/game/tests/EnemyPopper.test.js"></script>
-		<script src="src/game/tests/GameObjectManager.test.js"></script>
-		<script src="src/game/tests/Disposable.test.js"></script>
-		<script src="src/core/tests/Scheduler.test.js"></script>
-		<script src="src/core/tests/ImageLoader.test.js"></script>
-		<script src="src/core/tests/MathUtil.test.js"></script>
-		<script src="src/core/tests/Canvas.test.js"></script>
-		<script src="src/composites/tests/SimpleEnemyCompositeFactory.test.js"></script>
+    <!-- Test files -->
+    <script src="src/geometry/tests/Angle.test.js"></script>
+    <script src="src/geometry/tests/ShapeLoader.test.js"></script>
+    <script src="src/game/tests/Ship.test.js"></script>
+    <script src="src/game/tests/Collision.test.js"></script>
+    <script src="src/geometry/tests/Rectangle.test.js"></script>
+    <script src="src/geometry/tests/Vector2D.test.js"></script>
+    <script src="src/graphics/drawObjects/tests/DrawObjectTree.test.js"></script>
+    <script src="src/graphics/drawObjects/tests/RectangleDrawObject.test.js"></script>
+    <script src="src/graphics/drawObjects/tests/DrawObjectManager.test.js"></script>
+    <script src="src/graphics/drawObjects/tests/ImageDrawObject.test.js"></script>
+    <script src="src/graphics/drawObjects/tests/GameObjectDrawObject.test.js"></script>
+    <script src="src/graphics/drawObjects/tests/ExplosionDrawObject.test.js"></script>
+    <script src="src/game/tests/Bullet.test.js"></script>
+    <script src="src/game/tests/MachineGun.test.js"></script>
+    <script src="src/game/tests/SimpleEnemy.test.js"></script>
+    <script src="src/game/tests/Cloud.test.js"></script>
+    <script src="src/game/tests/CloudGenerator.test.js"></script>
+    <script src="src/game/tests/Camera.test.js"></script>
+    <script src="src/game/tests/GameMap.test.js"></script>
+    <script src="src/game/tests/EnemyPopper.test.js"></script>
+    <script src="src/game/tests/GameObjectManager.test.js"></script>
+    <script src="src/game/tests/Disposable.test.js"></script>
+    <script src="src/core/tests/Scheduler.test.js"></script>
+    <script src="src/core/tests/ImageLoader.test.js"></script>
+    <script src="src/core/tests/MathUtil.test.js"></script>
+    <script src="src/core/tests/Canvas.test.js"></script>
+    <script src="src/composites/tests/SimpleEnemyCompositeFactory.test.js"></script>
 
-		<script>
-			window.onload = testAllShapes;
-		</script>
-	</head>
+    <script>
+      window.onload = testAllShapes;
+    </script>
+  </head>
 
-	<body>
-		<canvas id="canvas" width="800" height="600" style="border-style: solid">
-		</canvas>
-	</body>
+  <body>
+    <canvas id="canvas" width="800" height="600" style="border-style: solid">
+    </canvas>
+  </body>
 
 </html>

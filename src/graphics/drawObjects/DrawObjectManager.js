@@ -1,34 +1,34 @@
 "use strict";
 
 const DrawObjectManager = {
-	
-	create() {
 
-		return Object.assign(
-			{
-				drawObjects: []
-			},
-			{
+  create() {
 
-				add(drawObject) {
-					this.drawObjects.push(drawObject);
-					return this;
-				},
+    return Object.assign(
+      {
+        drawObjects: []
+      },
+      {
 
-				length() {
-					return this.drawObjects.length;
-				},
+        add(drawObject) {
+          this.drawObjects.push(drawObject);
+          return this;
+        },
 
-				get(index) {
-					return this.drawObjects[index];
-				},
+        length() {
+          return this.drawObjects.length;
+        },
 
-				remove(drawObject) {
-					this.drawObjects = this.drawObjects.filter( function(element) {
-						return element != drawObject;
-					} );
-					return this;
-				},
+        get(index) {
+          return this.drawObjects[index];
+        },
+
+        remove(drawObject) {
+          this.drawObjects = this.drawObjects.filter( function(element) {
+            return element != drawObject;
+          } );
+          return this;
+        },
 
         clean() {
           this.drawObjects = this.drawObjects.filter( (drawObject) => {
@@ -37,42 +37,42 @@ const DrawObjectManager = {
           return this;
         },
 
-				draw(camera, elapsedTimeSecond) {
+        draw(camera, elapsedTimeSecond) {
           //Clean the list of draw objects
           this.clean();
 
-					let canvasContext = camera.getCanvas().getContext();
-					canvasContext.save();
+          let canvasContext = camera.getCanvas().getContext();
+          canvasContext.save();
 
-					//Move the context to the camera
-					canvasContext.translate(
-							camera.getCanvasTranslation().getX(),
-							camera.getCanvasTranslation().getY());
+          //Move the context to the camera
+          canvasContext.translate(
+              camera.getCanvasTranslation().getX(),
+              camera.getCanvasTranslation().getY());
 
-					this.drawAllObjects(canvasContext, elapsedTimeSecond);
+          this.drawAllObjects(canvasContext, elapsedTimeSecond);
 
-					canvasContext.restore();
+          canvasContext.restore();
 
-					return this;
-				},
+          return this;
+        },
 
-				drawAllObjects(canvasContext, elapsedTimeSecond) {
+        drawAllObjects(canvasContext, elapsedTimeSecond) {
 
-					this.drawObjects.forEach( function(drawObject) {
-						canvasContext.save();
+          this.drawObjects.forEach( function(drawObject) {
+            canvasContext.save();
             let position = drawObject.getPosition();
-						canvasContext.translate(position.getX(), position.getY());
-						canvasContext.rotate(drawObject.getDirection());
-						drawObject.draw(canvasContext, elapsedTimeSecond);
-						canvasContext.restore();
-					} );
+            canvasContext.translate(position.getX(), position.getY());
+            canvasContext.rotate(drawObject.getDirection());
+            drawObject.draw(canvasContext, elapsedTimeSecond);
+            canvasContext.restore();
+          } );
 
-					return this;
-				}
-				
-			}
+          return this;
+        }
 
-		);
-	}
+      }
+
+    );
+  }
 
 };

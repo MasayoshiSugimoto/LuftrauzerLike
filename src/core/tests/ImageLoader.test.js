@@ -9,7 +9,7 @@
     util.assert(images.get("url2").src == "url2");
     lastFunction = "onFinishCallback";
   };
-  
+
   let createImage = () => {
     return {
       src: "",

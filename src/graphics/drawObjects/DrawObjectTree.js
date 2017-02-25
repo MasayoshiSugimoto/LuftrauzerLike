@@ -3,68 +3,68 @@
 //Tree node of draw object tree.
 const DrawObjectTree = {
 
-	fromData(drawObject) {
-		return Object.assign(
-			{
-				drawObject: drawObject,
-				children:   []	
-			},
-			this.proto
-		);
-	},
+  fromData(drawObject) {
+    return Object.assign(
+      {
+        drawObject: drawObject,
+        children:   []
+      },
+      this.proto
+    );
+  },
 
-	proto: {
+  proto: {
 
-		getPosition() {
-			return this.drawObject.getPosition();
-		},
+    getPosition() {
+      return this.drawObject.getPosition();
+    },
 
-		setPosition(position) {
-			return this.drawObject.setPosition(position);
-		},
+    setPosition(position) {
+      return this.drawObject.setPosition(position);
+    },
 
-		getSize() {
-			return this.drawObject.getSize();
-		},
+    getSize() {
+      return this.drawObject.getSize();
+    },
 
-		getDirection() {
-			return this.drawObject.getDirection();
-		},
+    getDirection() {
+      return this.drawObject.getDirection();
+    },
 
-		setDirection(direction) {
-			return this.drawObject.setDirection(direction);
-		},
+    setDirection(direction) {
+      return this.drawObject.setDirection(direction);
+    },
 
-		getChildren() {
-			return this.children;
-		},
+    getChildren() {
+      return this.children;
+    },
 
-		getGeometryType() {
-			return this.drawObject.getGeometryType();
-		},
+    getGeometryType() {
+      return this.drawObject.getGeometryType();
+    },
 
-		setDrawObjects(children) {
-			this.children = children;
-		},
+    setDrawObjects(children) {
+      this.children = children;
+    },
 
-		addDrawObject(drawObject) {
-			this.children.push(drawObject);
-		},
+    addDrawObject(drawObject) {
+      this.children.push(drawObject);
+    },
 
-		draw(canvasContext) {
+    draw(canvasContext) {
 
-			//Draw the node object
-			canvasContext.save();	
-			this.drawObject.placeOn(canvasContext);
-			this.drawObject.draw(canvasContext);
-			//Draw the children inside the context of the parent:
-			//the children position are relative to the parent object.
-			this.children.forEach( function(item,index) {
-				item.draw(canvasContext);
-			} )
-			canvasContext.restore();
+      //Draw the node object
+      canvasContext.save();
+      this.drawObject.placeOn(canvasContext);
+      this.drawObject.draw(canvasContext);
+      //Draw the children inside the context of the parent:
+      //the children position are relative to the parent object.
+      this.children.forEach( function(item,index) {
+        item.draw(canvasContext);
+      } )
+      canvasContext.restore();
 
-		}
+    }
 
-	}
+  }
 };

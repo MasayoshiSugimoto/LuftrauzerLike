@@ -46,7 +46,7 @@
   let util = Util.create();
 
   let gameObjectFactory = {
-    
+
     create(collidable) {
       return {
         collidable: collidable,

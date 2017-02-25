@@ -2,7 +2,8 @@
 
 ################################################################################
 # This files clean the sources files
-# It replace the tabs by 2 spaces in all files
+# It replace the tabs by 2 spaces in all files and remove the trailing
+# spaces.
 ################################################################################
 
 cd ../..

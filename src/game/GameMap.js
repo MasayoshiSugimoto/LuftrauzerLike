@@ -1,7 +1,7 @@
 "use strict";
 
 const GameMap = {
-  
+
   create(gameObjectManager) {
     return Object.assign({gameObjectManager: gameObjectManager}, this.proto);
   },

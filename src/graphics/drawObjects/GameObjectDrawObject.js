@@ -16,13 +16,13 @@ const GameObjectDrawObject = {
       this.proto
     );
   },
-  
+
   proto: {
     getGameObject() {
       return this.activeGameObject;
     },
     getPosition() {
-		  return this.activeGameObject.getPosition().scalarMultiply(PIXEL_PER_METER);
+      return this.activeGameObject.getPosition().scalarMultiply(PIXEL_PER_METER);
     },
     setPosition(position) {
       this.activeGameObject.setPosition(position.scalarMultiply(1.0 / PIXEL_PER_METER));
