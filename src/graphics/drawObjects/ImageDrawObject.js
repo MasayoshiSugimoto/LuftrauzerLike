@@ -42,6 +42,10 @@ const ImageDrawObject = {
 					return Vector2D.create(this.image.width * this.scale, this.image.height * this.scale);
 				},
 
+        getCenter() {
+          return this.getSize().scalarMultiply(0.5);
+        },
+
 				setOpacity(opacity) {
 					this.opacity = opacity;
 					return this;

@@ -16,12 +16,13 @@ const LuftrauzerLike = {
 			//This function is only called once at startup
 			startGame() {
 				let that = this;
-				ImageLoader.load(ImageFactory, IMAGE_DATA, (images) => { that.onImagesLoaded(images); });
+				ImageLoader.load(ImageFactory, IMAGE_DATA, (images) => {
+            StartMenu.create(images, window, () => { that.startPlay(images); });
+          });
 			},
 
-			onImagesLoaded(images) {
-//        StartMenu.create().setup(images);
-//        return;
+			startPlay(images) {
+
 
         this.initializer = Initializer(images);
 
