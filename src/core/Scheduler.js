@@ -10,8 +10,6 @@ const Scheduler = {
       {
         time: time,
         lastTimeMillisecond: time.getCurrentTimeMillisecond(),
-        frameCounter: 0,
-        frameCounterTimerMillisecond: 0
       },
       {
         callByInterval(gameLoopFunction, intervalMilliseconds) {
@@ -22,21 +20,6 @@ const Scheduler = {
               (frameStartTimeMillisecond - this.lastTimeMillisecond),
               SCHEDULER_MAX_INTERVAL_MILLISECOND); //Interval in seconds
           this.lastTimeMillisecond = frameStartTimeMillisecond;
-
-          //Update frame counter
-          this.frameCounter++;
-          this.frameCounterTimerMillisecond = this.frameCounterTimerMillisecond + elapsedTimeMillisecond;
-
-          if (this.frameCounterTimerMillisecond >= 1000 /* 1 second */) {
-            //Update frame counter display
-            let debugDiv = document.getElementById("debug");
-            if (null != debugDiv) {
-              debugDiv.textContent = "Frame per second = " + this.frameCounter;
-              //Reset frame counter
-              this.frameCounterTimerMillisecond = this.frameCounterTimerMillisecond - 1000;
-            }
-            this.frameCounter = 0;
-          }
 
           gameLoopFunction(elapsedTimeMillisecond / 1000.0);
 
