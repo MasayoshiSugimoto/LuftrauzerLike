@@ -1,6 +1,5 @@
 "use strict";
 
-const FRAME_TIME_MILLISECOND      = 1000.0 / 60.0;
 const GRAVITY_CONSTANT            = 9.80665;
 const GRAVITY_VECTOR              = Vector2D.create(0,GRAVITY_CONSTANT);
 
@@ -9,20 +8,23 @@ const LuftrauzerLike = {
   create() {
 
     return {
+
       initializer       :  null,
+      sharedInitilizer  :  null,
 
       //First function to be called.
       //Setup the game before starting the game loop
       //This function is only called once at startup
       startGame() {
-        let that = this;
-        ImageLoader.load(ImageFactory, IMAGE_DATA, (images) => {
-            StartMenu.create(images, window, () => { that.startPlay(images); });
-          });
+        const that = this;
+        const onImagesLoaded = (images) => {
+          that.sharedInitializer = SharedInitializer(images);
+          StartMenu.create(images, window, () => { that.startPlay(images); }, that.sharedInitializer);
+        };
+        ImageLoader.load(ImageFactory, IMAGE_DATA, onImagesLoaded);
       },
 
       startPlay(images) {
-
 
         this.initializer = Initializer(images);
 
@@ -47,12 +49,9 @@ const LuftrauzerLike = {
         EnemyPopper.create(this.initializer.getSimpleEnemyCompositeFactory(), window);
 
         //Start the game after loading the image
-        let luftrauzerLike = this;
-        Scheduler.create(Time.create())
-          .callByInterval(
-            (elapsedTimeSecond) => { luftrauzerLike.gameLoop(elapsedTimeSecond); },
-            FRAME_TIME_MILLISECOND);
-
+        const luftrauzerLike = this;
+        this.sharedInitializer.getScheduler().setGameLoop(
+            (elapsedTimeSecond) => { luftrauzerLike.gameLoop(elapsedTimeSecond); });
       },
 
       gameLoop(elapsedTimeSecond) {

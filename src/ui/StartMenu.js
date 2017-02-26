@@ -1,12 +1,9 @@
 "use strict";
 
 const StartMenu = {
-  create(images, windowObject, onEnterPressedCallback) {
+  create(images, windowObject, onEnterPressedCallback, sharedInitializer) {
 
-    const canvas = Canvas.create(document.getElementById("canvas"), window)
-      .fullScreen()
-      .clear()
-      .setBackgroundColor("#66ccff"); //Blue sky background
+    const canvas = Canvas.create(document.getElementById("canvas"), window);
 
     //Setup title
     const titleImageDrawObject = ImageDrawObject.create(images.get('images/Title.png'))
@@ -28,13 +25,12 @@ const StartMenu = {
     CloudGenerator.create(drawObjectManager, images, Cloud, ImageDrawObject);
 
     const camera = Camera.create(canvas, target);
-    drawObjectManager.draw(camera);
 
     const startMenu = Object.assign({
-        titleImageDrawObject: titleImageDrawObject,
-        drawObjectManager: drawObjectManager,
-        canvas: canvas,
-        camera: camera,
+        titleImageDrawObject:  titleImageDrawObject,
+        drawObjectManager:     drawObjectManager,
+        canvas:                canvas,
+        camera:                camera,
       }, this.proto);
 
     const scheduler = Scheduler.create(Time.create());
@@ -47,12 +43,12 @@ const StartMenu = {
       }
     }
 
-    scheduler.callByInterval(
-        (elapsedTimeSecond) => { startMenu.update(elapsedTimeSecond); },
-        FRAME_TIME_MILLISECOND);
+    sharedInitializer.getScheduler()
+        .setGameLoop( (elapsedTimeSecond) => { startMenu.update(elapsedTimeSecond); } );
 
     return startMenu;
   },
+
   proto: {
     update(elapsedTimeSecond) {
       this.canvas.fullScreen()

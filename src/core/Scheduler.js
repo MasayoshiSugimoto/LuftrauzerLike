@@ -1,7 +1,8 @@
 "use strict";
 
-const SCHEDULER_MAX_INTERVAL_MILLISECOND = 1000 / 30; //Maximum duration for a frame.
-const SCHEDULER_MARGIN_MILLISECOND = 1;
+const SCHEDULER_FRAME_TIME_MILLISECOND    = 1000.0 / 60.0;
+const SCHEDULER_MAX_INTERVAL_MILLISECOND  = 1000 / 30; //Maximum duration for a frame.
+const SCHEDULER_MARGIN_MILLISECOND        = 1;
 
 const Scheduler = {
 
@@ -31,12 +32,19 @@ const Scheduler = {
                 - (time.getCurrentTimeMillisecond() - frameStartTimeMillisecond) 
                 - SCHEDULER_MARGIN_MILLISECOND
           );
+          return this;
         },
 
         cancel() {
-          clearTimeout(this.callbackHandle);
+          if (null != this.callbackHandle) {
+            clearTimeout(this.callbackHandle);
+          }
+          return this;
         },
 
+        setGameLoop(gameLoop) {
+          this.cancel().callByInterval(gameLoop, SCHEDULER_FRAME_TIME_MILLISECOND);
+        }
       }
     );
   },
