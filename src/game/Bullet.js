@@ -6,8 +6,8 @@ const Bullet = {
     let state = {
       position                    :  position,
       direction                   :  direction,    //Radian
-      velocity                    :  5.0,  //meter  per  second
-      inertiaVectorMeterPerSecond :  inertiaVectorMeterPerSecond,
+      velocity                    :  6.0,  //meter  per  second
+      inertiaVectorMeterPerSecond :  Vector2D.zero(),
     };
 
     return Object.assign(

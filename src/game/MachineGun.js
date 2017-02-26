@@ -1,17 +1,18 @@
 "use strict";
 
-const MACHINE_GUN_FIRE_RATE_INTERVAL_SECOND = 0.05; //Time between bullets in seconds
+const MACHINE_GUN_FIRE_RATE_INTERVAL_SECOND = 0.1; //Time between bullets in seconds
 
 const MachineGun = {
 
   create(ship, machineGunFactoryIn) {
 
     return Object.assign({
-        fireTimer          : 0.0,
-        bullets            : [],
-        ship               : ship,
-        machineGunFactory : machineGunFactoryIn,
-        updateFunction    : this.proto.clear,
+        fireTimer               : 0.0,
+        bullets                 : [],
+        ship                    : ship,
+        machineGunFactory       : machineGunFactoryIn,
+        updateFunction          : this.proto.clear,
+        image                   : machineGunFactoryIn.getImages().get('images/Explosion.png'),
       },
       this.proto
     );
@@ -40,7 +41,9 @@ const MachineGun = {
 
       //Add bullets
       let drawObject = this.machineGunFactory.gameObjectDrawObjectFactory
-          .create(SHAPE_MAP.get("bullet"), bullet);
+          .create(
+              this.machineGunFactory.getImageDrawObjectFactory().create(this.image).setScale(0.5),
+              bullet);
       this.bullets.push(drawObject);
       this.machineGunFactory.drawObjectManager.add(drawObject);
 
@@ -92,12 +95,14 @@ const MachineGun = {
 };
 
 const MachineGunFactory = {
-  create(bulletFactoryIn, drawObjectManagerIn, gameObjectDrawObjectFactoryIn) {
+  create(bulletFactoryIn, drawObjectManagerIn, gameObjectDrawObjectFactoryIn, images, imageDrawObjectFactory) {
     return Object.assign(
       {
         bulletFactory                :  bulletFactoryIn,
         drawObjectManager            :  drawObjectManagerIn,
         gameObjectDrawObjectFactory  :  gameObjectDrawObjectFactoryIn,
+        images                       :  images,
+        imageDrawObjectFactory       :  imageDrawObjectFactory,
       },
       this.proto
     );
@@ -108,6 +113,14 @@ const MachineGunFactory = {
       const machinegun = MachineGun.create(ship, this);
       this.bulletFactory.setWeapon(machinegun);
       return machinegun;
+    },
+
+    getImages() {
+      return this.images;
+    },
+
+    getImageDrawObjectFactory() {
+      return this.imageDrawObjectFactory;
     },
   }
 

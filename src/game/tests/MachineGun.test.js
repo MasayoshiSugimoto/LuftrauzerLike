@@ -1,5 +1,12 @@
 "use strict";
 
+function MachineGunTest() => {
+};
+
+MachineGunTest.explosionImage = { };
+MachineGunTest.images = new Map();
+MachineGunTest.images.set('images/Explosion.png', MachineGunTest.explosionImage);
+
 { //Test that no bullet is created before the fire timer
   const util = Util.create();
 
@@ -9,14 +16,20 @@
   };
 
   const machineGunFactory = {
+    image: { },
     bulletFactory: {
       isFromDataCalled: false,
       fromData(position, direction) {
         this.isFromDataCalled = true;
         util.assert(position == ship.position);
         util.assert(direction == ship.direction);
-      }
-    }
+      },
+    },
+    getImages() {
+      const images = new Map();
+      images.set('images/Explosion.png', this.image);
+      return images;
+    },
   };
 
   const machineGun = MachineGun.create(ship, machineGunFactory);
@@ -71,8 +84,16 @@
     }
   };
 
+  const imageDrawObjectFactory = {
+  };
+
   //Create machinegun
-  const machineGun = MachineGunFactory.create(bulletFactory, drawObjectManager, gameObjectDrawObjectFactory)
+  const machineGun = MachineGunFactory.create(
+          bulletFactory,
+          drawObjectManager,
+          gameObjectDrawObjectFactory,
+          MachineGunTest.images,
+          imageDrawObjectFactory)
       .createMachineGun(ship);
 
   //Fire for 0.05 second and check that the first bullet is created

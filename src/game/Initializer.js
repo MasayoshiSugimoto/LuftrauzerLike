@@ -58,7 +58,13 @@ const Initializer = (images) => {
 
     getMachineGun() {
       if (null == this.machineGun) {
-        this.machineGun = MachineGunFactory.create(BulletFactory(), this.getDrawObjectManager(), GameObjectDrawObject)
+        this.machineGun = MachineGunFactory.create(
+              BulletFactory(),
+              this.getDrawObjectManager(),
+              GameObjectDrawObject,
+              this.images,
+              ImageDrawObject
+            )
             .createMachineGun(this.getShip());
       }
       return this.machineGun;

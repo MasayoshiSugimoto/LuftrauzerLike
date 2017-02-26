@@ -40,7 +40,7 @@ const LuftrauzerLike = {
           .setDirection(-Math.PI / 2.0)
           .setVelocity(Vector2D.create(0.0, -5));
         this.initializer.getDrawObjectManager().add(this.initializer.getGameObjectDrawObjectFactory().create(
-          ImageDrawObject.create(images.get('images/Reisen.png')),
+          ImageDrawObject.create(images.get('images/Reisen.png')).setScale(0.5),
           this.initializer.getShip()));
 
         //Enemy

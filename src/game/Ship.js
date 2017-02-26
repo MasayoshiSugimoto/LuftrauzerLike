@@ -1,6 +1,6 @@
 "use strict";
 
-const SHIP_VELOCITY_MAX    = 4; //Velocity in meter/second
+const SHIP_VELOCITY_MAX    = 3; //Velocity in meter/second
 const SHIP_ROTATION_UNIT   = Math.PI * 2; //Rotation allowed per frame
 const SHIP_BOOST_UNIT      = 0.1; //Velocity in meter/second
 
