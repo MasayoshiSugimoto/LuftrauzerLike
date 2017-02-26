@@ -2,12 +2,11 @@
 
 const Bullet = {
 
-  create(position, direction, inertiaVectorMeterPerSecond) {
+  create(position, direction) {
     let state = {
       position                    :  position,
       direction                   :  direction,    //Radian
       velocity                    :  6.0,  //meter  per  second
-      inertiaVectorMeterPerSecond :  Vector2D.zero(),
     };
 
     return Object.assign(
@@ -31,8 +30,7 @@ const Bullet = {
       //Update the coordinates. Gravity does not apply to bullets.
       let velocityVector = Vector2D.create(1.0, 0.0).rotate(this.direction);
       this.position = this.position
-          .add(velocityVector.scalarMultiply(elapsedTimeSecond * this.velocity))
-          .add(this.inertiaVectorMeterPerSecond.scalarMultiply(elapsedTimeSecond));
+          .add(velocityVector.scalarMultiply(elapsedTimeSecond * this.velocity));
       return this;
     },
 
@@ -56,10 +54,7 @@ const BulletFactory = () => {
   return {
 
     create() {
-      return Bullet.create(
-          this.weapon.getPosition(),
-          this.weapon.getDirection(),
-          this.weapon.getInertiaVectorMeterPerSecond());
+      return Bullet.create(this.weapon.getPosition(), this.weapon.getDirection());
     },
 
     setWeapon(weapon) {

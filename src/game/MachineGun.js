@@ -78,10 +78,6 @@ const MachineGun = {
       } );
     },
 
-    getInertiaVectorMeterPerSecond() {
-      return this.ship.getVelocity();
-    },
-
     getPosition() {
       return this.ship.getPosition();
     },
