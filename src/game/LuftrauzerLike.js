@@ -23,8 +23,6 @@ const LuftrauzerLike = {
 
       startPlay(images) {
 
-//        this.sharedInitializer.getDebugMenu().setFramePerSecond(10);
-
         this.initializer = Initializer(images);
 
         GameKeyboardHandler.setup(this.initializer);
