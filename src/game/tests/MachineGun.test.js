@@ -1,6 +1,6 @@
 "use strict";
 
-function MachineGunTest() => {
+function MachineGunTest() {
 };
 
 MachineGunTest.explosionImage = { };
@@ -76,15 +76,25 @@ MachineGunTest.images.set('images/Explosion.png', MachineGunTest.explosionImage)
     getDirection() { }
   };
 
-  const gameObjectDrawObjectFactory = {
-    create(drawObject, gameObject) {
-      util.assert(drawObject == SHAPE_MAP.get("bullet"));
-      util.assert(gameObject == bullet);
-      return expectedDrawObjectGameObject;
+  const imageDrawObjectFactory = {
+    image: {
+      setScale(scale){
+        util.assert(scale == 0.5);
+        return this;
+      }
+    },
+    create(image) {
+      util.assert(MachineGunTest.images.get('images/Explosion.png') == image);
+      return this.image;
     }
   };
 
-  const imageDrawObjectFactory = {
+  const gameObjectDrawObjectFactory = {
+    create(drawObject, gameObject) {
+      util.assert(drawObject == imageDrawObjectFactory.image);
+      util.assert(gameObject == bullet);
+      return expectedDrawObjectGameObject;
+    }
   };
 
   //Create machinegun
@@ -96,18 +106,18 @@ MachineGunTest.images.set('images/Explosion.png', MachineGunTest.explosionImage)
           imageDrawObjectFactory)
       .createMachineGun(ship);
 
-  //Fire for 0.05 second and check that the first bullet is created
-  machineGun.fire(0.05);
-  util.assert(drawObjectManager.addDrawObjectCounter == 1);
-  util.assert(machineGun.getBulletsLength() == 1);
+  //Fire for 0.09 second and check that the first bullet is not created
+  machineGun.fire(0.09);
+  util.assert(drawObjectManager.addDrawObjectCounter == 0);
+  util.assert(machineGun.getBulletsLength() == 0);
 
   //Fire for 0.01 second and check that no bullet has been created.
-  machineGun.fire(0.01);
+  machineGun.fire(0.01 + EPSILON);
   util.assert(drawObjectManager.addDrawObjectCounter == 1);
   util.assert(machineGun.getBulletsLength() == 1);
 
-  //Fire for another 0.5 second and check that the second bullet has been created.
-  machineGun.fire(0.04 + EPSILON);
+  //Fire for another 0.1 second and check that the second bullet has been created.
+  machineGun.fire(0.1 + EPSILON);
   util.assert(machineGun.getBulletsLength() == 2);
   util.assert(drawObjectManager.addDrawObjectCounter == 2);
 
@@ -121,7 +131,16 @@ MachineGunTest.images.set('images/Explosion.png', MachineGunTest.explosionImage)
 { //Test clear function
   const util = Util.create();
 
-  const machineGun = MachineGun.create({}, {}, {}, {});
+  const machineGunFactory = {
+    getImages() {
+      return MachineGunTest.images;
+    },
+  };
+
+  const ship = {
+  };
+
+  const machineGun = MachineGun.create(ship, machineGunFactory);
 
   //Fire for 0.01 seconds
   machineGun.fire(0.01);
@@ -168,7 +187,25 @@ MachineGunTest.images.set('images/Explosion.png', MachineGunTest.explosionImage)
     }
   };
 
-  const machineGun = MachineGunFactory.create(bulletFactory, drawObjectManager, gameObjectDrawObjectFactory)
+  const imageDrawObjectFactory = {
+    imageDrawObject: {
+      setScale(scale) {
+        util.assert(scale == 0.5);
+        return this;
+      }
+    },
+    create(image) {
+      util.assert(image == MachineGunTest.images.get('images/Explosion.png'));
+      return this.imageDrawObject;
+    }
+  };
+
+  const machineGun = MachineGunFactory.create(
+          bulletFactory,
+          drawObjectManager,
+          gameObjectDrawObjectFactory,
+          MachineGunTest.images,
+          imageDrawObjectFactory)
       .createMachineGun(ship);
 
   //Update more than 1 second and check than no bullet has been fired.
@@ -216,7 +253,14 @@ MachineGunTest.images.set('images/Explosion.png', MachineGunTest.explosionImage)
   const ship = {
   };
 
-  const machineGunFactory = MachineGunFactory.create(bulletFactory, drawObjectManager, gameObjectDrawObjectFactory)
+  const imageDrawObjectFactory = { };
+
+  const machineGunFactory = MachineGunFactory.create(
+      bulletFactory,
+      drawObjectManager,
+      gameObjectDrawObjectFactory,
+      MachineGunTest.images,
+      imageDrawObjectFactory)
 
   util.assert(bulletFactory == machineGunFactory.bulletFactory);
   util.assert(drawObjectManager == machineGunFactory.drawObjectManager);
