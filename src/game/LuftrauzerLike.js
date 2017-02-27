@@ -54,6 +54,8 @@ const LuftrauzerLike = {
       gameLoop(elapsedTimeSecond) {
 
         this.sharedInitializer.getFrameCounter().increment();
+        this.sharedInitializer.getDebugMenu()
+            .setDrawObjectManagerSize(this.initializer.getDrawObjectManager().length());
 
         this.initializer.getMachineGun().update(elapsedTimeSecond);
         this.initializer.getGameObjectManager().update(elapsedTimeSecond);
