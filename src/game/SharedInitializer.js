@@ -10,5 +10,19 @@ const SharedInitializer = (images) => {
       return this.scheduler;
     },
 
+    getDebugMenu() {
+      if (null == this.debugMenu) {
+        this.debugMenu = DebugMenu.create(document);
+      }
+      return this.debugMenu;
+    },
+
+    getFrameCounter() {
+      if (null == this.frameCounter) {
+        this.frameCounter = FrameCounter.create(Time.create(), this.getDebugMenu());
+      }
+      return this.frameCounter;
+    },
+
   };
 };

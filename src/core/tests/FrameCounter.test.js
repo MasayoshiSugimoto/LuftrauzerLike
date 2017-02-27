@@ -10,29 +10,29 @@
     },
   };
 
-  const documentObject = {
-    div: { },
-    getElementById(id) {
-      util.assert(id == "debug");
-      return this.div;
+  const debugMenu = {
+    called: false,
+    setFramePerSecond(framePerSecond) {
+      util.assert(4 == framePerSecond);
+      this.called = true;
     }
   };
 
-  const frameCounter = FrameCounter.create(time, documentObject);
+  const frameCounter = FrameCounter.create(time, debugMenu);
 
   time.milliseconds = 250;
   frameCounter.increment();
-  util.assert(documentObject.div.textContent == null);
+  util.assert(!debugMenu.called);
   time.milliseconds = 500;
   frameCounter.increment();
-  util.assert(documentObject.div.textContent == null);
+  util.assert(!debugMenu.called);
   time.milliseconds = 750;
   frameCounter.increment();
-  util.assert(documentObject.div.textContent == null);
+  util.assert(!debugMenu.called);
   time.milliseconds = 1000;
   frameCounter.increment();
-  util.assert(documentObject.div.textContent == null);
+  util.assert(!debugMenu.called);
   time.milliseconds = 1250;
   frameCounter.increment();
-  util.assert(documentObject.div.textContent == "Frame per second = 4");
+  util.assert(debugMenu.called);
 }

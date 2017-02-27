@@ -1,13 +1,13 @@
 "use strict";
 
 const FrameCounter = {
-  create(time, documentObject) {
+  create(time, debugMenu) {
     return Object.assign({
       counter: 0,
       time: time,
       firstFrameTimeMillisecond: time.getCurrentTimeMillisecond(),
       lastFrameTimeMillisecond: time.getCurrentTimeMillisecond(),
-      debugDiv: documentObject.getElementById("debug"),
+      debugMenu: debugMenu,
     }, this.proto);
   },
   
@@ -21,10 +21,11 @@ const FrameCounter = {
                 
         //Update the display
         // -1 because the last frame finished after 1 second.
-        this.debugDiv.textContent = "Frame per second = " + (this.counter - 1);
+        this.debugMenu.setFramePerSecond(this.counter - 1);
         //Reset frame counter
         this.frameCounterTimerMillisecond = this.frameCounterTimerMillisecond - 1000;
 
+        //Reset
         this.firstFrameTimeMillisecond = this.lastFrameTimeMillisecond;
         this.counter = 0;    
       }

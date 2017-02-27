@@ -99,13 +99,6 @@ const Initializer = (images) => {
       return this.gameObjectDrawObjectFactory;
     },
 
-    getFrameCounter() {
-      if (null == this.frameCounter) {
-        this.frameCounter = FrameCounter.create(Time.create(), document);
-      }
-      return this.frameCounter;
-    },
-
   };
 
 };

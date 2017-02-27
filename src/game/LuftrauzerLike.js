@@ -9,9 +9,6 @@ const LuftrauzerLike = {
 
     return {
 
-      initializer       :  null,
-      sharedInitilizer  :  null,
-
       //First function to be called.
       //Setup the game before starting the game loop
       //This function is only called once at startup
@@ -25,6 +22,8 @@ const LuftrauzerLike = {
       },
 
       startPlay(images) {
+
+//        this.sharedInitializer.getDebugMenu().setFramePerSecond(10);
 
         this.initializer = Initializer(images);
 
@@ -56,7 +55,7 @@ const LuftrauzerLike = {
 
       gameLoop(elapsedTimeSecond) {
 
-        this.initializer.getFrameCounter().increment();
+        this.sharedInitializer.getFrameCounter().increment();
 
         this.initializer.getMachineGun().update(elapsedTimeSecond);
         this.initializer.getGameObjectManager().update(elapsedTimeSecond);
