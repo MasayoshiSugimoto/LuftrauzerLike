@@ -5,28 +5,29 @@ const DebugMenu = {
     return {
       debugMenuDomElement: documentObject.getElementById("debugMenu") || documentObject.createElement("div"),
 
-      getFramePerSecondDiv() {
-        return documentObject.getElementById("framePerSecond");
+      appendDiv(id) {
+        const div = documentObject.createElement("div");
+        div.id = id;
+        this.debugMenuDomElement.appendChild(div);
+        return div;
       },
-      
-      setFramePerSecond(framePerSecond) {
-        if (null == this.getFramePerSecondDiv()) {
-          const div = documentObject.createElement("div");
-          div.id = "framePerSecond";
-          this.debugMenuDomElement.appendChild(div);
-        }
-        this.getFramePerSecondDiv().textContent = "Frame per second: " + framePerSecond;
+
+      setField(id, text) {
+        const div = documentObject.getElementById(id) || this.appendDiv(id);
+        div.textContent = text;
         return this;
       },
 
+      setFramePerSecond(framePerSecond) {
+        return this.setField("framePerSecond", "Frame per second: " + framePerSecond);
+      },
+
       setDrawObjectManagerSize(size) {
-        if (null == documentObject.getElementById("drawObjectManagerSize")) {
-          const div = documentObject.createElement("div");
-          div.id = "drawObjectManagerSize";
-          this.debugMenuDomElement.appendChild(div);
-        }
-        documentObject.getElementById("drawObjectManagerSize").textContent = "DrawObjectManager size: " + size;
-        return this;
+        return this.setField("drawObjectManagerSize", "DrawObjectManager size: " + size);
+      },
+
+      setGameObjectManagerSize(size) {
+        return this.setField("gameObjectManagerSize", "GameObjectManager size: " + size);
       },
 
     };
