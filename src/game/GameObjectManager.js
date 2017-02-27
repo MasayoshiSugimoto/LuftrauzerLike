@@ -32,5 +32,8 @@ const GameObjectManager = {
     forEach(callback) {
       return this.gameObjects.forEach(callback);
     },
+    length() {
+      return this.gameObjects.length;
+    },
   }
 };
