@@ -10,7 +10,14 @@
     },
   };
 
-  const explosion = { };
+  const explosion = {
+    scale: 1.0,
+    setScale(scale) {
+      util.assert(scale == 0.5);
+      this.scale = scale;
+      return this;
+    },
+  };
   const explosionFactory = {
     create() {
       return explosion;
@@ -26,9 +33,31 @@
     }
   };
 
-  const bulletComposite = BulletCompositeFactory(bulletFactory, explosionFactory, gameObjectDrawObjectFactory)
+  const gameObjectManager = {
+    push(gameObject) {
+      this.gameObject = gameObject;
+      return this;
+    },
+  };
+
+  const drawObjectManager = {
+    add(drawObject) {
+      this.drawObject = drawObject;
+      return this;
+    },
+  };
+
+  const bulletComposite = BulletCompositeFactory(
+          bulletFactory,
+          explosionFactory,
+          gameObjectDrawObjectFactory,
+          gameObjectManager,
+          drawObjectManager)
       .create();
 
   util.assert(bullet == bulletComposite.getGameObject());
   util.assert(explosion == bulletComposite.getDrawObject());
+  util.assert(explosion.scale == 0.5);
+  util.assert(gameObjectManager.gameObject == bulletComposite);
+  util.assert(drawObjectManager.drawObject == explosion);
 }
