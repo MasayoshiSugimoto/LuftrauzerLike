@@ -13,7 +13,7 @@ const CloudGenerator = {
     for (let index = 0; index < 100; index++) {
       drawObjectManager.add(
         cloudFactory.create(images, imageDrawObjectFactory)
-          .setPosition(Vector2D.create(randomCoordinate(), randomCoordinate())));
+          .setScreenPosition(Vector2D.create(randomCoordinate(), randomCoordinate())));
     }
 
   }

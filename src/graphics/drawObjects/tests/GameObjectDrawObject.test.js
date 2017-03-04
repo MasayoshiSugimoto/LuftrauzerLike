@@ -1,12 +1,42 @@
 { //Test 'getGameObject'
-  let util = Util.create();
+  const util = Util.create();
 
-  let gameObject = { };
+  const gameObject = { };
 
   util.assert(gameObject == GameObjectDrawObject.create({ }, gameObject).getGameObject());
 }
 
 { //Test 'getPosition'
+  const util = Util.create();
+
+  const gameObject = {
+    getPosition() {
+      return Vector2D.create(1.0, 2.0);
+    }
+  };
+
+  const gameObjectDrawObject = GameObjectDrawObject.create({}, gameObject);
+
+  util.assert(1.0 == gameObjectDrawObject.getPosition().getX());
+  util.assert(2.0 == gameObjectDrawObject.getPosition().getY());
+}
+
+{ //Test 'setPosition'
+  const util = Util.create();
+
+  const gameObject = {
+    setPosition(position) {
+      util.assert("position");
+      return this;
+    },
+  };
+
+  const gameObjectDrawObject = GameObjectDrawObject.create("drawObject", gameObject);
+
+  util.assert(gameObjectDrawObject.setPosition("position") == gameObjectDrawObject);
+}
+
+{ //Test 'getScreenPosition'
   let util = Util.create();
 
   let gameObject = {
@@ -17,11 +47,11 @@
 
   let gameObjectDrawObject = GameObjectDrawObject.create({}, gameObject);
 
-  util.assertEqualFloat(PIXEL_PER_METER, gameObjectDrawObject.getPosition().getX());
-  util.assertEqualFloat(2 * PIXEL_PER_METER, gameObjectDrawObject.getPosition().getY());
+  util.assertEqualFloat(PIXEL_PER_METER, gameObjectDrawObject.getScreenPosition().getX());
+  util.assertEqualFloat(2 * PIXEL_PER_METER, gameObjectDrawObject.getScreenPosition().getY());
 }
 
-{ //Test 'setPosition'
+{ //Test 'setScreenPosition'
   let util = Util.create();
 
   let gameObject = {
@@ -32,7 +62,7 @@
   };
 
   let gameObjectDrawObject = GameObjectDrawObject.create({ }, gameObject);
-  util.assert(gameObjectDrawObject.setPosition(Vector2D.create(100.0, 200.0)) == gameObjectDrawObject);
+  util.assert(gameObjectDrawObject.setScreenPosition(Vector2D.create(100.0, 200.0)) == gameObjectDrawObject);
 }
 
 { //Test 'setScale'
@@ -225,4 +255,20 @@
   gameObject.dead = true;
   drawObject.toBeDeleted = true;
   util.assert(gameObjectDrawObject.toDelete());
+}
+
+{ //Test 'update'
+  const util = Util.create();
+
+  const gameObject = {
+    update(elapsedTime) {
+      this.elapsedTime = elapsedTime;
+      return this;
+    },
+  };
+
+  const gameObjectDrawObject = GameObjectDrawObject.create("drawObject", gameObject, "factory")
+      .update(1.0);
+
+  util.assert(gameObject.elapsedTime == 1.0);
 }

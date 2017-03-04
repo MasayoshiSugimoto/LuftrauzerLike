@@ -7,6 +7,7 @@ const ImageDrawObject = {
     return Object.assign(
 
       {
+        className: "ImageDrawObject",
         position: Vector2D.zero(), //Screen coordinates
         direction: 0,
         scale: 1.0,
@@ -15,11 +16,11 @@ const ImageDrawObject = {
       },
 
       {
-        getPosition() {
+        getScreenPosition() {
           return this.position;
         },
 
-        setPosition(position) {
+        setScreenPosition(position) {
           this.position = position;
           return this;
         },
@@ -53,8 +54,8 @@ const ImageDrawObject = {
 
         placeOn(canvasContext) {
           canvasContext.translate(
-            this.getPosition().getX(),
-            this.getPosition().getY());
+            this.getScreenPosition().getX(),
+            this.getScreenPosition().getY());
           canvasContext.rotate(this.getDirection());
           return this;
         },

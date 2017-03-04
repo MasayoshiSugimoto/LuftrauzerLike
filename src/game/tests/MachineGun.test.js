@@ -7,6 +7,20 @@ MachineGunTest.explosionImage = { };
 MachineGunTest.images = new Map();
 MachineGunTest.images.set('images/Explosion.png', MachineGunTest.explosionImage);
 
+MachineGunTest.emptyShip = {
+  getPosition() { },
+  getDirection() { },
+};
+
+MachineGunTest.emptyBullet = {
+  setDirection() { return this; },
+  setPosition() { return this; },
+};
+
+MachineGunTest.emptyWindowObject = {
+  setTimeout() { },
+};
+
 { //Test that no bullet is created before the fire timer
   const util = Util.create();
 
@@ -17,58 +31,24 @@ MachineGunTest.images.set('images/Explosion.png', MachineGunTest.explosionImage)
 
   const machineGunFactory = {
     image: { },
+
     bulletFactory: {
-      isFromDataCalled: false,
-      fromData(position, direction) {
-        this.isFromDataCalled = true;
-        util.assert(position == ship.position);
-        util.assert(direction == ship.direction);
-      },
+      create() {
+        this.created = true;
+        return { };
+      }
     },
-    getImages() {
-      const images = new Map();
-      images.set('images/Explosion.png', this.image);
-      return images;
-    },
+
   };
 
   const machineGun = MachineGun.create(ship, machineGunFactory);
 
   machineGun.fire(0.01 /*second*/);
-  util.assert(!machineGunFactory.bulletFactory.isFromDataCalled);
+  util.assert(!machineGunFactory.bulletFactory.created);
 }
 
 { //Test that a bullet is created at the fire rate
   const util = Util.create();
-
-  //Create bullet
-  const bullet = { };
-
-
-  //Create bullet factory
-  const bulletFactory = {
-    setWeapon(weapon) {
-    },
-    create() {
-      return bullet;
-    },
-  };
-
-  const expectedDrawObjectGameObject = { };
-
-  //Create drawObjectManager
-  const drawObjectManager = {
-    removeCounter: 0,
-    addDrawObjectCounter: 0,
-    add(drawObject) {
-      util.assert(drawObject == expectedDrawObjectGameObject);
-      this.addDrawObjectCounter++;
-    },
-    remove(drawObject) {
-      util.assert(drawObject == expectedDrawObjectGameObject);
-      this.removeCounter++;
-    }
-  };
 
   //Create ship
   const ship = {
@@ -76,56 +56,93 @@ MachineGunTest.images.set('images/Explosion.png', MachineGunTest.explosionImage)
     getDirection() { }
   };
 
-  const imageDrawObjectFactory = {
-    image: {
-      setScale(scale){
-        util.assert(scale == 0.5);
-        return this;
-      }
-    },
-    create(image) {
-      util.assert(MachineGunTest.images.get('images/Explosion.png') == image);
-      return this.image;
-    }
+  const bullet = {
+    setPosition() { return this; },
+    setDirection() { return this; },
   };
 
-  const gameObjectDrawObjectFactory = {
-    create(drawObject, gameObject) {
-      util.assert(drawObject == imageDrawObjectFactory.image);
-      util.assert(gameObject == bullet);
-      return expectedDrawObjectGameObject;
-    }
+  const bulletCompositeFactory = {
+    counter: 0,
+    create() {
+      this.counter++;
+      return bullet;
+    },
+  };
+
+  const windowObject = {
+    setTimeout() { }
   };
 
   //Create machinegun
-  const machineGun = MachineGunFactory.create(
-          bulletFactory,
-          drawObjectManager,
-          gameObjectDrawObjectFactory,
-          MachineGunTest.images,
-          imageDrawObjectFactory)
-      .createMachineGun(ship);
+  const machineGun = MachineGunFactory.create(bulletCompositeFactory, windowObject).createMachineGun(ship);
 
   //Fire for 0.09 second and check that the first bullet is not created
   machineGun.fire(0.09);
-  util.assert(drawObjectManager.addDrawObjectCounter == 0);
-  util.assert(machineGun.getBulletsLength() == 0);
+  util.assert(bulletCompositeFactory.counter == 0);
 
   //Fire for 0.01 second and check that no bullet has been created.
   machineGun.fire(0.01 + EPSILON);
-  util.assert(drawObjectManager.addDrawObjectCounter == 1);
-  util.assert(machineGun.getBulletsLength() == 1);
+  util.assert(bulletCompositeFactory.counter == 1);
 
   //Fire for another 0.1 second and check that the second bullet has been created.
   machineGun.fire(0.1 + EPSILON);
-  util.assert(machineGun.getBulletsLength() == 2);
-  util.assert(drawObjectManager.addDrawObjectCounter == 2);
+  util.assert(bulletCompositeFactory.counter == 2);
 
-  //Wait for the object to be deleted.
-  setTimeout( () => {
-      util.assert(machineGun.getBulletsLength() == 0);
-      util.assert(drawObjectManager.removeCounter == 2);
-    }, 5500 /* milliseconds */ );
+}
+
+{ //Test that the bullets are cleared after the end of the timer
+  const util = Util.create();
+
+  const ship = {
+    getPosition() { },
+    getDirection() { },
+  };
+
+  const windowObject = {
+    setTimeout(callback, timeMillisecond) {
+      //Check time validity
+      util.assert(1000 <= timeMillisecond);
+      this.callback = callback;
+    }
+  };
+
+  const bullet = {
+    setPosition() {
+      return this;
+    },
+    setDirection() {
+      return this;
+    },
+  };
+
+  const bulletFactory = {
+    create() {
+      return bullet;
+    },
+    dispose(object) {
+      //Check that the object deleted is the correct one.
+      util.assert(bullet == object);
+      machineGunFactory.called = true;
+      return this;
+    },
+  };
+
+  const machineGunFactory = {
+    getBulletFactory() {
+      return bulletFactory;
+    },
+    getWindowObject() {
+      return windowObject;
+    },
+  };
+
+  const machineGun = MachineGun.create(ship, machineGunFactory);
+  //Wait some time
+  machineGun.fire(1.0); 
+
+  //Confirm that the created object is deleted when the time comes
+  windowObject.callback();
+  util.assert(machineGunFactory.called);
 }
 
 { //Test clear function
@@ -160,7 +177,9 @@ MachineGunTest.images.set('images/Explosion.png', MachineGunTest.explosionImage)
     create() {
       this.createCounter++;
       return {
-        updatePosition(elapsedTimeSecond) {}
+        updatePosition(elapsedTimeSecond) {},
+        setPosition() { return this; },
+        setDirection() { return this; },
       };
     },
 
@@ -172,41 +191,19 @@ MachineGunTest.images.set('images/Explosion.png', MachineGunTest.explosionImage)
     getPosition() { },
     getDirection() { }
   };
-  const drawObjectManager = {
-    add() { },
-    remove() { }
-  };
 
-  const gameObjectDrawObjectFactory = {
-    create(drawObject, bullet) {
-      return {
-        getGameObject() {
-          return bullet;
-        }
-      };
-    }
-  };
-
-  const imageDrawObjectFactory = {
-    imageDrawObject: {
-      setScale(scale) {
-        util.assert(scale == 0.5);
-        return this;
-      }
+  const machineGunFactory = {
+    getBulletFactory() {
+      return bulletFactory;
     },
-    create(image) {
-      util.assert(image == MachineGunTest.images.get('images/Explosion.png'));
-      return this.imageDrawObject;
-    }
+    getWindowObject() {
+      return {
+        setTimeout() { }
+      };
+    },
   };
 
-  const machineGun = MachineGunFactory.create(
-          bulletFactory,
-          drawObjectManager,
-          gameObjectDrawObjectFactory,
-          MachineGunTest.images,
-          imageDrawObjectFactory)
-      .createMachineGun(ship);
+  const machineGun = MachineGun.create(ship, machineGunFactory);
 
   //Update more than 1 second and check than no bullet has been fired.
   machineGun.update(1.1 /* second */);
@@ -237,34 +234,83 @@ MachineGunTest.images.set('images/Explosion.png', MachineGunTest.explosionImage)
 { // Test 'MachineGunFactory.createMachineGun'
   const util = Util.create();
 
-  const bulletFactory = {
-    weapon: null,
-    setWeapon(weapon) {
-      this.weapon = weapon;
-    }
+  const machineGunFactory = MachineGunFactory.create("bulletCompositeFactory", "windowObject");
+  
+  util.assert(machineGunFactory.getBulletFactory() == "bulletCompositeFactory");
+  util.assert(machineGunFactory.getWindowObject() == "windowObject");
+}
+
+{ //Test that bullets are correctly created.
+  const util = Util.create();
+
+  const windowObject = {
+    setTimeout(callback, timeMillisecond) {
+    },
   };
 
-  const drawObjectManager = {
+  const machineGunFactory = {
+    bulletFactory: {
+      create() {
+        this.called = true;
+        return MachineGunTest.emptyBullet;
+      }
+    },
+    getBulletFactory() {
+      return this.bulletFactory;
+    },
+    getWindowObject() {
+      return {
+        setTimeout() { }
+      };
+    },
   };
 
-  const gameObjectDrawObjectFactory = {
-  };
+  const machineGun = MachineGun.create(MachineGunTest.emptyShip, machineGunFactory);
+
+  machineGun.fire(1.0);
+  util.assert(machineGunFactory.bulletFactory.called);
+}
+
+{ //Test that the bullet initialize its position from the ship.
+  const util = Util.create();
 
   const ship = {
+    getPosition() {
+      return "position";
+    },
+    getDirection() {
+      return "direction";
+    },
   };
 
-  const imageDrawObjectFactory = { };
+  const bullet = {
+    setPosition(position) {
+      this.position = position;
+      return this;
+    },
+    setDirection(direction) {
+      this.direction = direction;
+      return this;
+    },
+  };
 
-  const machineGunFactory = MachineGunFactory.create(
-      bulletFactory,
-      drawObjectManager,
-      gameObjectDrawObjectFactory,
-      MachineGunTest.images,
-      imageDrawObjectFactory)
+  const bulletFactory = {
+    create() {
+      return bullet;
+    },
+  };
 
-  util.assert(bulletFactory == machineGunFactory.bulletFactory);
-  util.assert(drawObjectManager == machineGunFactory.drawObjectManager);
-  util.assert(gameObjectDrawObjectFactory == machineGunFactory.gameObjectDrawObjectFactory);
-  const machinegun = machineGunFactory.createMachineGun(ship);
-  util.assert(machinegun == bulletFactory.weapon);
+  const machineGunFactory = {
+    getBulletFactory() {
+      return bulletFactory;
+    },
+    getWindowObject() {
+      return MachineGunTest.emptyWindowObject;
+    },
+  };
+
+  const machineGun = MachineGun.create(ship, machineGunFactory).fire(100.0);
+
+  util.assert("position" == bullet.position);
+  util.assert("direction" == bullet.direction);
 }

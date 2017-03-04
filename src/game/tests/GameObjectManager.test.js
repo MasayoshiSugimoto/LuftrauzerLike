@@ -36,3 +36,15 @@
     .update(1.23);
   util.assert(gameObjectManager.gameObjects[0].called);
 }
+
+{ //Test 'remove'
+  const util = Util.create();
+
+  const gameObject = "gameObject";
+
+  const gameObjectManager = GameObjectManager.create().push(gameObject);
+
+  util.assert(gameObjectManager.length() == 1);
+  util.assert(gameObjectManager.remove(gameObject) == gameObjectManager);
+  util.assert(gameObjectManager.length() == 0);
+}

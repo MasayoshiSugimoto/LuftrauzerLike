@@ -6,6 +6,7 @@ const ExplosionDrawObject = {
   create(image) {
     return Object.assign(
       {
+        className             :  "ExplosionDrawObject",
         image                 :  image,
         scale                 :  1.0,
         opacity               :  1.0,

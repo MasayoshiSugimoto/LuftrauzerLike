@@ -42,14 +42,14 @@
       previousFunctionCalled = "draw";
     },
 
-    getPosition() {
+    getScreenPosition() {
       util.assert(previousFunctionCalled == "save");
-      previousFunctionCalled = "getPosition";
+      previousFunctionCalled = "getScreenPosition";
       return Vector2D.create(1.0, 2.0);
     },
 
     getDirection() {
-      util.assert(previousFunctionCalled == "getPosition");
+      util.assert(previousFunctionCalled == "getScreenPosition");
       previousFunctionCalled = "getDirection";
       return expectedAngle;
     },
@@ -124,7 +124,7 @@
       util.assert(elapsedTimeSecond == 1.23);
       this.called = true;
     },
-    getPosition() {
+    getScreenPosition() {
       return Vector2D.zero();
     },
     getDirection() {

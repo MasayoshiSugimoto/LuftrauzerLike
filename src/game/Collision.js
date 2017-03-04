@@ -8,7 +8,7 @@ const CollisionManager = {
     let collisionableObjects = {
       forEach(callback) {
         gameObjects.filter( (gameObject) => {
-            return gameObject.isCollisionable();
+            return null != gameObject.collide;
           } )
           .forEach(callback);
       }

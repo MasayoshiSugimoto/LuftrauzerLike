@@ -4,6 +4,7 @@ const RectangleDrawObject = {
 
   create() {
     let state = {
+      className: "RectangleDrawObject",
       position: Vector2D.zero(),
       direction: 0,
       size: Vector2D.zero(),

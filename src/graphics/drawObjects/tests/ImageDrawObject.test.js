@@ -9,7 +9,7 @@ const TestImageDrawObject = {
 { //Test placeOn
 
   let imageDrawObject = ImageDrawObject.create({});
-  imageDrawObject.setPosition(Vector2D.create(10, 20));
+  imageDrawObject.setScreenPosition(Vector2D.create(10, 20));
   imageDrawObject.setDirection(3.0);
 
   let previousFunction = "";

@@ -59,11 +59,8 @@ const Initializer = (images) => {
     getMachineGun() {
       if (null == this.machineGun) {
         this.machineGun = MachineGunFactory.create(
-              BulletFactory(),
-              this.getDrawObjectManager(),
-              GameObjectDrawObject,
-              this.images,
-              ImageDrawObject
+              this.getBulletCompositeFactory(),
+              window
             )
             .createMachineGun(this.getShip());
       }
@@ -97,6 +94,18 @@ const Initializer = (images) => {
               EmptyGameObject);
       }
       return this.gameObjectDrawObjectFactory;
+    },
+
+    getBulletCompositeFactory() {
+      if (null == this.bulletCompositeFactory) {
+        this.bulletCompositeFactory = BulletCompositeFactory(
+            Bullet,
+            ExplosionDrawObjectFactory(this.images),
+            this.getGameObjectDrawObjectFactory(),
+            this.getGameObjectManager(),
+            this.getDrawObjectManager());
+      }
+      return this.bulletCompositeFactory;
     },
 
   };

@@ -51,7 +51,7 @@ const Canvas = {
       },
 
       center(drawObject) {
-        drawObject.setPosition(this.getCenter());
+        drawObject.setScreenPosition(this.getCenter());
         return this;
       },
 

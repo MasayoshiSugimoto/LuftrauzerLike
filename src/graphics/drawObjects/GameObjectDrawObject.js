@@ -7,6 +7,7 @@ const GameObjectDrawObject = {
   create(drawObject, gameObject, factory) {
     return Object.assign(
       {
+        className         :  "GameObjectDrawObject",
         drawObject        :  drawObject,
         gameObject        :  gameObject,
         factory           :  factory,
@@ -21,10 +22,20 @@ const GameObjectDrawObject = {
     getGameObject() {
       return this.activeGameObject;
     },
+    getDrawObject() {
+      return this.activeDrawObject;
+    },
     getPosition() {
-      return this.activeGameObject.getPosition().scalarMultiply(PIXEL_PER_METER);
+      return this.activeGameObject.getPosition();
     },
     setPosition(position) {
+      this.activeGameObject.setPosition(position);
+      return this;
+    },
+    getScreenPosition() {
+      return this.activeGameObject.getPosition().scalarMultiply(PIXEL_PER_METER);
+    },
+    setScreenPosition(position) {
       this.activeGameObject.setPosition(position.scalarMultiply(1.0 / PIXEL_PER_METER));
       return this;
     },
@@ -32,7 +43,8 @@ const GameObjectDrawObject = {
       return this.activeGameObject.getDirection();
     },
     setDirection(direction) {
-      return this.activeGameObject.setDirection(direction);
+      this.activeGameObject.setDirection(direction);
+      return this;
     },
     setScale(scale) {
       this.activeDrawObject.setScale(scale);
@@ -47,6 +59,10 @@ const GameObjectDrawObject = {
     },
     placeOn(canvasContext) {
       this.activeGameObject.placeOn(canvasContext);
+      return this;
+    },
+    update(elapsedTimeSecond) {
+      this.activeGameObject.update(elapsedTimeSecond);
       return this;
     },
     draw(canvasContext, elapsedTimeSecond) {

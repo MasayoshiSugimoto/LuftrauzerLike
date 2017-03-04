@@ -5,9 +5,8 @@
 
   const position = Vector2D.create(1.0, 2.0);
   const direction = 3.0;
-  const inertiaVectorMeterPerSecond = Vector2D.create(4.0, 5.0);
 
-  const bullet = Bullet.create(position, direction, inertiaVectorMeterPerSecond);
+  const bullet = Bullet.create(position, direction);
 
   util.assert(bullet.getPosition().equals(position));
   util.assert(direction == bullet.getDirection());
@@ -18,9 +17,8 @@
 
   const position = Vector2D.zero();
   const direction = 0.0;
-  const inertiaVectorMeterPerSecond = Vector2D.zero();
 
-  const bullet = Bullet.create(position, direction, inertiaVectorMeterPerSecond)
+  const bullet = Bullet.create(position, direction)
       .updatePosition(1.0 /* duration in second */);
 
   util.assert(bullet.getPosition().getX() == 6.0);
@@ -33,9 +31,8 @@
 
   const position = Vector2D.zero();
   const direction = -2.0 * Math.PI / 3.0;
-  const inertiaVectorMeterPerSecond = Vector2D.zero();
 
-  const bullet = Bullet.create(position, direction, inertiaVectorMeterPerSecond)
+  const bullet = Bullet.create(position, direction)
       .updatePosition(1.0 /* duration in second */);
 
   util.assert(bullet.getPosition().getX() < 0.0);

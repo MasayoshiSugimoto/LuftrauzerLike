@@ -21,9 +21,6 @@
         this.counter++;
         return this;
       },
-      isCollisionable() {
-        return true;
-      }
     };
   }
 
@@ -48,13 +45,15 @@
   let gameObjectFactory = {
 
     create(collidable) {
-      return {
-        collidable: collidable,
-        isCollisionable() {
-          return collidable;
-        }
-      };
+      if (collidable) {
+        return {
+          collide() { }
+        };
+      } else {
+        return { };
+      }
     }
+
   };
 
   let gameObjects = [
@@ -80,4 +79,13 @@
   collisionManager.collisionableObjects.forEach(callbackObject.create());
 
   util.assert(callbackObject.counter == 3);
+}
+
+{ //Test that objects without collide function are ignored.
+  const util = Util.create();
+
+  const gameObjects = ["gameObject"];
+
+  //Will fail if the gameObjects without 'collide' function are not ignored.
+  CollisionManager.create(gameObjects).applyCollision();
 }

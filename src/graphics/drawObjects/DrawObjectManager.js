@@ -60,7 +60,7 @@ const DrawObjectManager = {
 
           this.drawObjects.forEach( function(drawObject) {
             canvasContext.save();
-            let position = drawObject.getPosition();
+            let position = drawObject.getScreenPosition();
             canvasContext.translate(position.getX(), position.getY());
             canvasContext.rotate(drawObject.getDirection());
             drawObject.draw(canvasContext, elapsedTimeSecond);

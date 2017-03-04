@@ -7,8 +7,13 @@ const BulletCompositeFactory = (bulletFactory, explosionFactory, gameObjectDrawO
       const explosion = explosionFactory.create().setScale(0.5);
       const gameObjectDrawObject = gameObjectDrawObjectFactory.create(explosion, bulletFactory.create());
       gameObjectManager.push(gameObjectDrawObject);
-      drawObjectManager.add(explosion);
+      drawObjectManager.add(gameObjectDrawObject);
       return gameObjectDrawObject;
-    }
+    },
+    dispose(bulletComposite) {
+      gameObjectManager.remove(bulletComposite);
+      drawObjectManager.remove(bulletComposite);
+      return this;
+    },
   };
 };

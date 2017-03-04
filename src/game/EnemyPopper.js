@@ -3,8 +3,8 @@
 const EnemyPopper = {
   create(enemyFactory, windowObject) {
     let enemyManager = Object.assign( {
-      enemyFactory      :  enemyFactory,
-      windowObject      :  windowObject,
+      enemyFactory  :  enemyFactory,
+      windowObject  :  windowObject,
     }, this.proto);
     windowObject.setInterval( () => { enemyManager.createEnemy(); }, 1000 /*milliseconds*/);
     return enemyManager;

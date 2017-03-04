@@ -4,9 +4,10 @@ const Bullet = {
 
   create(position, direction) {
     let state = {
-      position                    :  position,
-      direction                   :  direction,    //Radian
-      velocity                    :  6.0,  //meter  per  second
+      className  :  "bullet",
+      position   :  position,
+      direction  :  direction,  //Radian
+      velocity   :  6.0,        //meter   per  second
     };
 
     return Object.assign(
@@ -35,6 +36,7 @@ const Bullet = {
     },
 
     update(elapsedTimeSecond) {
+      this.updatePosition(elapsedTimeSecond);
       return this;
     },
 
@@ -44,23 +46,8 @@ const Bullet = {
 
     isDead() {
       return false;
-    }
+    },
 
   }
 
-};
-
-const BulletFactory = () => {
-  return {
-
-    create() {
-      return Bullet.create(this.weapon.getPosition(), this.weapon.getDirection());
-    },
-
-    setWeapon(weapon) {
-      this.weapon = weapon;
-      return this;
-    },
-
-  };
 };

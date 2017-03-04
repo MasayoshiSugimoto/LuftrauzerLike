@@ -8,11 +8,9 @@ const MachineGun = {
 
     return Object.assign({
         fireTimer               : 0.0,
-        bullets                 : [],
         ship                    : ship,
         machineGunFactory       : machineGunFactoryIn,
         updateFunction          : this.proto.clear,
-        image                   : machineGunFactoryIn.getImages().get('images/Explosion.png'),
       },
       this.proto
     );
@@ -20,10 +18,6 @@ const MachineGun = {
   },
 
   proto: {
-
-    getBulletsLength() {
-      return this.bullets.length;
-    },
 
     getFireTimer() {
       return this.fireTimer;
@@ -37,22 +31,16 @@ const MachineGun = {
       }
 
       this.fireTimer = 0.0;
-      let bullet = this.machineGunFactory.bulletFactory.create();
-
-      //Add bullets
-      let drawObject = this.machineGunFactory.gameObjectDrawObjectFactory
-          .create(
-              this.machineGunFactory.getImageDrawObjectFactory().create(this.image).setScale(0.5),
-              bullet);
-      this.bullets.push(drawObject);
-      this.machineGunFactory.drawObjectManager.add(drawObject);
+      let bullet = this.machineGunFactory.getBulletFactory()
+        .create()
+        .setPosition(this.ship.getPosition())
+        .setDirection(this.ship.getDirection());
 
       //Set an event to delete the bullets after some time
       let that = this;
-      setTimeout(
+      this.machineGunFactory.getWindowObject().setTimeout(
         () => {
-          that.bullets = that.bullets.filter( (b) => { return b != drawObject; } );
-          that.machineGunFactory.drawObjectManager.remove(drawObject);
+          that.machineGunFactory.getBulletFactory().dispose(bullet);
         },
         5000 /*Life time of the bullet created in millisecond.*/
       );
@@ -72,10 +60,6 @@ const MachineGun = {
 
     update(elapsedTimeSecond) {
       this.updateFunction(elapsedTimeSecond);
-
-      this.bullets.forEach( function(bullet) {
-        bullet.getGameObject().updatePosition(elapsedTimeSecond);
-      } );
     },
 
     getPosition() {
@@ -91,14 +75,11 @@ const MachineGun = {
 };
 
 const MachineGunFactory = {
-  create(bulletFactoryIn, drawObjectManagerIn, gameObjectDrawObjectFactoryIn, images, imageDrawObjectFactory) {
+  create(bulletCompositeFactory, windowObject) {
     return Object.assign(
       {
-        bulletFactory                :  bulletFactoryIn,
-        drawObjectManager            :  drawObjectManagerIn,
-        gameObjectDrawObjectFactory  :  gameObjectDrawObjectFactoryIn,
-        images                       :  images,
-        imageDrawObjectFactory       :  imageDrawObjectFactory,
+        bulletCompositeFactory :  bulletCompositeFactory,
+        windowObject           :  windowObject,
       },
       this.proto
     );
@@ -106,17 +87,15 @@ const MachineGunFactory = {
 
   proto: {
     createMachineGun(ship) {
-      const machinegun = MachineGun.create(ship, this);
-      this.bulletFactory.setWeapon(machinegun);
-      return machinegun;
+      return MachineGun.create(ship, this, this.windowObject);
     },
 
-    getImages() {
-      return this.images;
+    getBulletFactory() {
+      return this.bulletCompositeFactory;
     },
 
-    getImageDrawObjectFactory() {
-      return this.imageDrawObjectFactory;
+    getWindowObject() {
+      return this.windowObject;
     },
   }
 

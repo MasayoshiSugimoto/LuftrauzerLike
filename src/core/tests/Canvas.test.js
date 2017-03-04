@@ -23,7 +23,7 @@
   };
 
   const drawObject = {
-    setPosition(position) {
+    setScreenPosition(position) {
       this.position = position;
     }
   };

@@ -35,5 +35,11 @@ const GameObjectManager = {
     length() {
       return this.gameObjects.length;
     },
+    remove(gameObject) {
+      this.gameObjects = this.gameObjects.filter( (go) => {
+        return go != gameObject;
+      } )
+      return this;
+    },
   }
 };
