@@ -5,7 +5,8 @@
  */
 const GameObjectDrawObject = {
   create(drawObject, gameObject, factory) {
-    return Object.assign(
+
+    const gameObjectDrawObject = Object.assign(
       {
         className         :  "GameObjectDrawObject",
         drawObject        :  drawObject,
@@ -16,6 +17,9 @@ const GameObjectDrawObject = {
       },
       this.proto
     );
+    gameObjectDrawObject.setActiveGameObject(gameObject);
+    return gameObjectDrawObject;
+
   },
 
   proto: {
@@ -76,6 +80,21 @@ const GameObjectDrawObject = {
     },
     toDelete() {
       return this.gameObject.isDead() && this.activeDrawObject.toDelete();
+    },
+    getRadius() {
+      return this.activeGameObject.getRadius();
+    },
+    setActiveGameObject(gameObject) {
+      this.activeGameObject = gameObject;
+      if (null == gameObject.collide) {
+        this.collide = null;
+      } else {
+        this.collide = () => {
+          this.activeGameObject.collide();
+          return this;
+        }
+      }
+      return this;
     },
   },
 };

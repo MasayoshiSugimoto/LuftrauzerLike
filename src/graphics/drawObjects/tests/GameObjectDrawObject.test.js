@@ -272,3 +272,37 @@
 
   util.assert(gameObject.elapsedTime == 1.0);
 }
+
+{ //Test that the collide function is added to the prototype if the active game object contains one.
+  const util = Util.create();
+
+  const gameObjectDrawObject = GameObjectDrawObject.create("drawObject", "gameObject", "factory");
+
+  util.assert(null == gameObjectDrawObject.collide);
+  const gameObject = {
+    collide() {
+      this.called = true;
+    }
+  };
+  gameObjectDrawObject.setActiveGameObject(gameObject);
+  gameObjectDrawObject.collide();
+  util.assert(gameObject.called);
+}
+
+{ //Test 'setActiveGameObject'
+  const util = Util.create();
+
+  const gameObjectDrawObject = GameObjectDrawObject.create("drawObject", "gameObject", "factory");
+  util.assert(null == gameObjectDrawObject.collide);
+
+  const gameObject = {
+    counter: 0,
+    collide() {
+      this.counter++;
+    }
+  };
+
+  util.assert(gameObjectDrawObject == gameObjectDrawObject.setActiveGameObject(gameObject));
+  gameObjectDrawObject.collide();
+  util.assert(1 == gameObject.counter);
+}

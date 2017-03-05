@@ -48,6 +48,9 @@ const Bullet = {
       return false;
     },
 
+    getRadius() {
+      return 0.3;
+    },
   }
 
 };
