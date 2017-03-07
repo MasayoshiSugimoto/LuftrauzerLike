@@ -30,7 +30,7 @@ const FrameCounter = {
         this.counter = 0;    
       }
 
-      this.lastFrameTimeMillisecond = this.currentTimeMillisecond;
+      this.lastFrameTimeMillisecond = currentTimeMillisecond;
     }
   }
 };
