@@ -24,7 +24,15 @@ const EmptyGameObject = {
     },
     getDirection() {
       return this.direction;
-    }
+    },
+    setPosition(position) {
+      this.position = position;
+      return this;
+    },
+    setDirection(direction) {
+      this.direction = direction;
+      return this;
+    },
   }
 
 };

@@ -72,8 +72,8 @@ const GameObjectDrawObject = {
     draw(canvasContext, elapsedTimeSecond) {
       if (this.gameObject.isDead() && this.gameObject == this.activeGameObject) {
         this.activeDrawObject = this.factory.getExplosionDrawObjectFactory().create();
-        this.activeGameObject = this.factory.getEmptyGameObjectFactory()
-            .create(this.gameObject.getPosition(), this.gameObject.getDirection());
+        this.setActiveGameObject(this.factory.getEmptyGameObjectFactory()
+            .create(this.gameObject.getPosition(), this.gameObject.getDirection()));
       }
       this.activeDrawObject.draw(canvasContext, elapsedTimeSecond);
       return this;
