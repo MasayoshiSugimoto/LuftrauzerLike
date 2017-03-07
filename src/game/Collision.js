@@ -2,7 +2,7 @@
 
 const CollisionManager = {
 
-  create(gameObjects) {
+  create(gameObjects, faction) {
 
     //Filter only gameObjects which collision are applied to
     let collisionableObjects = {
@@ -16,7 +16,8 @@ const CollisionManager = {
 
     return Object.assign(
       {
-        collisionableObjects: collisionableObjects
+        collisionableObjects: collisionableObjects,
+        faction: faction,
       },
       this.proto
     );
@@ -31,11 +32,16 @@ const CollisionManager = {
             return;
           }
 
+          //Check the faction
+          if (!this.faction.isEnemy(gameObject1, gameObject2)) {
+            return;
+          }
+
           let position1 = gameObject1.getPosition();
           let position2 = gameObject2.getPosition();
+
           //If there is a collision
-          if (position1.distanceTo(position2) - gameObject1.getRadius() - gameObject2.getRadius()
-              <= 0.0) {
+          if (position1.distanceTo(position2) - gameObject1.getRadius() - gameObject2.getRadius() <= 0.0) {
             gameObject1.collide();
           }
 

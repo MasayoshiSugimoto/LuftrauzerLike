@@ -47,12 +47,19 @@
     },
   };
 
+  const faction = {
+    setGoodFaction(actor) {
+      this.actor = actor;
+    }
+  };
+
   const bulletComposite = BulletCompositeFactory(
           bulletFactory,
           explosionFactory,
           gameObjectDrawObjectFactory,
           gameObjectManager,
-          drawObjectManager)
+          drawObjectManager,
+          faction)
       .create();
 
   util.assert(bullet == bulletComposite.getGameObject());
@@ -60,6 +67,7 @@
   util.assert(explosion.scale == 0.5);
   util.assert(gameObjectManager.gameObject == bulletComposite);
   util.assert(drawObjectManager.drawObject == bulletComposite);
+  util.assert(faction.actor == bulletComposite);
 }
 
 { //Test bullet composite deletion
@@ -115,7 +123,8 @@
       explosionFactory,
       gameObjectDrawObjectFactory,
       gameObjectManager,
-      drawObjectManager);
+      drawObjectManager,
+      FactionTest.dummyFaction);
   const bulletComposite = bulletCompositeFactory.create();
   bulletCompositeFactory.dispose(bulletComposite);
 

@@ -92,13 +92,20 @@ const Ship = {
 
 };
 
-const ShipFactory = (gameObjectManager) => {
+const ShipFactory = (gameObjectManager, faction) => {
   return {
     gameObjectManager: gameObjectManager,
+    faction: faction,
+
     createShip() {
       let ship = Ship.create();
       this.gameObjectManager.push(ship);
+      this.faction.setGoodFaction(ship);
       return ship;
-    }
+    },
+
+    getFaction() {
+      return this.faction;
+    },
   };
 };

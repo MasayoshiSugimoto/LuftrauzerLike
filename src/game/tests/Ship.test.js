@@ -72,13 +72,22 @@ const STANDARD_FRAME_DURATION_SECOND = 1 / 30;
 }
 
 { //Test 'ShipFactory'
-  let util = Util.create();
+  const util = Util.create();
 
-  let gameObjectManager = [ ];
-  let ship = ShipFactory(gameObjectManager).createShip();
+  const gameObjectManager = [ ];
+  const faction = {
+    setGoodFaction(actor) {
+      this.actor = actor;
+    }
+  };
+  const shipFactory = ShipFactory(gameObjectManager, faction);
+  const ship = shipFactory.createShip();
 
    //Test that the created ship is returned and contained in the gameObjectManager
   util.assert(ship == gameObjectManager[0]);
+  util.assert(faction == shipFactory.getFaction());
+  util.assert(faction.actor == ship);
+  util.assert(ship == faction.actor);
 }
 
 { //Test 'isDead'

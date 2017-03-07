@@ -23,7 +23,8 @@ const Initializer = (images) => {
 
     getShip() {
       if (null == this.ship) {
-        this.ship = ShipFactory(this.getGameObjectManager()).createShip()
+        this.ship = ShipFactory(this.getGameObjectManager(), this.getFaction())
+            .createShip()
       }
       return this.ship;
     },
@@ -51,7 +52,8 @@ const Initializer = (images) => {
 
     getCollisionManager() {
       if (null == this.collisionManager) {
-        this.collisionManager = CollisionManager.create(this.getGameObjectManager());
+        this.collisionManager = CollisionManager
+            .create(this.getGameObjectManager(), this.getFaction());
       }
       return this.collisionManager;
     },
@@ -96,16 +98,31 @@ const Initializer = (images) => {
       return this.gameObjectDrawObjectFactory;
     },
 
+    getBulletFactory() {
+      if (null == this.bulletFactory) {
+        this.bulletFactory = Bullet;
+      }
+      return this.bulletFactory;
+    },
+
     getBulletCompositeFactory() {
       if (null == this.bulletCompositeFactory) {
         this.bulletCompositeFactory = BulletCompositeFactory(
-            Bullet,
+            this.getBulletFactory(),
             ExplosionDrawObjectFactory(this.images),
             this.getGameObjectDrawObjectFactory(),
             this.getGameObjectManager(),
-            this.getDrawObjectManager());
+            this.getDrawObjectManager(),
+            this.getFaction());
       }
       return this.bulletCompositeFactory;
+    },
+
+    getFaction() {
+      if (null == this.faction) {
+        this.faction = Faction.create();
+      }
+      return this.faction;
     },
 
   };
