@@ -24,9 +24,24 @@ const Initializer = (images) => {
     getShip() {
       if (null == this.ship) {
         this.ship = ShipFactory(this.getGameObjectManager(), this.getFaction())
-            .createShip()
+            .createShip();
       }
       return this.ship;
+    },
+
+    getShipComposite() {
+      if (null == this.shipComposite) {
+        this.shipComposite = ShipCompositeFactory(
+            this.getShip(),
+            ImageDrawObject,
+            this.getGameObjectDrawObjectFactory(),
+            this.getGameObjectManager(),
+            this.getDrawObjectManager(),
+            this.getFaction(),
+            this.images)
+          .create();
+      }
+      return this.shipComposite;
     },
 
     getCanvas() {

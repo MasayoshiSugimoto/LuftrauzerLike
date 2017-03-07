@@ -8,11 +8,12 @@ const Ship = {
 
   create() {
     let ship = {
+      className  :  "Ship",
       isBoost    :  false,
       isLeft     :  false,
       isRight    :  false,
       position   :  Vector2D.create(0,0), //Game coordinates in meter
-      direction   :  0, //Angle in radian
+      direction  :  0, //Angle in radian
       velocity   :  Vector2D.create(0,0), //Velocity in meter/second
       hp         :  10, //Starting HP
     };
@@ -92,20 +93,12 @@ const Ship = {
 
 };
 
-const ShipFactory = (gameObjectManager, faction) => {
+const ShipFactory = () => {
   return {
-    gameObjectManager: gameObjectManager,
-    faction: faction,
 
     createShip() {
-      let ship = Ship.create();
-      this.gameObjectManager.push(ship);
-      this.faction.setGoodFaction(ship);
-      return ship;
+      return Ship.create();
     },
 
-    getFaction() {
-      return this.faction;
-    },
   };
 };
