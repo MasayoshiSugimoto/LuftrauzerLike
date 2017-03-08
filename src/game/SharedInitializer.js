@@ -24,5 +24,12 @@ const SharedInitializer = (images) => {
       return this.frameCounter;
     },
 
+    getGameLoop() {
+      if (null == this.gameLoop) {
+        this.gameLoop = GameLoop.create(window, Time.create());
+      }
+      return this.gameLoop;
+    },
+
   };
 };

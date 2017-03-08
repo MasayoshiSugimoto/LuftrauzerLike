@@ -33,17 +33,14 @@ const StartMenu = {
         camera:                camera,
       }, this.proto);
 
-    const scheduler = Scheduler.create(Time.create());
-
     //Setup keyboard handlers.
     windowObject.onkeydown = (event) => {
       if (event.which == KEYBOARD_KEY_ENTER) {
-        scheduler.cancel();
         onEnterPressedCallback();
       }
     }
 
-    sharedInitializer.getScheduler()
+    sharedInitializer.getGameLoop()
         .setGameLoop( (elapsedTimeSecond) => { startMenu.update(elapsedTimeSecond); } );
 
     return startMenu;

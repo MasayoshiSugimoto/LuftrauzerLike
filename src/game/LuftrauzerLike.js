@@ -45,7 +45,7 @@ const LuftrauzerLike = {
 
         //Start the game after loading the image
         const luftrauzerLike = this;
-        this.sharedInitializer.getScheduler().setGameLoop(
+        this.sharedInitializer.getGameLoop().setGameLoop(
             (elapsedTimeSecond) => { luftrauzerLike.gameLoop(elapsedTimeSecond); });
       },
 
