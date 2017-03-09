@@ -33,6 +33,9 @@ const EmptyGameObject = {
       this.direction = direction;
       return this;
     },
+    getRadius() {
+      return 0.0;
+    },
   }
 
 };
