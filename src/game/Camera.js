@@ -34,6 +34,10 @@ const Camera = {
         return this;
       },
 
+      getSize() {
+        return this.canvas.getGameSpaceSize();
+      },
+
     };
   }
 

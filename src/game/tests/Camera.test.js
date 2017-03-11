@@ -19,3 +19,15 @@
   util.assertEqualFloat(18, camera.position.getY());
 }
 
+{ //Test 'getSize'
+  const util = Util.create();
+
+  const canvas = {
+    getGameSpaceSize() {
+      return Vector2D.create(1.0, 2.0);
+    },
+  };
+
+  const camera = Camera.create(canvas, "subject");
+  util.assert(camera.getSize().equals(Vector2D.create(1.0, 2.0)));
+}

@@ -31,7 +31,10 @@ const SurvivalBattle = {
       this.initializer.getShipComposite() //Create a composite.
 
       //Enemy
-      EnemyPopper.create(this.initializer.getSimpleEnemyCompositeFactory(), window);
+      EnemyPopper.create(
+          this.initializer.getSimpleEnemyCompositeFactory(),
+          window,
+          this.initializer.getCamera());
 
       //Start the game after loading the image
       const that = this;
