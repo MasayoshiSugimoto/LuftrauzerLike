@@ -14,7 +14,6 @@ const SurvivalBattle = {
   proto: {
     initialize() {
       this.initializer = Initializer(this.sharedInitializer.getImages());
-      GameKeyboardHandler.setup(this.initializer);
 
       //Clouds
       CloudGenerator.create(this.initializer.getDrawObjectManager(), this.sharedInitializer.getImages(), Cloud, ImageDrawObject);

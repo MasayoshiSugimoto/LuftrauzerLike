@@ -21,9 +21,16 @@ const Initializer = (images) => {
       return this.gameObjectManager;
     },
 
+    getShipKeyboardController() {
+      if (null == this.shipKeyboardController) {
+        this.shipKeyboardController = ShipKeyboardController(window);
+      }
+      return this.shipKeyboardController;
+    },
+
     getShip() {
       if (null == this.ship) {
-        this.ship = ShipFactory(this.getGameObjectManager(), this.getFaction())
+        this.ship = ShipFactory(this.getShipKeyboardController())
             .createShip();
       }
       return this.ship;
@@ -80,6 +87,10 @@ const Initializer = (images) => {
               window
             )
             .createMachineGun(this.getShip());
+        //Resolve circular dependency on ShipKeyboardController
+        const machineGun = this.machineGun;
+        this.getShipKeyboardController().onFireStartCallback = () => { machineGun.onFireStart(); }
+        this.getShipKeyboardController().onFireStopCallback = () => { machineGun.onFireStop(); }
       }
       return this.machineGun;
     },

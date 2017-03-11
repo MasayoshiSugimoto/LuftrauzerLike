@@ -6,12 +6,10 @@ const SHIP_BOOST_UNIT      = 0.1; //Velocity in meter/second
 
 const Ship = {
 
-  create() {
+  create(controller) {
     let ship = {
       className  :  "Ship",
-      isBoost    :  false,
-      isLeft     :  false,
-      isRight    :  false,
+      controller :  controller,
       position   :  Vector2D.create(0,0), //Game coordinates in meter
       direction  :  0, //Angle in radian
       velocity   :  Vector2D.create(0,0), //Velocity in meter/second
@@ -45,16 +43,16 @@ const Ship = {
     updateControl(elapsedTime /*frame duration in second*/) {
 
       //Update direction
-      if (this.isLeft) {
+      if (this.controller.isLeft()) {
         this.setDirection(
           this.getDirection() - (SHIP_ROTATION_UNIT * elapsedTime));
-      } else if (this.isRight) {
+      } else if (this.controller.isRight()) {
         this.setDirection(
           this.getDirection() + (SHIP_ROTATION_UNIT * elapsedTime));
       }
 
       //Update boost
-      if (this.isBoost) {
+      if (this.controller.isBoost()) {
         this.velocity = this.velocity.add(
           Vector2D.create(SHIP_BOOST_UNIT * elapsedTime,0).rotate(this.getDirection()));
       }
@@ -93,11 +91,11 @@ const Ship = {
 
 };
 
-const ShipFactory = () => {
+const ShipFactory = (controller) => {
   return {
 
     createShip() {
-      return Ship.create();
+      return Ship.create(controller);
     },
 
   };
