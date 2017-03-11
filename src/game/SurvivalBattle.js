@@ -2,9 +2,8 @@
 
 const SurvivalBattle = {
 
-  create(images, sharedInitializer) {
+  create(sharedInitializer) {
     const survivalBattle = Object.assign({
-        images: images,
         sharedInitializer: sharedInitializer,
       }, this.proto);
     survivalBattle.initialize();
@@ -13,11 +12,11 @@ const SurvivalBattle = {
 
   proto: {
     initialize() {
-      this.initializer = Initializer(this.images);
+      this.initializer = Initializer(this.sharedInitializer.getImages());
       GameKeyboardHandler.setup(this.initializer);
 
       //Clouds
-      CloudGenerator.create(this.initializer.getDrawObjectManager(), this.images, Cloud, ImageDrawObject);
+      CloudGenerator.create(this.initializer.getDrawObjectManager(), this.sharedInitializer.getImages(), Cloud, ImageDrawObject);
 
       //Ship
       this.initializer.getShip()

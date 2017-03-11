@@ -31,5 +31,8 @@ const SharedInitializer = (images) => {
       return this.gameLoop;
     },
 
+    getImages() {
+      return images;
+    },
   };
 };

@@ -1,12 +1,12 @@
 "use strict";
 
 const StartMenu = {
-  create(images, windowObject, onEnterPressedCallback, sharedInitializer) {
+  create(windowObject, sharedInitializer, onEnterPressedCallback) {
 
     const canvas = Canvas.create(document.getElementById("canvas"), window);
 
     //Setup title
-    const titleImageDrawObject = ImageDrawObject.create(images.get('images/Title.png'))
+    const titleImageDrawObject = ImageDrawObject.create(sharedInitializer.getImages().get('images/Title.png'))
         .setScale(3.0);
     canvas.center(titleImageDrawObject);
 
@@ -22,7 +22,7 @@ const StartMenu = {
     const drawObjectManager = DrawObjectManager.create().add(titleImageDrawObject);
 
     //Clouds
-    CloudGenerator.create(drawObjectManager, images, Cloud, ImageDrawObject);
+    CloudGenerator.create(drawObjectManager, sharedInitializer.getImages(), Cloud, ImageDrawObject);
 
     const camera = Camera.create(canvas, target);
 
