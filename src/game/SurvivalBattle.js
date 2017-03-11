@@ -61,7 +61,6 @@ const SurvivalBattle = {
       this.initializer.getMachineGun().update(elapsedTimeSecond);
       this.initializer.getGameObjectManager().update(elapsedTimeSecond);
       this.initializer.getCollisionManager().applyCollision();
-      this.initializer.getGameMap().keepAllGameObjectsInMap();
 
       this.initializer.getCanvas()
           .fullScreen()

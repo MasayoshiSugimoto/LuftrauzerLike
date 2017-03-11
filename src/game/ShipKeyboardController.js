@@ -21,6 +21,13 @@ const ShipKeyboardController = (windowObject) => {
       return this.right;
     },
 
+    setOnFireStartCallback(onFireStartCallback) {
+      this.onFireStartCallback = onFireStartCallback;
+    },
+
+    setOnFireStopCallback(onFireStopCallback) {
+      this.onFireStopCallback = onFireStopCallback;
+    },
   };
 
   //Set the handles when a key is pressed

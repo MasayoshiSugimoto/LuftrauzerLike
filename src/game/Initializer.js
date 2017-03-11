@@ -23,7 +23,7 @@ const Initializer = (images) => {
 
     getShipKeyboardController() {
       if (null == this.shipKeyboardController) {
-        this.shipKeyboardController = ShipKeyboardController(window);
+        this.shipKeyboardController = BorderController(ShipKeyboardController(window));
       }
       return this.shipKeyboardController;
     },
@@ -32,6 +32,7 @@ const Initializer = (images) => {
       if (null == this.ship) {
         this.ship = ShipFactory(this.getShipKeyboardController())
             .createShip();
+        this.getShipKeyboardController().setShip(this.ship);
       }
       return this.ship;
     },
@@ -89,8 +90,8 @@ const Initializer = (images) => {
             .createMachineGun(this.getShip());
         //Resolve circular dependency on ShipKeyboardController
         const machineGun = this.machineGun;
-        this.getShipKeyboardController().onFireStartCallback = () => { machineGun.onFireStart(); }
-        this.getShipKeyboardController().onFireStopCallback = () => { machineGun.onFireStop(); }
+        this.getShipKeyboardController().setOnFireStartCallback( () => { machineGun.onFireStart(); } );
+        this.getShipKeyboardController().setOnFireStopCallback( () => { machineGun.onFireStop(); } );
       }
       return this.machineGun;
     },
