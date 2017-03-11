@@ -16,7 +16,7 @@ Tasks
 |Paralax                                |       |         |
 |Clouds                                 | DONE  |         |
 |Ground                                 |       |         |
-|Enemy manager                          |       |         |
+|Enemy manager                          | DONE  |         |
 |Particule manager                      |       |         |
 |z axis                                 |       |         |
 |Simple effect                          |       |         |
