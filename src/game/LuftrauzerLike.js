@@ -14,17 +14,18 @@ const LuftrauzerLike = {
       //This function is only called once at startup
       startGame() {
         const that = this;
+        ImageLoader.load(ImageFactory, IMAGE_DATA, (images) => {
+            that.sharedInitializer = SharedInitializer(images);
+            that.runGame();
+          } );
+      },
 
-        const loadImage = () => {
-            ImageLoader.load(ImageFactory, IMAGE_DATA, (images) => {
-                that.sharedInitializer = SharedInitializer(images);
-                startStartMenu();
-              } );
-          };
+      runGame() {
+        const that = this;
         const startStartMenu = () => { StartMenu.create(window, that.sharedInitializer, startSurvivalBattle); };
-        const startSurvivalBattle = () => { SurvivalBattle.create(that.sharedInitializer); };
-
-        loadImage();
+        const startSurvivalBattle = () => { SurvivalBattle.create(that.sharedInitializer, restartGame) };
+        const restartGame = () => { that.runGame() };
+        startStartMenu();
       }
     };
   }

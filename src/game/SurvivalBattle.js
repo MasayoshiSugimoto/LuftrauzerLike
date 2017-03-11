@@ -2,9 +2,10 @@
 
 const SurvivalBattle = {
 
-  create(sharedInitializer) {
+  create(sharedInitializer, onEndCallback) {
     const survivalBattle = Object.assign({
         sharedInitializer: sharedInitializer,
+        onEndCallback: onEndCallback,
       }, this.proto);
     survivalBattle.initialize();
     return survivalBattle;
@@ -34,12 +35,21 @@ const SurvivalBattle = {
 
       //Start the game after loading the image
       const that = this;
+      this.update = this.playingLoop;
       this.sharedInitializer.getGameLoop().setGameLoop(
           (elapsedTimeSecond) => { that.update(elapsedTimeSecond); });
     },
 
-    update(elapsedTimeSecond) {
+    playingLoop(elapsedTimeSecond) {
+      this.sharedLoop(elapsedTimeSecond);
+      if (this.initializer.getShip().isDead()) {
+        const that = this;
+        window.setTimeout(that.onEndCallback, 3000/*milliseconds*/);
+        this.update = this.sharedLoop;
+      }
+    },
 
+    sharedLoop(elapsedTimeSecond) {
       this.sharedInitializer.getFrameCounter().increment();
       this.sharedInitializer.getDebugMenu()
           .setDrawObjectManagerSize(this.initializer.getDrawObjectManager().length());
@@ -59,5 +69,6 @@ const SurvivalBattle = {
       this.initializer.getCamera().update();
       this.initializer.getDrawObjectManager().draw(this.initializer.getCamera(), elapsedTimeSecond);
     },
+
   },
 };
