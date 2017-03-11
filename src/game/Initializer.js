@@ -66,13 +66,6 @@ const Initializer = (images) => {
       return this.camera;
     },
 
-    getGameMap() {
-      if (null == this.gameMap) {
-        this.gameMap = GameMap.create(this.getGameObjectManager());
-      }
-      return this.gameMap;
-    },
-
     getCollisionManager() {
       if (null == this.collisionManager) {
         this.collisionManager = CollisionManager
