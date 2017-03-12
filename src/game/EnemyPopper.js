@@ -18,8 +18,8 @@ const EnemyPopper = {
       const enemy = this.enemyFactory.create();
       let popOffset = Vector2D.zero();
       const center = this.camera.getSize().scalarMultiply(0.5);
-      const xOffset = center.getX() + ENEMY_POPPER_MARGIN_METER;
-      const yOffset = center.getY() + ENEMY_POPPER_MARGIN_METER;
+      const xOffset = this.camera.getSize().getX() + ENEMY_POPPER_MARGIN_METER;
+      const yOffset = this.camera.getSize().getY() + ENEMY_POPPER_MARGIN_METER;
       switch (this.enemyCounter) {
         case 0:
           popOffset = Vector2D.create(-xOffset, 0.0);

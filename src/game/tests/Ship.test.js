@@ -2,14 +2,14 @@ const STANDARD_FRAME_DURATION_SECOND = 1 / 30;
 
 {
   //Test that the velocity does not get bigger than the max
-  let ship = Ship.create(TEST_SHAPE_MAP.getTestShip());
+  const ship = Ship.create(ShipKeyboardControllerTest());
   ship.updatePosition(50/*duration in second*/);
   Util.create().assert(ship.getVelocity().distance() <= SHIP_VELOCITY_MAX);
 }
 
 {
   //Test that the gravity is applied
-  let ship = Ship.create(TEST_SHAPE_MAP.getTestShip());
+  const ship = Ship.create(ShipKeyboardControllerTest());
   ship.updatePosition(STANDARD_FRAME_DURATION_SECOND /*duration in second*/);
 
   //Check that the gravity is applied to the velocity of the ship.
@@ -23,8 +23,8 @@ const STANDARD_FRAME_DURATION_SECOND = 1 / 30;
 
 {
   //Check that if there is no input, the ship does not move.
-  let ship = Ship.create(TEST_SHAPE_MAP.getTestShip());
-  let util = Util.create();
+  const ship = Ship.create(ShipKeyboardControllerTest());
+  const util = Util.create();
   ship.updateControl(STANDARD_FRAME_DURATION_SECOND /*duration in second*/);
   util.assert(ship.getVelocity().getX() == 0);
   util.assert(ship.getVelocity().getY() == 0);
@@ -34,9 +34,12 @@ const STANDARD_FRAME_DURATION_SECOND = 1 / 30;
 
 {
   //Check that some velocity forward is added to the ship when the boost is on.
-  let ship = Ship.create(TEST_SHAPE_MAP.getTestShip());
-  let util = Util.create();
-  ship.isBoost = true;
+  const shipController = ShipKeyboardControllerTest();
+  shipController.isBoost = () => {
+    return true;
+  };
+  const ship = Ship.create(shipController);
+  const util = Util.create();
   ship.updateControl(STANDARD_FRAME_DURATION_SECOND /*duration in second*/);
   util.assert(ship.getVelocity().getX() > 0);
   util.assert(ship.getVelocity().getY() == 0);
@@ -47,9 +50,10 @@ const STANDARD_FRAME_DURATION_SECOND = 1 / 30;
 
 {
   //Test that the direction change when the left button is pressed.
-  let ship = Ship.create(TEST_SHAPE_MAP.getTestShip());
-  let util = Util.create();
-  ship.isLeft = true;
+  const shipController = ShipKeyboardControllerTest();
+  shipController.isLeft = () => { return true; };
+  const ship = Ship.create(shipController);
+  const util = Util.create();
   ship.updateControl(STANDARD_FRAME_DURATION_SECOND /*duration in second*/);
   util.assert(ship.getVelocity().getX() == 0);
   util.assert(ship.getVelocity().getY() == 0);
@@ -60,9 +64,12 @@ const STANDARD_FRAME_DURATION_SECOND = 1 / 30;
 
 {
   //Test that the direction change when the right button is pressed.
-  let ship = Ship.create(TEST_SHAPE_MAP.getTestShip());
-  let util = Util.create();
-  ship.isRight = true;
+  const shipController = ShipKeyboardControllerTest();
+  shipController.isRight = () => {
+    return true;
+  };
+  const ship = Ship.create(shipController);
+  const util = Util.create();
   ship.updateControl(STANDARD_FRAME_DURATION_SECOND /*duration in second*/);
   util.assert(ship.getVelocity().getX() == 0);
   util.assert(ship.getVelocity().getY() == 0);
@@ -74,16 +81,16 @@ const STANDARD_FRAME_DURATION_SECOND = 1 / 30;
 { //Test 'ShipFactory'
   const util = Util.create();
 
-  const shipFactory = ShipFactory();
+  const shipFactory = ShipFactory(ShipKeyboardControllerTest());
   const ship = shipFactory.createShip();
 
   util.assert("Ship" == ship.className); 
 }
 
 { //Test 'isDead'
-  let util = Util.create();
+  const util = Util.create();
 
-  let ship = Ship.create();
+  const ship = Ship.create(ShipKeyboardControllerTest());
   for (index = 0; index < 9; index++) {
     ship.collide();
   }
@@ -94,9 +101,9 @@ const STANDARD_FRAME_DURATION_SECOND = 1 / 30;
 }
 
 { //Test 'getRadius'
-  let util = Util.create();
+  const util = Util.create();
 
-  let ship = Ship.create();
+  const ship = Ship.create(ShipKeyboardControllerTest());
   let called = false;
   ship.updateControl = (elapsedTime) => {
     called = true;

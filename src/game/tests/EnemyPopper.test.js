@@ -1,30 +1,40 @@
 "use strict";
 
-//{ //Test 'EnemyPopper'
-//  let util = Util.create();
-//
-//  let windowObject = {
-//    setInterval(callback, timeMilliseconds) {
-//      util.assert(timeMilliseconds == 1000);
-//      callback();
-//    }
-//  };
-//
-//  let expectedEnemy = {
-//    created: false
-//  };
-//
-//  let enemyFactory = {
-//    create() {
-//      expectedEnemy.created = true;
-//      return expectedEnemy;
-//    }
-//  };
-//
-//  let enemyPopper = EnemyPopper.create(enemyFactory, windowObject);
-//
-//  util.assert(expectedEnemy.created);
-//}
+{ //Test 'EnemyPopper'
+  const util = Util.create();
+
+  const windowObject = {
+    setInterval(callback, timeMilliseconds) {
+      util.assert(timeMilliseconds == 1000);
+      callback();
+    }
+  };
+
+  const expectedEnemy = {
+    created: false,
+    setPosition() { },
+  };
+
+  const enemyFactory = {
+    create() {
+      expectedEnemy.created = true;
+      return expectedEnemy;
+    }
+  };
+
+  const camera = {
+    getSize() {
+      return Vector2D.create(1.0, 2.0);
+    },
+    getPosition() {
+      return Vector2D.zero();
+    },
+  };
+
+  const enemyPopper = EnemyPopper.create(enemyFactory, windowObject, camera);
+
+  util.assert(expectedEnemy.created);
+}
 
 { //Test that enemies are created outside of the camera.
   const util = Util.create();
@@ -54,10 +64,19 @@
   const camera = {
     isVisible(actor) {
       const position = actor.getPosition();
-      return !(position.getX() >= camera.getPosition().getX()
-          && position.getX() <= camera.getPosition().getX() + camera.getSize().getX()
-          && position.getY() >= camera.getPosition().getY()
-          && position.getY() <= camera.getPosition().getY() + camera.getSize().getY());
+      if (position.getX() < camera.getPosition().getX()) {
+        return false;
+      }
+      if (position.getX() > (camera.getPosition().getX() + camera.getSize().getX())) {
+        return false;
+      }
+      if (position.getY() < camera.getPosition().getY()) {
+        return false;
+      }
+      if (position.getY() > (camera.getPosition().getY() + camera.getSize().getY())) {
+        return false;
+      }
+      return true;
     },
     getPosition() {
       return Vector2D.create(10.0, 20.0);
