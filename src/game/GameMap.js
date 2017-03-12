@@ -22,6 +22,9 @@ const GameMap = () => {
           && vector.getY() >= -GAME_MAP_HALF_SIZE_METER
           && vector.getY() <= GAME_MAP_HALF_SIZE_METER;
     },
+    getBottom() {
+      return GAME_MAP_HALF_SIZE_METER;
+    },
   };
 };
 

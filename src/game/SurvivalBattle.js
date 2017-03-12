@@ -35,6 +35,9 @@ const SurvivalBattle = {
           window,
           this.initializer.getCamera());
 
+      //Sea
+      this.sea = Sea(this.initializer.getCanvas(), this.initializer.getCamera(), GameMap());
+
       //Start the game after loading the image
       const that = this;
       this.update = this.playingLoop;
@@ -69,6 +72,8 @@ const SurvivalBattle = {
 
       this.initializer.getCamera().update();
       this.initializer.getDrawObjectManager().draw(this.initializer.getCamera(), elapsedTimeSecond);
+
+      this.sea.draw();
     },
 
   },

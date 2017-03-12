@@ -21,13 +21,13 @@ const Canvas = {
       },
 
       getGameSpaceHeight() {
-        return ScreenConversion.pixel2Meter(canvas.height);
+        return ScreenConversion.pixel2Meter(canvas.getHeight());
       },
 
       getGameSpaceSize() {
         return Vector2D.create(
           ScreenConversion.pixel2Meter(canvas.width),
-          ScreenConversion.pixel2Meter(canvas.height)
+          ScreenConversion.pixel2Meter(this.getHeight())
         );
       },
 
@@ -57,11 +57,13 @@ const Canvas = {
 
       fullScreen() {
         canvas.width = windowObject.innerWidth;
-        canvas.height = windowObject.innerHeight;
-        canvas.parentElement.style.margin = 0;
+        canvas.height = windowObject.innerHeight; //Need a bigger height sample for the sea effect
         return this;
-      }
+      },
 
+      getCanvas() {
+        return canvas;
+      },
     }
   }
 

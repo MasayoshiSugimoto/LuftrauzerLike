@@ -36,13 +36,7 @@
 { //Test 'fullScreen'
   const util = Util.create();
 
-  const underlyingCanvas = {
-    parentElement: {
-      style: {
-        margin: -1,
-      }
-    }
-  };
+  const underlyingCanvas = { };
   const windowObject = {
     innerWidth: 1.0,
     innerHeight: 2.0,
@@ -52,7 +46,6 @@
 
   util.assert(canvas.getWidth() == 1.0);
   util.assert(canvas.getHeight() == 2.0);
-  util.assert(underlyingCanvas.parentElement.style.margin == 0);
 }
 
 { //Test 'getGameSpaceCenter'

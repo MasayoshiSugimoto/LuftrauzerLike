@@ -56,7 +56,7 @@ const Initializer = (images) => {
 
     getCanvas() {
       if (null == this.canvas) {
-        this.canvas = Canvas.create(document.getElementById("canvas"), window);
+        this.canvas = Canvas.create(document.createElement("canvas"), window);
       }
       return this.canvas;
     },
