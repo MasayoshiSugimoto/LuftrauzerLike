@@ -23,7 +23,9 @@ const Initializer = (images) => {
 
     getShipKeyboardController() {
       if (null == this.shipKeyboardController) {
-        this.shipKeyboardController = BorderController(ShipKeyboardController(window));
+        this.shipKeyboardController = BorderController(
+            ShipKeyboardController(window),
+            GameMap());
       }
       return this.shipKeyboardController;
     },

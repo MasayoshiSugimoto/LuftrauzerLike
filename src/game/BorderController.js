@@ -3,22 +3,22 @@
 const BORDER_CONTROLLER_MAP_SIZE_METER = 10.0;
 
 //Take control of the ship when getting outside of the map.
-const BorderController = (controller) => {
+const BorderController = (controller, gameMap) => {
   return {
 
     isBoost() {
-      return this.isOutOfMap() || controller.isBoost();
+      return !this.isShipInside() || controller.isBoost();
     },
 
     isLeft() {
-      if (!this.isOutOfMap()) {
+      if (this.isShipInside()) {
         return controller.isLeft();
       }
       return this.autoDirection() == "left";
     },
 
     isRight() {
-      if (!this.isOutOfMap()) {
+      if (this.isShipInside()) {
         return controller.isRight();
       }
       return this.autoDirection() == "right";
@@ -56,8 +56,13 @@ const BorderController = (controller) => {
       }
     },
 
+    isShipInside() {
+      return gameMap.isInside(this.ship.getPosition());
+    },
+
     setShip(ship) {
       this.ship = ship;
+      return this;
     },
   };
 };
