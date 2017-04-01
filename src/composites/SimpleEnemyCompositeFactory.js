@@ -9,7 +9,7 @@ const SimpleEnemyCompositeFactory = (
   return {
     create() {
       let simpleEnemyComposite = gameObjectDrawObjectFactory.create(
-          imageDrawObjectFactory.create(images.get('images/Reisen.png')).setScale(0.4),
+          imageDrawObjectFactory.create(images.get('images/Reisen.png')).setScale(0.6),
           simpleEnemyFactory.create());
       drawObjectManager.add(simpleEnemyComposite);
       return simpleEnemyComposite;
