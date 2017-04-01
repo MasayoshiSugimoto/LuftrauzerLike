@@ -60,6 +60,10 @@ const ImageDrawObject = {
           return this;
         },
 
+        update(elapsedTime) {
+          return this;
+        },
+
         draw(canvasContext) {
           let size = this.getSize();
           let previousOpacity = canvasContext.globalAlpha;

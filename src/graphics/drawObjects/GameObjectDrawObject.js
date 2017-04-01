@@ -67,6 +67,7 @@ const GameObjectDrawObject = {
     },
     update(elapsedTimeSecond) {
       this.activeGameObject.update(elapsedTimeSecond);
+      this.activeDrawObject.update(elapsedTimeSecond);
       return this;
     },
     draw(canvasContext, elapsedTimeSecond) {

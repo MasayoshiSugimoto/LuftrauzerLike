@@ -1,3 +1,12 @@
+"use strict";
+
+const GameObjectDrawObjectTest = {
+  emptyDrawObject: {
+    update() { },
+  }
+};
+
+
 { //Test 'getGameObject'
   const util = Util.create();
 
@@ -267,7 +276,7 @@
     },
   };
 
-  const gameObjectDrawObject = GameObjectDrawObject.create("drawObject", gameObject, "factory")
+  const gameObjectDrawObject = GameObjectDrawObject.create(GameObjectDrawObjectTest.emptyDrawObject, gameObject, "factory")
       .update(1.0);
 
   util.assert(gameObject.elapsedTime == 1.0);

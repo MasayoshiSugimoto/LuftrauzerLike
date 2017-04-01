@@ -35,6 +35,10 @@ const ExplosionDrawObject = {
       return this;
     },
 
+    update(elapsedTimeSecond) {
+      return this;
+    },
+
     draw(canvasContext, elapsedTimeSecond) {
 
       //Decrease opacity with time

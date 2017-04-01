@@ -7,7 +7,9 @@ const ShipCompositeTest = {
 { //Test ShipComposite
   const util = Util.create();
 
-  const ship = { };
+  const ship = {
+    getDirection() { },
+  };
 
   const gameObjectManager = {
     push(gameObject) {
@@ -58,7 +60,6 @@ const ShipCompositeTest = {
       .create();
 
   util.assert(shipComposite.gameObject == ship);
-  util.assert(shipComposite.drawObject == imageDrawObject);
   util.assert(1.0 == shipComposite.scale);
   util.assert(imageDrawObject.image = "image");
   util.assert(shipComposite == gameObjectManager.gameObject);

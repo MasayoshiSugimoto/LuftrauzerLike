@@ -60,10 +60,10 @@ const AnimationDrawObject = {
     },
 
     getCurrentImage() {
-      return this.images[MathUtil.clamp(0, this.animationSelector.getIndex(), this.images.length)];
+      return this.images[MathUtil.clamp(0, this.animationSelector.getIndex(), this.images.length - 1)];
     },
 
-    updateAnimationSelector(elapsedTimeSecond) {
+    update(elapsedTimeSecond) {
       this.animationSelector.update(elapsedTimeSecond);
       return this;
     },
@@ -88,7 +88,7 @@ const AnimationDrawObject = {
   }
 };
 
-AnimationDrawObject.MAX_ANIMATION_DURATION_SECOND  =  2.0;
+AnimationDrawObject.MAX_ANIMATION_DURATION_SECOND  =  0.5;
 AnimationDrawObject.GO_STRAIGHT_ANIMATION_INDEX    =  15;
 AnimationDrawObject.ANIMATION_OFFSET_MAX           =  15;
 AnimationDrawObject.DIRECTION_LEFT                 =  -1.0;
@@ -132,7 +132,8 @@ AnimationDrawObject.AnimationSelector = (images, ship) => {
     //Return the index of the image to use in the animation
     getIndex() {
       let currentFrameIndex = this.startFrameIndex +
-          Math.floor((this.timeAccumulatorSecond / 2.0) * AnimationDrawObject.ANIMATION_OFFSET_MAX) * this.direction;
+          Math.floor((this.timeAccumulatorSecond / AnimationDrawObject.MAX_ANIMATION_DURATION_SECOND) *
+              AnimationDrawObject.ANIMATION_OFFSET_MAX) * this.direction;
       return Math.max(Math.min(currentFrameIndex, images.length), 0)
     },
   };

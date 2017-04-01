@@ -11,7 +11,7 @@ const ShipCompositeFactory = (
   return {
     create() {
       const shipComposite = gameObjectDrawObjectFactory.create(
-          imageDrawObjectFactory.create(images.get('images/Reisen.png')),
+          AnimationDrawObject.create(ReisenImages(images).get(), ship),
           ship)
         .setScale(1.0);
       gameObjectManager.push(shipComposite);
