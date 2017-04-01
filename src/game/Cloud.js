@@ -15,7 +15,7 @@ const Cloud = {
       className: "Cloud",
       position: Vector2D.zero(),
       direction: 0.0,
-      drawObject: ImageDrawObjectFactory.create(images.get('images/Cloud1.png'))
+      drawObject: ImageDrawObjectFactory.create(images.get('images/Cloud.png'))
         .setScale(randomScale())
         .setOpacity(0.5),
 

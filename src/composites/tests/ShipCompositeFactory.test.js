@@ -59,7 +59,7 @@ const ShipCompositeTest = {
 
   util.assert(shipComposite.gameObject == ship);
   util.assert(shipComposite.drawObject == imageDrawObject);
-  util.assert(0.5 == shipComposite.scale);
+  util.assert(1.0 == shipComposite.scale);
   util.assert(imageDrawObject.image = "image");
   util.assert(shipComposite == gameObjectManager.gameObject);
   util.assert(shipComposite == drawObjectManager.drawObject);

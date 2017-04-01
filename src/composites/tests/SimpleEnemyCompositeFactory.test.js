@@ -47,7 +47,7 @@
         images,
         drawObjectManager)
       .create();
-  util.assert(simpleEnemyComposite.drawObject.scale == 0.4);
+  util.assert(simpleEnemyComposite.drawObject.scale == 0.6);
   util.assert(simpleEnemyComposite.gameObject == simpleEnemy);
   util.assert(drawObjectManager.drawObject == simpleEnemyComposite);
 }
