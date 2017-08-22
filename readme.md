@@ -1,3 +1,18 @@
+How to start the game
+=====================
+
+Launch _LuftrauzerLike.html_ in a Chrome.
+
+Controls
+========
+
+| W     | Boost      |
+|-------|------------|
+| A     | Turn left  |
+| D     | Turn right |
+| SPACE | Fire       |
+
+
 Tasks
 =====
 
