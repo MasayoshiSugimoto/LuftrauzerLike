@@ -3,6 +3,8 @@ How to start the game
 
 Launch _LuftrauzerLike.html_ in a Chrome.
 
+On the title screen, press _Enter_ to start the game.
+
 Controls
 ========
 
