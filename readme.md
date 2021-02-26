@@ -1,6 +1,8 @@
 How to start the game
 =====================
 
+Click [here](https://masayoshisugimoto.github.io/LuftrauzerLike/LuftrauzerLike.html) to test the demo.
+
 Launch _LuftrauzerLike.html_ in a Chrome.
 
 On the title screen, press _Enter_ to start the game.
