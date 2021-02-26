@@ -81,7 +81,7 @@ const Ship = {
     },
 
     getRadius() {
-      return 0.5;
+      return 0.1 // Meter
     },
 
     isCollisionable() {

@@ -82,7 +82,7 @@ const SimpleEnemy = {
     },
 
     getRadius() {
-      return 0.2;
+      return 0.05;
     },
 
     isCollisionable() {
