@@ -1,152 +1,94 @@
-"use strict";
+"use strict"
 
-//This class declare lazy getters to chain object creations
-const Initializer = (images) => {
+// This class declare lazy getters to chain object creations
+// Set getters of 'appContext' if you want to test with mocks
+function Initializer(images, appContext = {}) {
 
-  return {
+	const lazy = f => {
+		let instance = null
+		return () => {
+			if (!instance) instance = f()
+			return instance
+		}
+	}
 
-    images: images,
+	appContext.images = images
 
-    getDrawObjectManager() {
-      if (null == this.drawObjectManager) {
-        this.drawObjectManager = DrawObjectManager.create();
-      }
-      return this.drawObjectManager;
-    },
+	appContext.getDrawObjectManager = lazy(() => DrawObjectManager.create())
 
-    getGameObjectManager() {
-      if (null == this.gameObjectManager) {
-        this.gameObjectManager = GameObjectManager.create();
-      }
-      return this.gameObjectManager;
-    },
+	appContext.getGameObjectManager = lazy(() => GameObjectManager.create())
 
-    getShipKeyboardController() {
-      if (null == this.shipKeyboardController) {
-        this.shipKeyboardController = BorderController(
-            ShipKeyboardController(window),
-            GameMap());
-      }
-      return this.shipKeyboardController;
-    },
+	appContext.getShipKeyboardController = lazy(() => BorderController(
+		ShipKeyboardController(window),
+		GameMap())
+	)
 
-    getShip() {
-      if (null == this.ship) {
-        this.ship = ShipFactory(this.getShipKeyboardController())
-            .createShip();
-        this.getShipKeyboardController().setShip(this.ship);
-      }
-      return this.ship;
-    },
+	appContext.getShip = lazy(() => {
+		const ship = ShipFactory(appContext.getShipKeyboardController()).createShip()
+		appContext.getShipKeyboardController().setShip(ship)
+		return ship
+	})
 
-    getShipComposite() {
-      if (null == this.shipComposite) {
-        this.shipComposite = ShipCompositeFactory(
-            this.getShip(),
-            ImageDrawObject,
-            this.getGameObjectDrawObjectFactory(),
-            this.getGameObjectManager(),
-            this.getDrawObjectManager(),
-            this.getFaction(),
-            this.images)
-          .create();
-      }
-      return this.shipComposite;
-    },
+	appContext.getShipComposite = lazy(() =>
+		ShipCompositeFactory(
+				appContext.getShip(),
+				ImageDrawObject,
+				appContext.getGameObjectDrawObjectFactory(),
+				appContext.getGameObjectManager(),
+				appContext.getDrawObjectManager(),
+				appContext.getFaction(),
+				appContext.images)
+		.create()
+	)
 
-    getCanvas() {
-      if (null == this.canvas) {
-        this.canvas = Canvas.create(document.createElement("canvas"), window);
-      }
-      return this.canvas;
-    },
+	appContext.getCanvas = lazy(() => Canvas.create(document.createElement("canvas"), window))
 
-    getCamera() {
-      if (null == this.camera) {
-        this.camera = Camera.create(this.getCanvas(), this.getShip());
-      }
-      return this.camera;
-    },
+	appContext.getCamera = lazy(() => Camera.create(appContext.getCanvas(), appContext.getShip()))
 
-    getCollisionManager() {
-      if (null == this.collisionManager) {
-        this.collisionManager = CollisionManager
-            .create(this.getGameObjectManager(), this.getFaction());
-      }
-      return this.collisionManager;
-    },
+	appContext.getCollisionManager = lazy(() => CollisionManager.create(
+		appContext.getGameObjectManager(),
+		appContext.getFaction()
+	))
 
-    getMachineGun() {
-      if (null == this.machineGun) {
-        this.machineGun = MachineGunFactory.create(
-              this.getBulletCompositeFactory(),
-              window
-            )
-            .createMachineGun(this.getShip());
-        //Resolve circular dependency on ShipKeyboardController
-        const machineGun = this.machineGun;
-        this.getShipKeyboardController().setOnFireStartCallback( () => { machineGun.onFireStart(); } );
-        this.getShipKeyboardController().setOnFireStopCallback( () => { machineGun.onFireStop(); } );
-      }
-      return this.machineGun;
-    },
+	appContext.getMachineGun = lazy(() => {
+		const machineGun = MachineGunFactory.create(
+				appContext.getBulletCompositeFactory(),
+				window
+			)
+			.createMachineGun(appContext.getShip())
+		//Resolve circular dependency on ShipKeyboardController
+		appContext.getShipKeyboardController().setOnFireStartCallback( () => { machineGun.onFireStart(); } )
+		appContext.getShipKeyboardController().setOnFireStopCallback( () => { machineGun.onFireStop(); } )
+		return machineGun
+	})
 
-    getSimpleEnemyFactory() {
-      if (null == this.simpleEnemyFactory) {
-        this.simpleEnemyFactory = SimpleEnemyFactory(this.getGameObjectManager(), this.getShip());
-      }
-      return this.simpleEnemyFactory;
-    },
+	appContext.getSimpleEnemyFactory = lazy(() => SimpleEnemyFactory(appContext.getGameObjectManager(), appContext.getShip()))
 
-    getSimpleEnemyCompositeFactory() {
-      if (null == this.simpleEnemyCompositeFactory) {
-        this.simpleEnemyCompositeFactory = SimpleEnemyCompositeFactory(
-          this.getSimpleEnemyFactory(),
-          ImageDrawObject,
-          this.getGameObjectDrawObjectFactory(),
-          this.images,
-          this.getDrawObjectManager()
-        );
-      }
-      return this.simpleEnemyCompositeFactory;
-    },
+	appContext.getSimpleEnemyCompositeFactory = lazy(() => SimpleEnemyCompositeFactory(
+		appContext.getSimpleEnemyFactory(),
+		ImageDrawObject,
+		appContext.getGameObjectDrawObjectFactory(),
+		appContext.images,
+		appContext.getDrawObjectManager()
+	))
 
-    getGameObjectDrawObjectFactory() {
-      if (null == this.gameObjectDrawObjectFactory) {
-        this.gameObjectDrawObjectFactory = GameObjectDrawObjectFactory(
-              ExplosionDrawObjectFactory(this.images),
-              EmptyGameObject);
-      }
-      return this.gameObjectDrawObjectFactory;
-    },
+	appContext.getGameObjectDrawObjectFactory = lazy(() => GameObjectDrawObjectFactory(
+		ExplosionDrawObjectFactory(appContext.images),
+		EmptyGameObject
+	))
 
-    getBulletFactory() {
-      if (null == this.bulletFactory) {
-        this.bulletFactory = Bullet;
-      }
-      return this.bulletFactory;
-    },
+	appContext.getBulletFactory = lazy(() => Bullet)
 
-    getBulletCompositeFactory() {
-      if (null == this.bulletCompositeFactory) {
-        this.bulletCompositeFactory = BulletCompositeFactory(
-            this.getBulletFactory(),
-            ExplosionDrawObjectFactory(this.images),
-            this.getGameObjectDrawObjectFactory(),
-            this.getGameObjectManager(),
-            this.getDrawObjectManager(),
-            this.getFaction());
-      }
-      return this.bulletCompositeFactory;
-    },
+	appContext.getBulletCompositeFactory = lazy(() => BulletCompositeFactory(
+		appContext.getBulletFactory(),
+		ExplosionDrawObjectFactory(appContext.images),
+		appContext.getGameObjectDrawObjectFactory(),
+		appContext.getGameObjectManager(),
+		appContext.getDrawObjectManager(),
+		appContext.getFaction()
+	))
 
-    getFaction() {
-      if (null == this.faction) {
-        this.faction = Faction.create();
-      }
-      return this.faction;
-    },
+	appContext.getFaction = lazy(() => Faction.create())
 
-  };
-
-};
+	return appContext
+}

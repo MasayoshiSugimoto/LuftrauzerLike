@@ -91,7 +91,7 @@ const Ship = {
 
 };
 
-const ShipFactory = (controller) => {
+function ShipFactory(controller) {
   return {
 
     createShip() {
