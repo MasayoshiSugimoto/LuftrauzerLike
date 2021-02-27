@@ -3,7 +3,7 @@
 const BORDER_CONTROLLER_MAP_SIZE_METER = 10.0;
 
 //Take control of the ship when getting outside of the map.
-const BorderController = (controller, gameMap) => {
+function BorderController(controller, gameMap) {
   return {
 
     isBoost() {

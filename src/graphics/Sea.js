@@ -1,6 +1,6 @@
 "use strict";
 
-const Sea = (inMemoryCanvas, camera, gameMap) => {
+function Sea(inMemoryCanvas, camera, gameMap) {
   return { 
     draw() {
       const canvas = document.getElementById("canvas");

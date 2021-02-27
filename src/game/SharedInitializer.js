@@ -1,6 +1,6 @@
 "use strict";
 
-const SharedInitializer = (images) => {
+function SharedInitializer(images) {
   return {
 
     getScheduler() {

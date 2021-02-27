@@ -67,7 +67,7 @@ const ExplosionDrawObject = {
   }
 };
 
-const ExplosionDrawObjectFactory = (images) => {
+function ExplosionDrawObjectFactory(images) {
   return {
     create() {
       return ExplosionDrawObject.create(images.get('images/Explosion.png'));

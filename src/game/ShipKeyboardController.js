@@ -1,6 +1,6 @@
 "use strict";
 
-const ShipKeyboardController = (windowObject) => {
+function ShipKeyboardController(windowObject) {
 
   const shipController = {
     boost:  false,

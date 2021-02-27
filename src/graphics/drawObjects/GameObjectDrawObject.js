@@ -100,7 +100,7 @@ const GameObjectDrawObject = {
   },
 };
 
-const GameObjectDrawObjectFactory = (explosionDrawObjectFactory, emptyGameObjectFactory) => {
+function GameObjectDrawObjectFactory(explosionDrawObjectFactory, emptyGameObjectFactory) {
   return {
     explosionDrawObjectFactory: explosionDrawObjectFactory,
     emptyGameObjectFactory: emptyGameObjectFactory,

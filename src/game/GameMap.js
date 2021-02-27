@@ -2,7 +2,7 @@
 
 const GAME_MAP_HALF_SIZE_METER = 10.0;
 
-const GameMap = () => {
+function GameMap() {
   return {
     getWidthMeter() {
       return 2 * GAME_MAP_HALF_SIZE_METER;

@@ -1,6 +1,6 @@
 "use strict";
 
-const ReisenImages = (images) => {
+function ReisenImages(images) {
 
   const paths = [
     "images/Reisen15.png",

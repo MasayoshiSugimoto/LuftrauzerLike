@@ -1,6 +1,6 @@
 "use strict";
 
-const Disposable = (object) => {
+function Disposable(object) {
   object.toBeDeleted = false;
   return {
     markForDeletion() {

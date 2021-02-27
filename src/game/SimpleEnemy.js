@@ -92,7 +92,7 @@ const SimpleEnemy = {
   }
 };
 
-const SimpleEnemyFactory = (gameObjectManager, target) => {
+function SimpleEnemyFactory(gameObjectManager, target) {
   return {
     create() {
       let simpleEnemy = SimpleEnemy.create(target, { });
