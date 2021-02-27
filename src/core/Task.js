@@ -1,6 +1,6 @@
 "use strict";
 
-const Task = () => {
+function Task() {
   const task = {
     asynchronous: false,
     then(onEndCallback) {

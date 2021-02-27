@@ -1,13 +1,13 @@
 "use strict";
 
 //This is a top most factory, it should take care of the registration in drawObject manager and gameObject manager.
-const BulletCompositeFactory = (
+function BulletCompositeFactory(
     bulletFactory,
     explosionFactory,
     gameObjectDrawObjectFactory,
     gameObjectManager,
     drawObjectManager,
-    faction) => {
+    faction) {
   return {
     create() {
       const explosion = explosionFactory.create().setScale(0.5);

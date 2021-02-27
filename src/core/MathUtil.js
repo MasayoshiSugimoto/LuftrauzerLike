@@ -1,6 +1,6 @@
 "use strict";
 
-const MathUtil = { };
+function MathUtil() {}
 
 MathUtil.EPSILON = 0.00001;
 

@@ -1,13 +1,13 @@
 "use strict";
 
-const ShipCompositeFactory = (
+function ShipCompositeFactory(
     ship,
     imageDrawObjectFactory,
     gameObjectDrawObjectFactory,
     gameObjectManager,
     drawObjectManager,
     faction,
-    images) => {
+    images) {
   return {
     create() {
       const shipComposite = gameObjectDrawObjectFactory.create(

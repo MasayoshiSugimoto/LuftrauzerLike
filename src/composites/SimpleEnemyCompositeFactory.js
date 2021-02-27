@@ -1,11 +1,11 @@
 "use strict";
 
-const SimpleEnemyCompositeFactory = (
+function SimpleEnemyCompositeFactory (
     simpleEnemyFactory,
     imageDrawObjectFactory,
     gameObjectDrawObjectFactory,
     images,
-    drawObjectManager) => {
+    drawObjectManager) {
   return {
     create() {
       let simpleEnemyComposite = gameObjectDrawObjectFactory.create(

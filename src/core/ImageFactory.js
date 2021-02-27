@@ -1,5 +1,5 @@
 "use strict";
 
-const ImageFactory = () => {
+function ImageFactory() {
   return new Image();
 };
