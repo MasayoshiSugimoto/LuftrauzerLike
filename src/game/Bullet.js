@@ -2,19 +2,23 @@
 
 const Bullet = {
 
-  create(position, direction) {
+  create: function(position, direction) {
     let state = {
       className  :  "bullet",
-      position   :  position,
-      direction  :  direction,  //Radian
-      velocity   :  6.0,        //meter   per  second
-    };
+    }
 
-    return Object.assign(
+    const bullet = Object.assign(
       state,
-      GameSpacePositionableComposite(state),
+			PhysicalComponent.prototype,
       this.proto,
-      Disposable(state));
+      Disposable(state)
+		)
+
+		bullet.position = position,
+		bullet.direction = direction
+		bullet.velocity = 6.0 // Metter per second
+
+		return bullet
   },
 
   proto: {

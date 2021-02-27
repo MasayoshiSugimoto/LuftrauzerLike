@@ -8,7 +8,7 @@
 
   const bullet = Bullet.create(position, direction);
 
-  util.assert(bullet.getPosition().equals(position));
+  util.assert(bullet.position.equals(position));
   util.assert(direction == bullet.getDirection());
 }
 
@@ -21,8 +21,8 @@
   const bullet = Bullet.create(position, direction)
       .updatePosition(1.0 /* duration in second */);
 
-  util.assert(bullet.getPosition().getX() == 6.0);
-  util.assert(bullet.getPosition().getY() == 0.0);
+  util.assert(bullet.position.getX() == 6.0);
+  util.assert(bullet.position.getY() == 0.0);
 }
 
 
@@ -35,7 +35,7 @@
   const bullet = Bullet.create(position, direction)
       .updatePosition(1.0 /* duration in second */);
 
-  util.assert(bullet.getPosition().getX() < 0.0);
-  util.assert(bullet.getPosition().getY() < 0.0);
-  util.assert(util.compareFloat(bullet.getPosition().distance(), 6.0));
+  util.assert(bullet.position.getX() < 0.0);
+  util.assert(bullet.position.getY() < 0.0);
+  util.assert(util.compareFloat(bullet.position.distance(), 6.0));
 }

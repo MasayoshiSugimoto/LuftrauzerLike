@@ -15,43 +15,11 @@ const GameObjectDrawObjectTest = {
   util.assert(gameObject == GameObjectDrawObject.create({ }, gameObject).getGameObject());
 }
 
-{ //Test 'getPosition'
-  const util = Util.create();
-
-  const gameObject = {
-    getPosition() {
-      return Vector2D.create(1.0, 2.0);
-    }
-  };
-
-  const gameObjectDrawObject = GameObjectDrawObject.create({}, gameObject);
-
-  util.assert(1.0 == gameObjectDrawObject.getPosition().getX());
-  util.assert(2.0 == gameObjectDrawObject.getPosition().getY());
-}
-
-{ //Test 'setPosition'
-  const util = Util.create();
-
-  const gameObject = {
-    setPosition(position) {
-      util.assert("position");
-      return this;
-    },
-  };
-
-  const gameObjectDrawObject = GameObjectDrawObject.create("drawObject", gameObject);
-
-  util.assert(gameObjectDrawObject.setPosition("position") == gameObjectDrawObject);
-}
-
 { //Test 'getScreenPosition'
   let util = Util.create();
 
   let gameObject = {
-    getPosition() {
-      return Vector2D.create(1.0, 2.0);
-    }
+		position: Vector2D.create(1.0, 2.0)
   };
 
   let gameObjectDrawObject = GameObjectDrawObject.create({}, gameObject);
