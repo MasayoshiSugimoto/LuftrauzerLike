@@ -10,24 +10,18 @@ const Ship = {
     let ship = {
       className  :  "Ship",
       controller :  controller,
-      position   :  Vector2D.create(0,0), //Game coordinates in meter
-      direction  :  0, //Angle in radian
-      velocity   :  Vector2D.create(0,0), //Velocity in meter/second
       hp         :  10, //Starting HP
     };
-    return Object.assign(ship, this.proto, GameSpacePositionableComposite(ship), Disposable(ship));
+    return Object.assign(
+			ship, 
+			this.proto, 
+			PhysicalComponent.prototype,
+			GameSpacePositionableComposite(ship), 
+			Disposable(ship)
+		);
   },
 
   proto: {
-
-    setVelocity(velocity) {
-      this.velocity = velocity;
-      return this;
-    },
-
-    getVelocity() {
-      return this.velocity;
-    },
 
     updatePosition(elapsedTime /*frame duration in second*/) {
       //Update velocity

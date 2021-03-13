@@ -4,7 +4,7 @@ const STANDARD_FRAME_DURATION_SECOND = 1 / 30;
   //Test that the velocity does not get bigger than the max
   const ship = Ship.create(ShipKeyboardControllerTest());
   ship.updatePosition(50/*duration in second*/);
-  Util.create().assert(ship.getVelocity().distance() <= SHIP_VELOCITY_MAX);
+  Util.create().assert(ship.velocity.distance() <= SHIP_VELOCITY_MAX);
 }
 
 {
@@ -13,8 +13,8 @@ const STANDARD_FRAME_DURATION_SECOND = 1 / 30;
   ship.updatePosition(STANDARD_FRAME_DURATION_SECOND /*duration in second*/);
 
   //Check that the gravity is applied to the velocity of the ship.
-  Util.create().assert(ship.getVelocity().getX() == 0);
-  Util.create().assert(ship.getVelocity().getY() > 0);
+  Util.create().assert(ship.velocity.getX() == 0);
+  Util.create().assert(ship.velocity.getY() > 0);
 
   //Check that the position has moved down
   Util.create().assert(ship.getPosition().getX() == 0);
@@ -26,8 +26,8 @@ const STANDARD_FRAME_DURATION_SECOND = 1 / 30;
   const ship = Ship.create(ShipKeyboardControllerTest());
   const util = Util.create();
   ship.updateControl(STANDARD_FRAME_DURATION_SECOND /*duration in second*/);
-  util.assert(ship.getVelocity().getX() == 0);
-  util.assert(ship.getVelocity().getY() == 0);
+  util.assert(ship.velocity.getX() == 0);
+  util.assert(ship.velocity.getY() == 0);
   util.assert(ship.getPosition().getX() == 0);
   util.assert(ship.getPosition().getY() == 0);
 }
@@ -41,8 +41,8 @@ const STANDARD_FRAME_DURATION_SECOND = 1 / 30;
   const ship = Ship.create(shipController);
   const util = Util.create();
   ship.updateControl(STANDARD_FRAME_DURATION_SECOND /*duration in second*/);
-  util.assert(ship.getVelocity().getX() > 0);
-  util.assert(ship.getVelocity().getY() == 0);
+  util.assert(ship.velocity.getX() > 0);
+  util.assert(ship.velocity.getY() == 0);
   util.assert(ship.getPosition().getX() == 0);
   util.assert(ship.getPosition().getY() == 0);
   util.assert(ship.getDirection() == 0);
@@ -55,8 +55,8 @@ const STANDARD_FRAME_DURATION_SECOND = 1 / 30;
   const ship = Ship.create(shipController);
   const util = Util.create();
   ship.updateControl(STANDARD_FRAME_DURATION_SECOND /*duration in second*/);
-  util.assert(ship.getVelocity().getX() == 0);
-  util.assert(ship.getVelocity().getY() == 0);
+  util.assert(ship.velocity.getX() == 0);
+  util.assert(ship.velocity.getY() == 0);
   util.assert(ship.getPosition().getX() == 0);
   util.assert(ship.getPosition().getY() == 0);
   util.assert(ship.getDirection() < 0);
@@ -71,8 +71,8 @@ const STANDARD_FRAME_DURATION_SECOND = 1 / 30;
   const ship = Ship.create(shipController);
   const util = Util.create();
   ship.updateControl(STANDARD_FRAME_DURATION_SECOND /*duration in second*/);
-  util.assert(ship.getVelocity().getX() == 0);
-  util.assert(ship.getVelocity().getY() == 0);
+  util.assert(ship.velocity.getX() == 0);
+  util.assert(ship.velocity.getY() == 0);
   util.assert(ship.getPosition().getX() == 0);
   util.assert(ship.getPosition().getY() == 0);
   util.assert(ship.getDirection() > 0);

@@ -25,8 +25,8 @@ const SurvivalBattle = {
             ScreenConversion.pixel2Meter(this.initializer.getCanvas().getWidth() / 2),
             ScreenConversion.pixel2Meter(this.initializer.getCanvas().getHeight() - 1)))
         //The ship starts by beeing thrown upward.
-        .setDirection(-Math.PI / 2.0)
-        .setVelocity(Vector2D.create(0.0, -5));
+        .setDirection(-Math.PI / 2.0);
+			this.initializer.getShip().velocity = Vector2D.create(0.0, -5);
       this.initializer.getShipComposite() //Create a composite.
 
       //Enemy
