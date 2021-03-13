@@ -13,8 +13,6 @@ const Cloud = {
 
     let cloud = {
       className: "Cloud",
-      position: Vector2D.zero(),
-      direction: 0.0,
       drawObject: ImageDrawObjectFactory.create(images.get('images/Cloud.png'))
         .setScale(randomScale())
         .setOpacity(0.5),
@@ -32,16 +30,9 @@ const Cloud = {
         this.position = position;
         return this;
       },
-      getDirection() {
-        return this.direction;
-      },
-      setDirection(direction) {
-        this.direction = direction;
-        return this;
-      },
     };
 
-    return cloud;
+    return Object.assign(cloud, PhysicalComponent.prototype);
   }
 
 };
