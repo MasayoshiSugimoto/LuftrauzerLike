@@ -30,17 +30,17 @@ const GameObjectDrawObject = {
       return this.activeDrawObject;
     },
     getPosition() {
-      return this.activeGameObject.position;
+      return this.activeGameObject.getPosition();
     },
     setPosition(position) {
-      this.activeGameObject.position = position
+      this.activeGameObject.setPosition(position)
       return this
     },
     getScreenPosition() {
-      return this.activeGameObject.position.scalarMultiply(PIXEL_PER_METER);
+      return this.activeGameObject.getPosition().scalarMultiply(PIXEL_PER_METER);
     },
     setScreenPosition(position) {
-      this.activeGameObject.position = position.scalarMultiply(1.0 / PIXEL_PER_METER)
+      this.activeGameObject.setPosition(position.scalarMultiply(1.0 / PIXEL_PER_METER))
       return this;
     },
     getDirection() {

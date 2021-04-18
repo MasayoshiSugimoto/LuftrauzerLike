@@ -72,5 +72,8 @@ const Angle = {
 
   },
 
+  zero() {
+    return Angle.create(0.0)
+  }
 };
 

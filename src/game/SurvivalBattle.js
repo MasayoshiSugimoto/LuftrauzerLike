@@ -26,7 +26,7 @@ const SurvivalBattle = {
             ScreenConversion.pixel2Meter(this.initializer.getCanvas().getHeight() - 1)))
         //The ship starts by beeing thrown upward.
         .setDirection(-Math.PI / 2.0);
-			this.initializer.getShip().velocity = Vector2D.create(0.0, -5);
+      this.initializer.getShip().velocity = Vector2D.create(0.0, -5);
       this.initializer.getShipComposite() //Create a composite.
 
       //Enemy
@@ -62,6 +62,7 @@ const SurvivalBattle = {
           .setGameObjectManagerSize(this.initializer.getGameObjectManager().length());
 
       this.initializer.getMachineGun().update(elapsedTimeSecond);
+      this.initializer.getEntityManager().update(elapsedTimeSecond);
       this.initializer.getGameObjectManager().update(elapsedTimeSecond);
       this.initializer.getCollisionManager().applyCollision();
 

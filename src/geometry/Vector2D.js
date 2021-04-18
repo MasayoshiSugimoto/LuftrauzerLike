@@ -105,7 +105,11 @@ const Vector2D = {
 
     distanceTo(vector) {
       return Vector2D.distanceBetween(this, vector);
-    }
+    },
 
+    isNull() {
+      return -VECTOR_2D_EPSILON < this.x && this.x < VECTOR_2D_EPSILON
+        && -VECTOR_2D_EPSILON < this.y && this.y < VECTOR_2D_EPSILON;
+    }
   }
 };
