@@ -2,114 +2,114 @@
 
 const VECTOR_2D_EPSILON = 0.00001;
 
-const Vector2D = {
+Vector2D.ZERO = new Vector2D(0, 0)
+Vector2D.X_ONE = new Vector2D(1, 0)
+Vector2D.Y_ONE = new Vector2D(0, 1)
 
-  create(x, y) {
-    return Object.assign( {x: x, y: y}, this.proto );
-  },
+function Vector2D(x, y) {
+  this.x = x;
+  this.y = y;
+}
 
-  fromData(vector2DData) {
-    return this.create(vector2DData.x, vector2DData.y);
-  },
+Vector2D.create = function(x, y) {
+  return new Vector2D(x,y)
+}
 
-  zero() {
-    return this.create(0,0);
-  },
+Vector2D.fromData = function(vector2DData) {
+  return this.create(vector2DData.x, vector2DData.y);
+}
 
-  unitX() {
-    return this.create(1.0, 0.0);
-  },
+Vector2D.zero = function() {
+  return Vector2D.ZERO
+}
 
-  unitY() {
-    return this.create(0.0, 1.0);
-  },
+Vector2D.unitX = function() {
+  return Vector2D.X_ONE
+}
 
-  distanceBetween(v1, v2) {
-    return v1.substract(v2).distance();
-  },
+Vector2D.unitY = function() {
+  return Vector2D.Y_ONE
+}
 
-  proto: {
 
-    getX() {
-      return this.x;
-    },
+Vector2D.distanceBetween = function(v1, v2) {
+  return v1.substract(v2).distance();
+}
 
-    getY() {
-      return this.y;
-    },
+Vector2D.prototype.getX = function() {
+  return this.x;
+}
 
-    add(vector2D) {
-      return Vector2D.create(vector2D.x + this.x, vector2D.y + this.y);
-    },
+Vector2D.prototype.getY = function() {
+  return this.y;
+}
 
-    substract(vector2D) {
-      return Vector2D.create(this.x - vector2D.x, this.y - vector2D.y);
-    },
+Vector2D.prototype.add = function(vector2D) {
+  return new Vector2D(vector2D.x + this.x, vector2D.y + this.y)
+}
 
-    scalarMultiply(scalar) {
-      return Vector2D.create(this.x * scalar, this.y * scalar);
-    },
+Vector2D.prototype.substract = function(vector2D) {
+  return new Vector2D(this.x - vector2D.x, this.y - vector2D.y)
+}
 
-    copy() {
-      return Vector2D.create(this.x, this.y);
-    },
+Vector2D.prototype.scalarMultiply = function(scalar) {
+  return new Vector2D(this.x * scalar, this.y * scalar)
+}
 
-    resize(size) {
-      return this.scalarMultiply(size / this.distance());
-    },
+Vector2D.prototype.resize = function(size) {
+  return this.scalarMultiply(size / this.distance())
+}
 
-    normalize() {
-      return this.resize(1.0);
-    },
+Vector2D.prototype.normalize = function() {
+  return this.resize(1.0)
+}
 
-    distance() {
-      return Math.sqrt((this.x * this.x) + (this.y * this.y));
-    },
+Vector2D.prototype.distance = function() {
+  return Math.sqrt((this.x * this.x) + (this.y * this.y))
+}
 
-    cut(size) {
-      if (this.distance() > size) {
-        return this.resize(size);
-      }
-      return this.copy();
-    },
-
-    rotate(angle) {
-      return Vector2D.create(
-        Math.cos(angle) - this.y * Math.sin(angle),
-        Math.sin(angle) + this.y * Math.cos(angle)
-      );
-    },
-
-    dot(vector2D) {
-      return this.x * Vector2D.x + this.y * Vector2D.y;
-    },
-
-    toString() {
-      return "{x:" + this.x + ",y:" + this.y + "}";
-    },
-
-    getAngle() {
-      return Angle.create(Math.atan2(this.y, this.x));
-    },
-
-    minus() {
-      return this.scalarMultiply(-1.0);
-    },
-
-    equals(vector2D) {
-      let dx = this.getX() - vector2D.getX();
-      let dy = this.getY() - vector2D.getY();
-      return -VECTOR_2D_EPSILON < dx &&  dx < VECTOR_2D_EPSILON
-          && -VECTOR_2D_EPSILON < dy && dy < VECTOR_2D_EPSILON;
-    },
-
-    distanceTo(vector) {
-      return Vector2D.distanceBetween(this, vector);
-    },
-
-    isNull() {
-      return -VECTOR_2D_EPSILON < this.x && this.x < VECTOR_2D_EPSILON
-        && -VECTOR_2D_EPSILON < this.y && this.y < VECTOR_2D_EPSILON;
-    }
+Vector2D.prototype.cut = function(size) {
+  if (this.distance() > size) {
+    return this.resize(size)
   }
-};
+  return this
+}
+
+Vector2D.prototype.rotate = function(angle) {
+  return new Vector2D(
+    Math.cos(angle) - this.y * Math.sin(angle),
+    Math.sin(angle) + this.y * Math.cos(angle)
+  )
+}
+
+Vector2D.prototype.dot = function(vector2D) {
+  return this.x * vector2D.x + this.y * vector2D.y
+}
+
+Vector2D.prototype.toString = function() {
+  return "{x:" + this.x + ",y:" + this.y + "}"
+}
+
+Vector2D.prototype.getAngle = function() {
+  return Angle.create(Math.atan2(this.y, this.x))
+}
+
+Vector2D.prototype.minus = function() {
+  return this.scalarMultiply(-1.0)
+}
+
+Vector2D.prototype.equals = function(vector2D) {
+  const dx = this.x - vector2D.x
+  const dy = this.y - vector2D.y
+  return -VECTOR_2D_EPSILON < dx &&  dx < VECTOR_2D_EPSILON
+      && -VECTOR_2D_EPSILON < dy && dy < VECTOR_2D_EPSILON
+}
+
+Vector2D.prototype.distanceTo = function(vector) {
+  return Vector2D.distanceBetween(this, vector)
+}
+
+Vector2D.prototype.isNull = function() {
+  return -VECTOR_2D_EPSILON < this.x && this.x < VECTOR_2D_EPSILON
+    && -VECTOR_2D_EPSILON < this.y && this.y < VECTOR_2D_EPSILON
+}

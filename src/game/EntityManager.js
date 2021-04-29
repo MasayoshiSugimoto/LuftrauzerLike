@@ -12,13 +12,16 @@ function EntityManager() {
 		this.actives[i] = false
 	}
 	this.lastEntityId = 0
+  const physicsSystem = new PhysicsSystem(maxEntities)
 	this.systems = [
-		new PhysicsSystem(maxEntities)
+		physicsSystem,
+    new GraphicSystem(maxEntities, physicsSystem)
 	]
 }
 
 EntityManager.SYSTEM_TYPES = {
-	PHYSICS: 0
+	PHYSICS: 0,
+  GRAPHICS: 1
 }
 
 EntityManager.prototype.createEntity = function(systemIds) {
@@ -52,4 +55,8 @@ EntityManager.prototype.getSystem = function(systemId) {
 
 EntityManager.prototype.getPhysicsSystem = function() {
 	return this.systems[EntityManager.SYSTEM_TYPES.PHYSICS]
+}
+
+EntityManager.prototype.getGraphicSystem = function() {
+  return this.systems[EntityManager.SYSTEM_TYPES.GRAPHICS]
 }

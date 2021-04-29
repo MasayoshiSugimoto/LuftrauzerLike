@@ -22,16 +22,15 @@ function PhysicsSystem(maxEntities) {
 
 PhysicsSystem.prototype.update = function(elapsedTimeSecond) {
 	// Apply constant velocity to all entities.
-	for (let i = 0; i < this.components.length; i++) {
-		const component = this.components[i]
+  this.components.forEach((component, entityId) => {
+    if (!this.actives[entityId]) return
 		const position = component.position
 		const velocity = component.velocity
 
 		component.position = position.add(
 			velocity.scalarMultiply(elapsedTimeSecond)
 		)
-
-	}
+  })
 }
 
 PhysicsSystem.prototype.createComponent = function(entityId) {
@@ -62,6 +61,14 @@ PhysicsSystem.prototype.setPosition = function(entityId, position) {
 	this.components[entityId].position = position
 }
 
+PhysicsSystem.prototype.getPosition = function(entityId) {
+  return this.components[entityId].position
+}
+
 PhysicsSystem.prototype.setVelocity = function(entityId, velocity) {
 	this.components[entityId].velocity = velocity
+}
+
+PhysicsSystem.prototype.isActive = function(entityId) {
+  return this.actives[entityId]
 }

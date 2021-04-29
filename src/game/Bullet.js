@@ -21,7 +21,8 @@ const Bullet = {
         position: position,
         velocity: Bullet.angleToVector(direction)
       })
-    const component = physicsSystem.getComponent(entityId)
+    entityManager.getGraphicSystem()
+      .setupImage(entityId, image)
 
     const bullet = Object.assign(
       state,
