@@ -15,7 +15,8 @@ Reisen.start = function(appContext = {}) {
       const updateFrame = now => {
         // We set a positive value to avoid dividing by 0.
         const elapsedTimeMillisecond = (begin === 0) ? 1 : now - begin 
-        entityManager.update(elapsedTimeMillisecond)
+        begin = now
+        entityManager.update(elapsedTimeMillisecond/1000)
         window.requestAnimationFrame(updateFrame)
       }
 
@@ -54,10 +55,12 @@ Reisen.setup = function(appContext) {
   const entityManager = appContext.getEntityManager()
   
   // Create some Projectiles.
-  for (let i = 0; i < 1000; i++) {
+  for (let i = 0; i < 100; i++) {
     const entityId = createProjectile();
     entityManager.getPhysicsSystem().setupComponent(entityId, {
-      velocity: Vector2D.create(i * 0.001, i * 0.001)
+      position: new Vector2D(i * 0.1, 0),
+      velocity: new Vector2D(i * 0.1, 0),
+      gravity: true
     })
   }
 

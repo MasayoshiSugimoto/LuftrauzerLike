@@ -34,14 +34,16 @@ GraphicSystem.prototype.update = function(elapsedTimeSecond) {
   canvas.save()
   this.components.forEach((component, entityId) => {
     if (!this.actives[entityId]) return
+
     // Update screen coordinates based on position in game space.
     if (this.physicsSystem.isActive(entityId)) {
-      component.position = this.physicsSystem
-        .getPosition(entityId)
+      const position = this.physicsSystem.getPosition(entityId)
+      component.position = new Vector2D(position.x, -position.y)
         .scalarMultiply(PIXEL_PER_METER)
     }
 
-    canvas.translate(component.position.getX(), component.position.getY())
+    canvas.save()
+    canvas.translate(component.position.x, component.position.y)
     canvas.rotate(component.direction)
     canvas.globalAlpha = component.opacity
     canvas.drawImage(
@@ -51,6 +53,7 @@ GraphicSystem.prototype.update = function(elapsedTimeSecond) {
       component.size.x,
       component.size.y
     )
+    canvas.restore()
   })
   canvas.restore()
 }
