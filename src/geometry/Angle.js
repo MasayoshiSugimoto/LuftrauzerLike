@@ -1,79 +1,35 @@
 "use strict";
 
-/*
- * This class represent an angle between -PI and PI.
- */
-const Angle = {
+/*******************************************************************************
+ * Angle keeps an angle between -Pi and Pi.
+ ******************************************************************************/
 
-  create(angleInRadian) {
+Angle.PI = 3.14159265359
+Angle.PI2 = 2 * Angle.PI
 
-    let angleObject = Object.assign(
-      {
-        angleInRadian: angleInRadian
-      },
-      {
+function Angle() {}
 
-        //Convert the angle set to fit within -PI and PI.
-        set(angleInRadian) {
-
-          let divisor = 0;
-          //Round to zero
-          if (angleInRadian > 0.0) {
-            divisor = Math.floor(angleInRadian / PIx2);
-          } else {
-            divisor = Math.ceil(angleInRadian / PIx2);
-          }
-
-          //Remove modulo
-          angleInRadian = angleInRadian - divisor * PIx2;
-
-          //Change the side if bigger than PI
-          if (angleInRadian < -Math.PI) {
-            angleInRadian = angleInRadian + PIx2;
-          } else if (angleInRadian > Math.PI) {
-            angleInRadian = angleInRadian - PIx2;
-          }
-
-          //Set the value
-          this.angleInRadian = angleInRadian;
-
-          return this;
-        },
-
-        get() {
-          return this.angleInRadian;
-        },
-
-        minus() {
-          this.angleInRadian = -this.angleInRadian;
-          return this;
-        },
-
-        add(angle) {
-          return Angle.create(this.get() + angle.get());
-        },
-
-        substract(angle) {
-          return Angle.create(this.get() - angle.get());
-        },
-
-        equals(angle) {
-          let deltaAngle = Angle.create(this.get() - angle.get()).get();
-          if (-EPSILON < deltaAngle && deltaAngle < EPSILON) {
-            return true;
-          }
-          return false;
-        }
-
-      }
-    );
-
-    return angleObject.set(angleInRadian);
-
-  },
-
-  zero() {
-    return Angle.create(0.0)
+Angle.normalize = function(angle) {
+  let circleRatio = Math.floor(angle / Angle.PI2)
+  const sign = angle >= 0 ? 1 : -1
+  angle = angle - (circleRatio * Angle.PI2)
+  angle = Math.abs(angle)
+  if (angle > Angle.PI) {
+    return -sign * (Angle.PI2 - angle)
+  } else {
+    return sign * angle
   }
-};
+}
 
+Angle.normalize2PI = function(angle) {
+  let circleRatio = Math.floor(angle / Angle.PI2)
+  const sign = angle >= 0 ? 1 : -1
+  return angle - (circleRatio * Angle.PI2)
+}
+
+/*
+for (let i = -4; i <= 4; i+=0.25) {
+  const angle = i*Angle.PI
+  console.log(`${i} => ${angle} => ${Angle.normalize2PI(angle)}`)
+}
+*/

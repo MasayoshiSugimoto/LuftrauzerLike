@@ -10,13 +10,12 @@ Reisen.start = function(appContext = {}) {
   Reisen.initialize()
     .then(Reisen.setup)
     .then(appContext => {
-      const entityManager = appContext.getEntityManager()
       let begin = 0
       const updateFrame = now => {
         // We set a positive value to avoid dividing by 0.
         const elapsedTimeMillisecond = (begin === 0) ? 1 : now - begin 
         begin = now
-        entityManager.update(elapsedTimeMillisecond/1000)
+        Reisen.update(appContext, elapsedTimeMillisecond/1000)
         window.requestAnimationFrame(updateFrame)
       }
 
@@ -30,6 +29,30 @@ Reisen.initialize = function(appContext = {}) {
 
   appContext.getProjectileFactory = () =>
     Projectile.createFactory(appContext.getEntityManager(), appContext.getImages())
+
+  // Return a dataset which contains keyboard status. Updates are automated.
+  appContext.getKeyboardData = () => {
+    const keyboardData = ControlSystem.createKeyboardData()
+    ControlSystem.setupKeyboardHandlers(keyboardData)
+    return keyboardData
+  }
+
+  // This creates the player entity on first call.
+  appContext.getPlayerEntityId = () => {
+    return appContext.getEntityManager().createEntity([
+      EntityManager.SYSTEM_TYPES.PHYSICS,
+      EntityManager.SYSTEM_TYPES.GRAPHICS
+    ])
+  }
+
+  appContext.getPlayerShip = () => {
+    return new PlayerShip(
+      appContext.getKeyboardData(),
+      appContext.getPlayerEntityId(),
+      appContext.getEntityManager(),
+      appContext.getImages()
+    )
+  }
 
   // Replace all getters by a lazy getter.
   const lazy = f => {
@@ -55,14 +78,19 @@ Reisen.setup = function(appContext) {
   const entityManager = appContext.getEntityManager()
   
   // Create some Projectiles.
-  for (let i = 0; i < 100; i++) {
-    const entityId = createProjectile();
-    entityManager.getPhysicsSystem().setupComponent(entityId, {
-      position: new Vector2D(i * 0.1, 0),
-      velocity: new Vector2D(i * 0.1, 0),
-      gravity: true
-    })
-  }
+//  for (let i = 0; i < 100; i++) {
+//    const entityId = createProjectile();
+//    entityManager.getPhysicsSystem().setupComponent(entityId, {
+//      position: new Vector2D(i * 0.1, 0),
+//      velocity: new Vector2D(i * 0.1, 0),
+//      gravity: true
+//    })
+//  }
 
   return appContext
+}
+
+Reisen.update = function(appContext, elapsedTimeSecond) {
+  appContext.getEntityManager().update(elapsedTimeSecond)
+  appContext.getPlayerShip().update(elapsedTimeSecond)
 }

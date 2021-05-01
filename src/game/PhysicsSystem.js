@@ -4,13 +4,12 @@
 * PhysicsSystem apply gravity and update velocity of game entities.
 ********************************************************************************/
 
-PhysicsSystem.GRAVITY_VECTOR = new Vector2D(0, -9.80665 / PIXEL_PER_METER)
-PhysicsSystem.MAX_GRAVITY_VELOCITY = 2; // Meter/Second
+PhysicsSystem.GRAVITY_VECTOR = new Vector2D(0, -2)
+PhysicsSystem.MAX_VELOCITY = 3; // Meter/Second
 
 function PhysicsSystem(maxEntities) {
 	this.actives = []
 	this.components = []
-	this.lastEntityId = 0
 
 	for (let i = 0; i < maxEntities; i++) {
 		this.actives[i] = false
@@ -26,15 +25,16 @@ PhysicsSystem.prototype.update = function(elapsedTimeSecond) {
     if (!this.actives[entityId]) return
 		const position = component.position
 
-    // Update velocity.
+    // Update gravity.
     if (component.gravity) {
-      component.gravityVelocity = PhysicsSystem.GRAVITY_VECTOR
-        .scalarMultiply(elapsedTimeSecond)
-        .add(component.gravityVelocity)
-        .cut(PhysicsSystem.MAX_GRAVITY_VELOCITY)
-      component.velocity = component.velocity
-        .add(component.gravityVelocity)
+      component.acceleration = component.acceleration
+        .add(PhysicsSystem.GRAVITY_VECTOR)
     }
+
+    // Update velocity.
+    component.velocity = component.velocity
+      .add(component.acceleration.scalarMultiply(elapsedTimeSecond))
+      .cut(PhysicsSystem.MAX_VELOCITY)
 
     // Update position.
     component.position = position.add(
@@ -54,10 +54,10 @@ PhysicsSystem.prototype.deleteComponent = function(entityId) {
 
 PhysicsSystem.initComponent = function(component) {
 	component.position = Vector2D.zero()
-	component.direction = Angle.zero()
+	component.direction = 0
 	component.velocity = Vector2D.zero()
-  component.gravityVelocity = Vector2D.zero()
 	component.gravity = false
+  component.acceleration = Vector2D.zero()
 }
 
 PhysicsSystem.prototype.setupComponent = function(entityId, component) {
@@ -65,7 +65,7 @@ PhysicsSystem.prototype.setupComponent = function(entityId, component) {
 }
 
 PhysicsSystem.prototype.getComponent = function(entityId) {
-	return Object.assign(this.components[entityId])
+	return this.components[entityId]
 }
 
 PhysicsSystem.prototype.setPosition = function(entityId, position) {
@@ -76,8 +76,28 @@ PhysicsSystem.prototype.getPosition = function(entityId) {
   return this.components[entityId].position
 }
 
+PhysicsSystem.prototype.getVelocity = function(entityId) {
+  return this.components[entityId].velocity
+}
+
 PhysicsSystem.prototype.setVelocity = function(entityId, velocity) {
 	this.components[entityId].velocity = velocity
+}
+
+PhysicsSystem.prototype.setDirection = function(entityId, direction) {
+  this.components[entityId].direction = direction
+}
+
+PhysicsSystem.prototype.getDirection = function(entityId) {
+  return this.components[entityId].direction
+}
+
+PhysicsSystem.prototype.setAcceleration = function(entityId, acceleration) {
+  this.components[entityId].acceleration = acceleration
+}
+
+PhysicsSystem.prototype.getAcceleration = function(entityId) {
+  return this.components[entityId].acceleration
 }
 
 PhysicsSystem.prototype.isActive = function(entityId) {

@@ -76,9 +76,10 @@ Vector2D.prototype.cut = function(size) {
 }
 
 Vector2D.prototype.rotate = function(angle) {
+  angle = -angle
   return new Vector2D(
-    Math.cos(angle) - this.y * Math.sin(angle),
-    Math.sin(angle) + this.y * Math.cos(angle)
+    this.x * Math.cos(angle) - this.y * Math.sin(angle),
+    this.x * Math.sin(angle) + this.y * Math.cos(angle)
   )
 }
 

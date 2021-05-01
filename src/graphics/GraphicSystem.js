@@ -37,9 +37,11 @@ GraphicSystem.prototype.update = function(elapsedTimeSecond) {
 
     // Update screen coordinates based on position in game space.
     if (this.physicsSystem.isActive(entityId)) {
-      const position = this.physicsSystem.getPosition(entityId)
+      const physicsComponent = this.physicsSystem.getComponent(entityId)
+      const position = physicsComponent.position
       component.position = new Vector2D(position.x, -position.y)
         .scalarMultiply(PIXEL_PER_METER)
+      component.direction = physicsComponent.direction
     }
 
     canvas.save()
