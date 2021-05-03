@@ -50,7 +50,20 @@ Reisen.initialize = function(appContext = {}) {
       appContext.getKeyboardData(),
       appContext.getPlayerEntityId(),
       appContext.getEntityManager(),
-      appContext.getImages()
+      appContext.getImages(),
+      appContext.getBlaster()
+    )
+  }
+
+  appContext.getBlaster = () => {
+    return new Blaster(
+      appContext.getKeyboardData(),
+      Projectile.createFactory(
+        appContext.getEntityManager(),
+        appContext.getImages()
+      ),
+      appContext.getEntityManager().getPhysicsSystem(),
+      appContext.getPlayerEntityId()
     )
   }
 
@@ -58,7 +71,7 @@ Reisen.initialize = function(appContext = {}) {
   const lazy = f => {
     let instance = null
     return () => {
-      if (!instance) instance = f()
+      if (instance === undefined || instance === null) instance = f()
       return instance
     }
   }
@@ -74,19 +87,6 @@ Reisen.initialize = function(appContext = {}) {
 }
 
 Reisen.setup = function(appContext) {
-  const createProjectile = appContext.getProjectileFactory()
-  const entityManager = appContext.getEntityManager()
-  
-  // Create some Projectiles.
-//  for (let i = 0; i < 100; i++) {
-//    const entityId = createProjectile();
-//    entityManager.getPhysicsSystem().setupComponent(entityId, {
-//      position: new Vector2D(i * 0.1, 0),
-//      velocity: new Vector2D(i * 0.1, 0),
-//      gravity: true
-//    })
-//  }
-
   return appContext
 }
 

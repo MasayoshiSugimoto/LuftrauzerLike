@@ -41,7 +41,7 @@ PlayerShip.IMAGE_PATHS = [
 ]
 PlayerShip.TOP_VIEW_INDEX = 15
 
-function PlayerShip(inputData, entityId, entityManager, images) {
+function PlayerShip(inputData, entityId, entityManager, images, blaster) {
   this.inputData = inputData
   this.physicEntity = new PhysicEntity(
     entityId,
@@ -51,9 +51,7 @@ function PlayerShip(inputData, entityId, entityManager, images) {
   this.entityManager = entityManager
   this.entityId = entityId
   this.angle = 0
-
-  const component = this.entityManager.getPhysicsSystem().getComponent(entityId)
-  component.gravity = true
+  this.blaster = blaster
 }
 
 PlayerShip.prototype.update = function(elapsedTimeSecond) {
@@ -76,5 +74,8 @@ PlayerShip.prototype.update = function(elapsedTimeSecond) {
   // Update graphics properties.
   const graphicSystem = this.entityManager.getGraphicSystem()
   graphicSystem.setupImage(this.entityId, this.images[PlayerShip.TOP_VIEW_INDEX])
+
+  // Update blaster.
+  this.blaster.update(elapsedTimeSecond)
 }
 

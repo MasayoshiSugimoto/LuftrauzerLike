@@ -64,17 +64,14 @@ GraphicSystem.prototype.setupImage = function(entityId, image) {
   const component = this.components[entityId]
   GraphicSystem.initComponent(component)
   component.image = image
-  component.size = Vector2D.create(
-    image.width * component.scale,
-    image.height * component.scale
-  )
+  this.setScale(entityId, component.scale)
 }
 
 GraphicSystem.prototype.setScale = function(entityId, scale) {
-  const component = this.component[entityId]
+  const component = this.components[entityId]
   component.size = Vector2D.create(
-    image.width * component.scale,
-    image.height * component.scale
+    component.image.width * scale,
+    component.image.height * scale
   )
 }
 
