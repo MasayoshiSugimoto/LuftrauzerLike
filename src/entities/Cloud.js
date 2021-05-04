@@ -32,6 +32,7 @@ Cloud.createSky = function(entityManager, images) {
       minSkyCoordinate + Math.random() * Cloud.SKY_SIZE_PIXEL
     ))
     graphicSystem.setScale(entityId, Cloud.randomScale())
+		graphicSystem.setOpacity(entityId, Cloud.OPACITY)
   }
 }
 

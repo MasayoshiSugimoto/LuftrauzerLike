@@ -99,6 +99,10 @@ GraphicSystem.prototype.centerOn = function(canvas, entityId) {
 	canvasContext.translate(canvas.getWidth() / 2 - position.x, canvas.getHeight() / 2 - position.y)	
 }
 
+GraphicSystem.prototype.setOpacity = function(entityId, opacity) {
+	this.components[entityId].opacity = opacity
+}
+
 GraphicSystem.prototype.setTargetEntityId = function(targetEntityId) {
 	this.targetEntityId = targetEntityId
 }
