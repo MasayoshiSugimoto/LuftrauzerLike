@@ -87,6 +87,7 @@ Reisen.initialize = function(appContext = {}) {
 }
 
 Reisen.setup = function(appContext) {
+  Cloud.createSky(appContext.getEntityManager(), appContext.getImages())
   return appContext
 }
 

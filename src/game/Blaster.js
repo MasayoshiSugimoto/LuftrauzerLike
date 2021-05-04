@@ -13,13 +13,11 @@ function Blaster(userInput, createProjectile, physicsSystem, playerEntityId) {
 Blaster.prototype.update = function(elapsedTimeSecond) {
   if (!this.userInput.fire) {
     this.timer = 0
-    console.log('Reset timer.')
     return
   }
 
   this.timer += elapsedTimeSecond
   if (this.timer < Blaster.FIRE_INTERVAL) return
-  console.log('Fire.')
 
   // Fire a bullet and reset the timer.
   this.timer = this.timer % Blaster.FIRE_INTERVAL

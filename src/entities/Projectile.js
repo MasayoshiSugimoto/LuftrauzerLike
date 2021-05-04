@@ -12,12 +12,12 @@ Projectile.scale = 0.4
 
 Projectile.createFactory = function(entityManager, images) {
   const graphicSystem = entityManager.getGraphicSystem()
+  const image = images.get(Projectile.IMAGE_FILE)
   return () => {
     const entityId = entityManager.createEntity([
       EntityManager.SYSTEM_TYPES.PHYSICS,
       EntityManager.SYSTEM_TYPES.GRAPHICS
     ])
-    const image = images.get(Projectile.IMAGE_FILE)
     graphicSystem.setupImage(entityId, image) 
     graphicSystem.setScale(entityId, Projectile.scale)
     return entityId
