@@ -1,12 +1,14 @@
 "use strict"
 
 GraphicSystem.CANVAS_ID = 'canvas'
+GraphicSystem.SKY_COLOR = '#66ccff'
 
 function GraphicSystem(maxEntity, physicsSystem) {
   this.canvas = Canvas.create(
     document.getElementById(GraphicSystem.CANVAS_ID),
     window
   )
+	this.canvas.setBackgroundColor(GraphicSystem.SKY_COLOR)
   this.canvas.fullScreen()
   this.actives = []
   this.components = []
@@ -29,7 +31,7 @@ GraphicSystem.prototype.deleteComponent = function(entityId) {
 }
 
 GraphicSystem.prototype.update = function(elapsedTimeSecond) {
-  this.canvas.clear()
+	this.canvas.setBackgroundColor(GraphicSystem.SKY_COLOR)
   const canvas = this.canvas.getContext()
   canvas.save()
   this.components.forEach((component, entityId) => {
