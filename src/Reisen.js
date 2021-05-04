@@ -87,11 +87,16 @@ Reisen.initialize = function(appContext = {}) {
 }
 
 Reisen.setup = function(appContext) {
+	// Force the player to be at index 0.
+	appContext.getPlayerEntityId()
+	// Create the sky.
   Cloud.createSky(appContext.getEntityManager(), appContext.getImages())
+	// Center the screen on the player ship.
+	appContext.getEntityManager().getGraphicSystem().setTargetEntityId(appContext.getPlayerEntityId())
   return appContext
 }
 
 Reisen.update = function(appContext, elapsedTimeSecond) {
-  appContext.getEntityManager().update(elapsedTimeSecond)
   appContext.getPlayerShip().update(elapsedTimeSecond)
+  appContext.getEntityManager().update(elapsedTimeSecond)
 }

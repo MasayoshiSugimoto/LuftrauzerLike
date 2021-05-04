@@ -1,5 +1,9 @@
 "use strict"
 
+/********************************************************************************
+ * GraphicSystem manages all rendering.
+ *******************************************************************************/
+
 GraphicSystem.CANVAS_ID = 'canvas'
 GraphicSystem.SKY_COLOR = '#66ccff'
 
@@ -19,6 +23,7 @@ function GraphicSystem(maxEntity, physicsSystem) {
     this.components.push(component)
   }
   this.physicsSystem = physicsSystem
+	this.targetEntityId = -1
 }
 
 GraphicSystem.prototype.createComponent = function(entityId) {
@@ -33,7 +38,8 @@ GraphicSystem.prototype.deleteComponent = function(entityId) {
 GraphicSystem.prototype.update = function(elapsedTimeSecond) {
 	this.canvas.setBackgroundColor(GraphicSystem.SKY_COLOR)
   const canvas = this.canvas.getContext()
-  canvas.save()
+	canvas.save()
+	this.centerOn(this.canvas, this.targetEntityId)
   this.components.forEach((component, entityId) => {
     if (!this.actives[entityId]) return
 
@@ -59,7 +65,7 @@ GraphicSystem.prototype.update = function(elapsedTimeSecond) {
     )
     canvas.restore()
   })
-  canvas.restore()
+	canvas.restore()
 }
 
 GraphicSystem.prototype.setupImage = function(entityId, image) {
@@ -81,6 +87,25 @@ GraphicSystem.prototype.setPosition = function(entityId, position) {
   const component = this.components[entityId]
   component.position = position
 }
+
+GraphicSystem.prototype.getPosition = function(entityId) {
+	return this.components[entityId]
+}
+
+GraphicSystem.prototype.centerOn = function(canvas, entityId) {
+	const canvasContext = canvas.getContext()
+	if (entityId < 0 || entityId >= this.components.length) return
+	const position = this.components[entityId].position
+	canvasContext.translate(canvas.getWidth() / 2 - position.x, canvas.getHeight() / 2 - position.y)	
+}
+
+GraphicSystem.prototype.setTargetEntityId = function(targetEntityId) {
+	this.targetEntityId = targetEntityId
+}
+
+/********************************************************************************
+ * Static Functions
+ *******************************************************************************/
 
 GraphicSystem.initComponent = function(component) {
   component.position = Vector2D.zero() // Screen coordinates

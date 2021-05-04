@@ -52,6 +52,10 @@ function PlayerShip(inputData, entityId, entityManager, images, blaster) {
   this.entityId = entityId
   this.angle = 0
   this.blaster = blaster
+	this.graphicSystem = entityManager.getGraphicSystem()
+
+	// Initialize with an image.
+  this.graphicSystem.setupImage(this.entityId, this.images[PlayerShip.TOP_VIEW_INDEX])
 }
 
 PlayerShip.prototype.update = function(elapsedTimeSecond) {
@@ -70,10 +74,6 @@ PlayerShip.prototype.update = function(elapsedTimeSecond) {
     boost = PlayerShip.BOOST_UNIT
   }
   this.physicEntity.setAcceleration(new Vector2D(boost, 0).rotate(direction))
-
-  // Update graphics properties.
-  const graphicSystem = this.entityManager.getGraphicSystem()
-  graphicSystem.setupImage(this.entityId, this.images[PlayerShip.TOP_VIEW_INDEX])
 
   // Update blaster.
   this.blaster.update(elapsedTimeSecond)

@@ -1,4 +1,4 @@
-"use strict";
+"use strict"
 
 Cloud.IMAGE = 'images/Cloud.png'
 Cloud.OPACITY = 0.5

@@ -66,5 +66,4 @@ const Canvas = {
       },
     }
   }
-
 };
