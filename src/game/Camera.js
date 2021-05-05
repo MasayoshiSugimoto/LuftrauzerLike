@@ -1,44 +1,21 @@
-"use strict";
+"use strict"
 
 /********************************************************************************
-Center the subject inside the canvas.
-********************************************************************************/
-const Camera = {
+ * Manages information related to camera
+ *******************************************************************************/
 
-  create(canvas, subject) {
-    return {
+function Camera(canvas, targetEntityId, entityManager) {
+	this.topLeftPixel = Vector2D.zero()
+	this.centerPixel = Vector2D.zero()
+	this.sizePixel = Vector2D.zero()
+	this.canvas = canvas
+	this.physicsSystem = entityManager.getPhysicsSystem()
+	this.targetEntityId = targetEntityId
+}
 
-      position  : Vector2D.zero(),
-      canvas    : canvas,
-      subject   : subject,
-
-      getPosition() {
-        return this.position;
-      },
-
-      setPosition(position) {
-        this.position = position;
-        return this;
-      },
-
-      getCanvasTranslation() {
-        return ScreenConversion.vectorMeter2Pixel(this.getPosition()).minus();
-      },
-
-      getCanvas() {
-        return this.canvas;
-      },
-
-      update() {
-        this.position = this.subject.getPosition().substract(this.canvas.getGameSpaceCenter());
-        return this;
-      },
-
-      getSize() {
-        return this.canvas.getGameSpaceSize();
-      },
-
-    };
-  }
-
-};
+Camera.prototype.update = function() {
+	const position = this.physicsSystem.getComponent(this.targetEntityId)
+	this.sizePixel = new Vector2D(this.canvas.getWidth(), this.canvas.getHeight())
+	this.centerPixel = position.scalarMultiply(PIXEL_PER_METER)
+	this.topLeftPixel = this.centerPixel.substract(this.sizePixel.scalarMultiply(-0.5))
+}

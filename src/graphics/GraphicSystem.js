@@ -4,16 +4,10 @@
  * GraphicSystem manages all rendering.
  *******************************************************************************/
 
-GraphicSystem.CANVAS_ID = 'canvas'
 GraphicSystem.SKY_COLOR = '#66ccff'
 
-function GraphicSystem(maxEntity, physicsSystem) {
-  this.canvas = Canvas.create(
-    document.getElementById(GraphicSystem.CANVAS_ID),
-    window
-  )
-	this.canvas.setBackgroundColor(GraphicSystem.SKY_COLOR)
-  this.canvas.fullScreen()
+function GraphicSystem(maxEntity, physicsSystem, canvas) {
+  this.canvas = canvas
   this.actives = []
   this.components = []
   for (let i = 0; i < maxEntity; i++) {

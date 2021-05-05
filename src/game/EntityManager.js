@@ -4,7 +4,7 @@
 * EntityManager manages the lifecycle of all entities in the game.
 ********************************************************************************/
 
-function EntityManager() {
+function EntityManager(canvas) {
 	const maxEntities = 1000
 
 	this.actives = []
@@ -15,7 +15,7 @@ function EntityManager() {
   const physicsSystem = new PhysicsSystem(maxEntities)
 	this.systems = [
 		physicsSystem,
-    new GraphicSystem(maxEntities, physicsSystem)
+    new GraphicSystem(maxEntities, physicsSystem, canvas)
 	]
 }
 

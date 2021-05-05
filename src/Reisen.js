@@ -25,7 +25,7 @@ Reisen.start = function(appContext = {}) {
 
 Reisen.initialize = function(appContext = {}) {
 
-  appContext.getEntityManager = () => new EntityManager()
+  appContext.getEntityManager = () => new EntityManager(appContext.getCanvas())
 
   appContext.getProjectileFactory = () =>
     Projectile.createFactory(appContext.getEntityManager(), appContext.getImages())
@@ -67,6 +67,8 @@ Reisen.initialize = function(appContext = {}) {
     )
   }
 
+	appContext.getCanvas = () => new Canvas()
+
   // Replace all getters by a lazy getter.
   const lazy = f => {
     let instance = null
@@ -87,6 +89,7 @@ Reisen.initialize = function(appContext = {}) {
 }
 
 Reisen.setup = function(appContext) {
+	appContext.getCanvas().fullScreen()
 	// Force the player to be at index 0.
 	appContext.getPlayerEntityId()
 	// Create the sky.
