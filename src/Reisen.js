@@ -69,6 +69,21 @@ Reisen.initialize = function(appContext = {}) {
 
 	appContext.getCanvas = () => new Canvas()
 
+	appContext.getCamera = () => {
+		return new Camera(
+			appContext.getCanvas(),
+			appContext.getPlayerEntityId(),
+			appContext.getEntityManager()
+		)
+	}
+
+	appContext.getSea = () => {
+		return new Sea(
+			appContext.getCanvas(),
+			appContext.getCamera()
+		)
+	}
+
   // Replace all getters by a lazy getter.
   const lazy = f => {
     let instance = null
@@ -102,4 +117,5 @@ Reisen.setup = function(appContext) {
 Reisen.update = function(appContext, elapsedTimeSecond) {
   appContext.getPlayerShip().update(elapsedTimeSecond)
   appContext.getEntityManager().update(elapsedTimeSecond)
+	appContext.getSea().draw()
 }
