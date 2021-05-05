@@ -40,6 +40,7 @@ PlayerShip.IMAGE_PATHS = [
   "images/Reisen-15.png",
 ]
 PlayerShip.TOP_VIEW_INDEX = 15
+PlayerShip.MAX_VELOCITY = 3
 
 function PlayerShip(inputData, entityId, entityManager, images, blaster) {
   this.inputData = inputData
@@ -53,6 +54,7 @@ function PlayerShip(inputData, entityId, entityManager, images, blaster) {
   this.angle = 0
   this.blaster = blaster
 	this.graphicSystem = entityManager.getGraphicSystem()
+	entityManager.getPhysicsSystem().getComponent(entityId).maxVelocity = PlayerShip.MAX_VELOCITY
 
 	// Initialize with an image.
   this.graphicSystem.setupImage(this.entityId, this.images[PlayerShip.TOP_VIEW_INDEX])

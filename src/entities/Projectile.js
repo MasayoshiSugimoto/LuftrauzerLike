@@ -7,7 +7,7 @@
 function Projectile() {}
 
 Projectile.IMAGE_FILE = 'images/Explosion.png'
-Projectile.SPEED = 3 // Meter per second.
+Projectile.SPEED = 8 // Meter per second.
 Projectile.scale = 0.4
 
 Projectile.createFactory = function(entityManager, images) {
