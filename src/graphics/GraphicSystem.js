@@ -5,6 +5,8 @@
  *******************************************************************************/
 
 GraphicSystem.SKY_COLOR = '#66ccff'
+GraphicSystem.MAX_BASE = 100
+GraphicSystem.BASE_COLOR = '#FF0000'
 
 function GraphicSystem(maxEntity, physicsSystem, canvas) {
   this.canvas = canvas
@@ -59,6 +61,7 @@ GraphicSystem.prototype.update = function(elapsedTimeSecond) {
     )
     canvas.restore()
   })
+	this.drawBase()
 	canvas.restore()
 }
 
@@ -99,6 +102,29 @@ GraphicSystem.prototype.setOpacity = function(entityId, opacity) {
 
 GraphicSystem.prototype.setTargetEntityId = function(targetEntityId) {
 	this.targetEntityId = targetEntityId
+}
+
+GraphicSystem.prototype.drawBase = function() {
+	const context = this.canvas.getContext()
+	context.save()
+	context.strokeStyle = GraphicSystem.BASE_COLOR
+	context.beginPath()
+	context.moveTo(-GraphicSystem.MAX_BASE * PIXEL_PER_METER, 0)
+	context.lineTo(GraphicSystem.MAX_BASE * PIXEL_PER_METER, 0)
+	context.moveTo(0, GraphicSystem.MAX_BASE * PIXEL_PER_METER)
+	context.lineTo(0, -GraphicSystem.MAX_BASE * PIXEL_PER_METER)
+	context.stroke()
+	for (let i = -GraphicSystem.MAX_BASE; i <= GraphicSystem.MAX_BASE; i++) {
+		context.beginPath()
+		context.moveTo(i * PIXEL_PER_METER, -5)
+		context.lineTo(i * PIXEL_PER_METER, 5)
+		context.stroke()
+		context.beginPath()
+		context.moveTo(-5, i * PIXEL_PER_METER)
+		context.lineTo(5, i * PIXEL_PER_METER)
+		context.stroke()
+	}
+	context.restore()
 }
 
 /********************************************************************************
