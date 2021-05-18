@@ -2,8 +2,8 @@
 
 Blaster.FIRE_INTERVAL = 0.1 // Time between bullets in seconds.
 
-function Blaster(userInput, createProjectile, physicsSystem, playerEntityId) {
-  this.userInput = userInput
+function Blaster(getInputData, createProjectile, physicsSystem, playerEntityId) {
+  this.getInputData = getInputData
   this.timer = 0
   this.createProjectile = createProjectile
   this.physicsSystem = physicsSystem
@@ -11,7 +11,8 @@ function Blaster(userInput, createProjectile, physicsSystem, playerEntityId) {
 }
 
 Blaster.prototype.update = function(elapsedTimeSecond) {
-  if (!this.userInput.fire) {
+	const inputData = this.getInputData()
+  if (!inputData.fire) {
     this.timer = 0
     return
   }

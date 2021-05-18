@@ -14,14 +14,16 @@ function EntityManager(canvas) {
 	this.lastEntityId = 0
   const physicsSystem = new PhysicsSystem(maxEntities)
 	this.systems = [
+		new GameSystem(maxEntities),
 		physicsSystem,
     new GraphicSystem(maxEntities, physicsSystem, canvas)
 	]
 }
 
 EntityManager.SYSTEM_TYPES = {
-	PHYSICS: 0,
-  GRAPHICS: 1
+	GAME: 0,
+	PHYSICS: 1,
+  GRAPHICS: 2
 }
 
 EntityManager.prototype.createEntity = function(systemIds) {
@@ -51,6 +53,10 @@ EntityManager.prototype.update = function(elapsedTimeSecond) {
 
 EntityManager.prototype.getSystem = function(systemId) {
 	return this.systems[systemId]
+}
+
+EntityManager.prototype.getGameSystem = function() {
+	return this.systems[EntityManager.SYSTEM_TYPES.GAME]
 }
 
 EntityManager.prototype.getPhysicsSystem = function() {

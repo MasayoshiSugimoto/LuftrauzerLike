@@ -46,3 +46,30 @@ Sea.prototype.draw = function() {
 		canvasContext.restore()
 	}
 }
+
+
+function SeaComponent(entityId, physicsSystem) {
+	this.entityId = entityId
+	this.physicsSystem = physicsSystem
+	this.inputData = {
+    boost: true,
+    left: false,
+    right: false,
+    fire: false
+  }
+}
+
+// TODO: Add a game system to add game components.
+SeaComponent.prototype.update = function() {
+	const component = this.physicsSystem.getComponent(this.entityId)
+	if (component.position.y <= Sea.Y_COORDINATE_METER) {
+		const baseAngle = Angle.normalize(component.direction+Math.PI/2)
+		if (baseAngle >= 0) {
+			this.inputData.left = true
+			this.inputData.right = false
+		} else {
+			this.inputData.left = false
+			this.inputData.right = true
+		}
+	}
+}

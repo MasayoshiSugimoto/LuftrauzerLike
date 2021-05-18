@@ -1,4 +1,4 @@
-"use strict";
+"use strict"
 
 /********************************************************************************
 * PhysicsSystem apply gravity and update velocity of game entities.

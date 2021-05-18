@@ -26,10 +26,3 @@ Angle.normalize2PI = function(angle) {
   const sign = angle >= 0 ? 1 : -1
   return angle - (circleRatio * Angle.PI2)
 }
-
-/*
-for (let i = -4; i <= 4; i+=0.25) {
-  const angle = i*Angle.PI
-  console.log(`${i} => ${angle} => ${Angle.normalize2PI(angle)}`)
-}
-*/

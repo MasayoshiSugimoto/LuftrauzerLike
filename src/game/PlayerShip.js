@@ -42,8 +42,7 @@ PlayerShip.IMAGE_PATHS = [
 PlayerShip.TOP_VIEW_INDEX = 15
 PlayerShip.MAX_VELOCITY = 3
 
-function PlayerShip(inputData, entityId, entityManager, images, blaster) {
-  this.inputData = inputData
+function PlayerShip(entityId, entityManager, images, blaster) {
   this.physicEntity = new PhysicEntity(
     entityId,
     entityManager.getPhysicsSystem()
@@ -53,6 +52,12 @@ function PlayerShip(inputData, entityId, entityManager, images, blaster) {
   this.entityId = entityId
   this.angle = 0
   this.blaster = blaster
+
+	entityManager.getGameSystem().addComponent(
+		entityId,
+		GAME_COMPONENT_ID_CONTROL,
+		new ControlSystem(entityManager.getPhysicsSystem())
+	)
 	this.graphicSystem = entityManager.getGraphicSystem()
 	entityManager.getPhysicsSystem().getComponent(entityId).maxVelocity = PlayerShip.MAX_VELOCITY
 
@@ -63,16 +68,19 @@ function PlayerShip(inputData, entityId, entityManager, images, blaster) {
 PlayerShip.prototype.update = function(elapsedTimeSecond) {
   // Update physics based on user inputs.
   let direction = this.physicEntity.getDirection()
-  if (this.inputData.left) {
+	const controlComponent = this.entityManager.getGameSystem().getComponent(this.entityId, GAME_COMPONENT_ID_CONTROL)
+	controlComponent.update(this.entityId, elapsedTimeSecond)
+	const inputData = controlComponent.getInputData()
+  if (inputData.left) {
     direction -= PlayerShip.ROTATION_UNIT * elapsedTimeSecond
-  } else if (this.inputData.right) {
+  } else if (inputData.right) {
     direction += PlayerShip.ROTATION_UNIT * elapsedTimeSecond
   }
   direction = Angle.normalize2PI(direction)
   this.physicEntity.setDirection(direction)
 
   let boost = 0
-  if (this.inputData.boost) {
+  if (inputData.boost) {
     boost = PlayerShip.BOOST_UNIT
   }
   this.physicEntity.setAcceleration(new Vector2D(boost, 0).rotate(direction))
@@ -80,4 +88,3 @@ PlayerShip.prototype.update = function(elapsedTimeSecond) {
   // Update blaster.
   this.blaster.update(elapsedTimeSecond)
 }
-

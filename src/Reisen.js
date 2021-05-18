@@ -30,16 +30,17 @@ Reisen.initialize = function(appContext = {}) {
   appContext.getProjectileFactory = () =>
     Projectile.createFactory(appContext.getEntityManager(), appContext.getImages())
 
-  // Return a dataset which contains keyboard status. Updates are automated.
-  appContext.getKeyboardData = () => {
-    const keyboardData = ControlSystem.createKeyboardData()
-    ControlSystem.setupKeyboardHandlers(keyboardData)
-    return keyboardData
+  // Returns a function to get user inputs.
+  appContext.getInputDataFactory = () => {
+    KeyboardControl.setupKeyboardHandlers()
+		const controlSystem = new ControlSystem()
+    return () => controlSystem.getInputData()
   }
 
   // This creates the player entity on first call.
   appContext.getPlayerEntityId = () => {
     return appContext.getEntityManager().createEntity([
+			EntityManager.SYSTEM_TYPES.GAME,
       EntityManager.SYSTEM_TYPES.PHYSICS,
       EntityManager.SYSTEM_TYPES.GRAPHICS
     ])
@@ -47,7 +48,6 @@ Reisen.initialize = function(appContext = {}) {
 
   appContext.getPlayerShip = () => {
     return new PlayerShip(
-      appContext.getKeyboardData(),
       appContext.getPlayerEntityId(),
       appContext.getEntityManager(),
       appContext.getImages(),
@@ -57,7 +57,7 @@ Reisen.initialize = function(appContext = {}) {
 
   appContext.getBlaster = () => {
     return new Blaster(
-      appContext.getKeyboardData(),
+      appContext.getInputDataFactory(),
       Projectile.createFactory(
         appContext.getEntityManager(),
         appContext.getImages()
