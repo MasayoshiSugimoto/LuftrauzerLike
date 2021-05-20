@@ -56,7 +56,7 @@ function PlayerShip(entityId, entityManager, images, blaster) {
 	entityManager.getGameSystem().addComponent(
 		entityId,
 		GAME_COMPONENT_ID_CONTROL,
-		new ControlSystem(entityManager.getPhysicsSystem())
+		new ControlSystem(entityManager.getPhysicsSystem(), entityId)
 	)
 	this.graphicSystem = entityManager.getGraphicSystem()
 	entityManager.getPhysicsSystem().getComponent(entityId).maxVelocity = PlayerShip.MAX_VELOCITY

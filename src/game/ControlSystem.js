@@ -1,7 +1,7 @@
 "use strict"
 
-function ControlSystem(physicsSystem) {
-	this.seaController = new SeaController(physicsSystem)
+function ControlSystem(physicsSystem, entityId) {
+	this.seaController = new SeaController(physicsSystem, entityId)
 }
 
 ControlSystem.prototype.getInputData = function() {
@@ -10,7 +10,7 @@ ControlSystem.prototype.getInputData = function() {
 }
 
 ControlSystem.prototype.update = function(entityId, elapsedTimeSecond) {
-	this.seaController.update(entityId, elapsedTimeSecond)
+	this.seaController.update(elapsedTimeSecond)
 }
 
 function KeyboardControl() {}
@@ -59,8 +59,9 @@ KeyboardControl.setupKeyboardHandlers = function() {
   }
 }
 
-function SeaController(physicsSystem) {
+function SeaController(physicsSystem, entityId) {
 	this.physicsSystem = physicsSystem
+	this.entityId = entityId
 	this.inputData = {
     boost: true,
     left: false,
@@ -69,11 +70,14 @@ function SeaController(physicsSystem) {
   }
 }
 
-SeaController.prototype.update = function(entityId, elapsedTimeSecond) {
-	const component = this.physicsSystem.getComponent(entityId)
-	if (component.position.y <= Sea.Y_COORDINATE_METER) {
-		const baseAngle = Angle.normalize(component.direction+Math.PI/2)
-		if (baseAngle >= 0) {
+SeaController.prototype.update = function(elapsedTimeSecond) {
+	const component = this.physicsSystem.getComponent(this.entityId)
+	const baseAngle = Angle.normalize(component.direction-Math.PI/2)
+	if (this.isInSea()) {
+		if (Math.abs(baseAngle) >= 3 * (Math.PI / 4)) {
+			this.inputData.left = false
+			this.inputData.right = false
+		} else if (baseAngle <= 0) {
 			this.inputData.left = true
 			this.inputData.right = false
 		} else {
@@ -87,5 +91,6 @@ SeaController.prototype.update = function(entityId, elapsedTimeSecond) {
 }
 
 SeaController.prototype.isInSea = function() {
-	return this.inputData.left || this.inputData.right
+	const component = this.physicsSystem.getComponent(this.entityId)
+	return component.position.y <= Sea.Y_COORDINATE_METER
 }

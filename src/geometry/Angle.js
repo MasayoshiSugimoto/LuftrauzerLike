@@ -11,14 +11,14 @@ function Angle() {}
 
 Angle.normalize = function(angle) {
   let circleRatio = Math.floor(angle / Angle.PI2)
-  const sign = angle >= 0 ? 1 : -1
   angle = angle - (circleRatio * Angle.PI2)
-  angle = Math.abs(angle)
-  if (angle > Angle.PI) {
-    return -sign * (Angle.PI2 - angle)
+  if (-Math.PI <= angle && angle <= Math.PI) {
+		return angle
+  } else if (angle > Math.PI) {
+    return -Angle.PI2 + angle
   } else {
-    return sign * angle
-  }
+		return Angle.PI2 + angle
+	}
 }
 
 Angle.normalize2PI = function(angle) {

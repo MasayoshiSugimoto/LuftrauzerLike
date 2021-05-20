@@ -33,7 +33,10 @@ Reisen.initialize = function(appContext = {}) {
   // Returns a function to get user inputs.
   appContext.getInputDataFactory = () => {
     KeyboardControl.setupKeyboardHandlers()
-		const controlSystem = new ControlSystem()
+		const controlSystem = new ControlSystem(
+			appContext.getEntityManager().getPhysicsSystem(),
+			appContext.getPlayerEntityId()
+		)
     return () => controlSystem.getInputData()
   }
 
