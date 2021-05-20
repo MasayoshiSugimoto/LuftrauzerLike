@@ -43,6 +43,8 @@ PlayerShip.TOP_VIEW_INDEX = 15
 PlayerShip.MAX_VELOCITY = 3
 
 function PlayerShip(entityId, entityManager, images, blaster) {
+	const controlSystem = new ControlSystem(entityManager.getPhysicsSystem(), entityId)
+
   this.physicEntity = new PhysicEntity(
     entityId,
     entityManager.getPhysicsSystem()
@@ -51,12 +53,17 @@ function PlayerShip(entityId, entityManager, images, blaster) {
   this.entityManager = entityManager
   this.entityId = entityId
   this.angle = 0
-  this.blaster = blaster
+  this.blaster = new Blaster(
+		() => controlSystem.getInputData(),
+		Projectile.createFactory(entityManager, images),
+		entityManager.getPhysicsSystem(),
+		entityId
+	)
 
 	entityManager.getGameSystem().addComponent(
 		entityId,
 		GAME_COMPONENT_ID_CONTROL,
-		new ControlSystem(entityManager.getPhysicsSystem(), entityId)
+		controlSystem
 	)
 	this.graphicSystem = entityManager.getGraphicSystem()
 	entityManager.getPhysicsSystem().getComponent(entityId).maxVelocity = PlayerShip.MAX_VELOCITY

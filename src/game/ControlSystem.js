@@ -1,5 +1,11 @@
 "use strict"
 
+/*******************************************************************************
+ * ControlSystem
+ *
+ * This class manages user inputs.
+ ******************************************************************************/
+
 function ControlSystem(physicsSystem, entityId) {
 	this.seaController = new SeaController(physicsSystem, entityId)
 }

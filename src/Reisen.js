@@ -30,16 +30,6 @@ Reisen.initialize = function(appContext = {}) {
   appContext.getProjectileFactory = () =>
     Projectile.createFactory(appContext.getEntityManager(), appContext.getImages())
 
-  // Returns a function to get user inputs.
-  appContext.getInputDataFactory = () => {
-    KeyboardControl.setupKeyboardHandlers()
-		const controlSystem = new ControlSystem(
-			appContext.getEntityManager().getPhysicsSystem(),
-			appContext.getPlayerEntityId()
-		)
-    return () => controlSystem.getInputData()
-  }
-
   // This creates the player entity on first call.
   appContext.getPlayerEntityId = () => {
     return appContext.getEntityManager().createEntity([
@@ -53,20 +43,7 @@ Reisen.initialize = function(appContext = {}) {
     return new PlayerShip(
       appContext.getPlayerEntityId(),
       appContext.getEntityManager(),
-      appContext.getImages(),
-      appContext.getBlaster()
-    )
-  }
-
-  appContext.getBlaster = () => {
-    return new Blaster(
-      appContext.getInputDataFactory(),
-      Projectile.createFactory(
-        appContext.getEntityManager(),
-        appContext.getImages()
-      ),
-      appContext.getEntityManager().getPhysicsSystem(),
-      appContext.getPlayerEntityId()
+      appContext.getImages()
     )
   }
 
@@ -107,6 +84,7 @@ Reisen.initialize = function(appContext = {}) {
 }
 
 Reisen.setup = function(appContext) {
+	KeyboardControl.setupKeyboardHandlers()
 	appContext.getCanvas().fullScreen()
 	// Force the player to be at index 0.
 	appContext.getPlayerEntityId()
