@@ -61,7 +61,7 @@ GraphicSystem.prototype.update = function(elapsedTimeSecond) {
     )
     canvas.restore()
   })
-	this.drawBase()
+  if (DEBUG_ENABLED) this.drawBase()
 	canvas.restore()
 }
 
