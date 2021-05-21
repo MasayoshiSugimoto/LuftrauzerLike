@@ -7,8 +7,6 @@
  * drawn after the rest of the game entities.
  ******************************************************************************/
 
-Sea.Y_COORDINATE_METER = -1
-
 function Sea(canvas, camera) {
 	this.canvas = canvas
 	this.camera = camera
@@ -16,7 +14,7 @@ function Sea(canvas, camera) {
 
 Sea.prototype.draw = function() {
 	const canvasContext = this.canvas.getContext()
-	const seaLevelPixel = this.camera.toScreenCoordinates(new Vector2D(0, Sea.Y_COORDINATE_METER)).y
+	const seaLevelPixel = this.camera.toScreenCoordinates(new Vector2D(0, SEA_Y_COORDINATE_METER)).y
 		
 	//Draw the sea
 	if (seaLevelPixel <= this.canvas.getHeight()) {

@@ -98,5 +98,5 @@ SeaController.prototype.update = function(elapsedTimeSecond) {
 
 SeaController.prototype.isInSea = function() {
 	const component = this.physicsSystem.getComponent(this.entityId)
-	return component.position.y <= Sea.Y_COORDINATE_METER
+	return component.position.y <= SEA_Y_COORDINATE_METER
 }
