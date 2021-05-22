@@ -34,9 +34,11 @@ PhysicsSystem.prototype.update = function(elapsedTimeSecond) {
     }
 
     // Update velocity.
-    component.velocity = component.velocity
-      .add(component.acceleration.scalarMultiply(elapsedTimeSecond))
-      .cut(component.maxVelocity)
+    if (component.velocityUpdate) {
+      component.velocity = component.velocity
+        .add(component.acceleration.scalarMultiply(elapsedTimeSecond))
+        .cut(component.maxVelocity)
+    }
 
     // Update position.
     component.position = position.add(
@@ -62,6 +64,7 @@ PhysicsSystem.initComponent = function(component) {
 	component.gravity = false
   component.acceleration = Vector2D.zero()
 	component.maxVelocity = PhysicsSystem.MAX_VELOCITY
+  component.velocityUpdate = true
 }
 
 PhysicsSystem.prototype.setupComponent = function(entityId, component) {

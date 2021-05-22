@@ -6,7 +6,8 @@
 ********************************************************************************/
 
 const GAME_COMPONENT_ID_CONTROL = 0
-const GAME_COMPONENT_ID_MAX = 1
+const GAME_COMPONENT_ID_TINY_SHIP = 1
+const GAME_COMPONENT_ID_MAX = 2
 
 function GameSystem(maxEntities) {
 	this.components = []

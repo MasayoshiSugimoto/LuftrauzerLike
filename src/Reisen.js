@@ -69,6 +69,14 @@ Reisen.initialize = function(appContext = {}) {
 		)
 	}
 
+  appContext.getTinyShipPopper = () => {
+    return new TinyShipPopper(
+      appContext.getEntityManager(),
+      appContext.getPlayerEntityId(),
+      appContext.getImages()
+    )
+  }
+
   appContext.getDebug = () => new Debug()
 
   // Replace all getters by a lazy getter.
@@ -104,6 +112,7 @@ Reisen.setup = function(appContext) {
 
 Reisen.update = function(appContext, elapsedTimeSecond) {
   appContext.getDebug().update(elapsedTimeSecond)
+  appContext.getTinyShipPopper().update(elapsedTimeSecond)
   appContext.getPlayerShip().update(elapsedTimeSecond)
   appContext.getEntityManager().update(elapsedTimeSecond)
 	appContext.getSea().draw()

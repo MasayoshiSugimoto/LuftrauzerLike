@@ -92,7 +92,7 @@ Vector2D.prototype.toString = function() {
 }
 
 Vector2D.prototype.getAngle = function() {
-  return Angle.create(Math.atan2(this.y, this.x))
+  return -Math.atan2(this.y, this.x)
 }
 
 Vector2D.prototype.minus = function() {
