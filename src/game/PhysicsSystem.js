@@ -5,9 +5,11 @@
 ********************************************************************************/
 
 PhysicsSystem.GRAVITY_VECTOR = new Vector2D(0, -2)
-PhysicsSystem.MAX_VELOCITY = 8; // Meter/Second
+PhysicsSystem.MAX_VELOCITY = 8 // Meter/Second
+PhysicsSystem.GAME_SPACE_WIDTH_METER = 10
 
 function PhysicsSystem(maxEntities) {
+  this.playerEntityId = -1
 	this.actives = []
 	this.components = []
 
@@ -41,6 +43,7 @@ PhysicsSystem.prototype.update = function(elapsedTimeSecond) {
       component.velocity.scalarMultiply(elapsedTimeSecond)
     )
   })
+  this.CylinderProjection()
 }
 
 PhysicsSystem.prototype.createComponent = function(entityId) {
@@ -103,4 +106,28 @@ PhysicsSystem.prototype.getAcceleration = function(entityId) {
 
 PhysicsSystem.prototype.isActive = function(entityId) {
   return this.actives[entityId]
+}
+
+/*
+ * We project on a cylinder, center on the player, then project again on the
+ * game space. This is done in order to have infinite scrolling on left and
+ * right sides.
+ */
+PhysicsSystem.prototype.CylinderProjection = function() {
+  // Still works without player entity id.
+  if (this.playerEntityId < 0 || !this.actives[this.playerEntityId]) return 
+  const playerX = this.components[this.playerEntityId].position.x
+  this.components.forEach((component, entityId) => {
+    if (!this.actives[entityId]) return
+		const position = component.position
+    let x = position.x
+    x = (x - playerX) / PhysicsSystem.GAME_SPACE_WIDTH_METER * Math.PI
+    x = Angle.normalize(x)
+    x = x / Math.PI * PhysicsSystem.GAME_SPACE_WIDTH_METER
+    position.x = x
+  })
+}
+
+PhysicsSystem.prototype.setPlayerEntityId = function(playerEntityId) {
+  this.playerEntityId = playerEntityId
 }

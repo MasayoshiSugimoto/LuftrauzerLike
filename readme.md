@@ -3,7 +3,7 @@ How to start the game
 
 Click [here](https://masayoshisugimoto.github.io/LuftrauzerLike/LuftrauzerLike.html) to test the demo.
 
-Launch _LuftrauzerLike.html_ in a Chrome.
+Launch _LuftrauzerLike.html_ in Chrome.
 
 On the title screen, press _Enter_ to start the game.
 
@@ -17,33 +17,15 @@ Controls
 | SPACE | Fire       |
 
 
-Tasks
+Notes
 =====
 
-| Task													        | State | Current | Comments 						|
-|---------------------------------------|-------|---------|---------------------|
-|Blue background								        | DONE  |         |											|
-|Draw objects color	    				        | DONE  |         |											|
-|Bullets           	    				        | DONE  |         |											|
-|One simple ennemy 	    				        | DONE  |         |											|
-|Border collisions 	    				        | DONE  |         |											|
-|Game starts in the center  		        | DONE  |         |											|
-|Support image for draw object          | DONE  |         |											|
-|Animated draw object                   |       |         |											|
-|Collision manager                      | DONE  |         |											|
-|Camera                                 | DONE  |         |											|
-|Paralax                                |       |         |											|
-|Clouds                                 | DONE  |         |											|
-|Ground                                 |       |         |											|
-|Enemy manager                          | DONE  |         |											|
-|Particule manager                      |       |         |											|
-|z axis                                 |       |         |											|
-|Simple effect                          |       |         |											|
-|Explosion                              | DONE  |         |											|
-|Decouple gameObjects and DrawObjects   | DONE  |         |											|
-|Circular map                           |       |         |											|
-|Map limit                              | DONE  |         |											|
-|HP                                     | DONE  |         |											|
-|Refactor LufrauzerLike.js (singleton)  | DONE  |         |											|
-|Implement *getRadius* from image size  |       |         |	Not Needed					|
+- Represent base coordinates in a specific vector { x: angle, y: number }
+- Projection to flat space where player is centered.
+- We want to keep calculation in flat space as much as possible.
+- We introduce a projection step between physics update and graphics update.
+  User will be at the origin of the space after being projected through the
+  cylinder space.
+
+FlatSpace -> cylinderSpsace -> FlatSpace -> GraphicSpace
 
