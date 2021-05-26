@@ -1,24 +1,25 @@
 "use strict"
 
-Blaster.FIRE_INTERVAL = 0.1 // Time between bullets in seconds.
+Blaster.FIRE_INTERVAL = 0.3 // Time between bullets in seconds.
 
 function Blaster(getInputData, createProjectile, physicsSystem, playerEntityId) {
   this.getInputData = getInputData
-  this.timer = 0
+  this.cooldown = Blaster.FIRE_INTERVAL
   this.createProjectile = createProjectile
   this.physicsSystem = physicsSystem
   this.playerEntityId = playerEntityId
 }
 
 Blaster.prototype.update = function(elapsedTimeSecond) {
+  this.cooldown = Math.max(0, this.cooldown - elapsedTimeSecond)
+
 	const inputData = this.getInputData()
   if (!inputData.fire) {
-    this.timer = 0
     return
   }
 
-  this.timer += elapsedTimeSecond
-  if (this.timer < Blaster.FIRE_INTERVAL) return
+  if (this.cooldown > 0) return
+  this.cooldown = Blaster.FIRE_INTERVAL
 
   // Fire a bullet and reset the timer.
   this.timer = this.timer % Blaster.FIRE_INTERVAL
@@ -29,5 +30,12 @@ Blaster.prototype.update = function(elapsedTimeSecond) {
   component.position = playerComponent.position
   component.velocity = new Vector2D(Projectile.SPEED, 0)
     .rotate(playerComponent.direction)
-}
+    .add(playerComponent.velocity)
 
+  // Prevent the projectile to lose too much speed.
+  const distance = component.velocity.distance()
+  if (distance < Projectile.SPEED && distance > 0.0001) {
+    component.velocity = component.velocity
+      .scalarMultiply(Projectile.SPEED / distance)
+  }
+}

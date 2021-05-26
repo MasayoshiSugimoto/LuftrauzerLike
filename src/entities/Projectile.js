@@ -7,9 +7,9 @@
 function Projectile() {}
 
 Projectile.IMAGE_FILE = 'images/Explosion.png'
-Projectile.SPEED = 8 // Meter per second.
+Projectile.SPEED = 5 // Meter per second.
 Projectile.scale = 0.4
-Projectile.LIFE_TIME_SECOND = 1
+Projectile.LIFE_TIME_SECOND = 2
 
 Projectile.createFactory = function(entityManager, images) {
   const graphicSystem = entityManager.getGraphicSystem()
