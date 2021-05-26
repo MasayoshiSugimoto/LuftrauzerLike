@@ -79,6 +79,7 @@
     <script src="src/game/GameSystem.js"></script>
     <script src="src/game/Debug.js"></script>
     <script src="src/entities/TinyShip.js"></script>
+    <script src="src/components/DeactivationTimerComponent.js"></script>
 
     <script>
       window.onload = function() { Reisen.start(); };
@@ -90,6 +91,7 @@
 		<div id="debug-menu">
       <ul>
         <li>FPS: <span id='debug-menu-fps'></span></li>
+        <li>NB Entities: <span id='debug-menu-nb-entities'></span></li>
       </ul>
     </div>
     <canvas id="canvas" style="position:absolute; top: 0px; left: 0px; z-index:-1;">

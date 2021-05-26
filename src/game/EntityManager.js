@@ -7,6 +7,7 @@
 function EntityManager(canvas) {
 	const maxEntities = 1000
 
+  this.activeCount = 0
 	this.actives = []
 	for (let i = 0; i < maxEntities; i++) {
 		this.actives[i] = false
@@ -36,6 +37,7 @@ EntityManager.prototype.createEntity = function(systemIds) {
 		systemIds.forEach(systemId =>
 			this.systems[systemId].createComponent(this.lastEntityId)
 		)
+    this.activeCount++
 		return this.lastEntityId	
 	}
 	console.log('Failed to create entity. Max number of entity reached.')
@@ -43,8 +45,10 @@ EntityManager.prototype.createEntity = function(systemIds) {
 }
 
 EntityManager.prototype.deleteEntity = function(entityId) {
+  if (!this.actives[entityId]) return
 	this.actives[entityId] = false
-	this.systems.forEach(x => x.deleteComponent(x))
+	this.systems.forEach(x => x.deleteComponent(entityId))
+  this.activeCount--
 }
 
 EntityManager.prototype.update = function(elapsedTimeSecond) {
@@ -65,4 +69,8 @@ EntityManager.prototype.getPhysicsSystem = function() {
 
 EntityManager.prototype.getGraphicSystem = function() {
   return this.systems[EntityManager.SYSTEM_TYPES.GRAPHICS]
+}
+
+EntityManager.prototype.getActiveCount = function() {
+  return this.activeCount
 }

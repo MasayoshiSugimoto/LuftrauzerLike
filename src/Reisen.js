@@ -77,7 +77,7 @@ Reisen.initialize = function(appContext = {}) {
     )
   }
 
-  appContext.getDebug = () => new Debug()
+  appContext.getDebug = () => new Debug(appContext.getEntityManager())
 
   // Replace all getters by a lazy getter.
   const lazy = f => {
@@ -112,7 +112,7 @@ Reisen.setup = function(appContext) {
 
 Reisen.update = function(appContext, elapsedTimeSecond) {
   appContext.getDebug().update(elapsedTimeSecond)
-  appContext.getTinyShipPopper().update(elapsedTimeSecond)
+  //appContext.getTinyShipPopper().update(elapsedTimeSecond)
   appContext.getPlayerShip().update(elapsedTimeSecond)
   appContext.getEntityManager().update(elapsedTimeSecond)
 	appContext.getSea().draw()
