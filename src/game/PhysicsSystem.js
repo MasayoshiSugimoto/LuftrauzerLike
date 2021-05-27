@@ -6,7 +6,6 @@
 
 PhysicsSystem.GRAVITY_VECTOR = new Vector2D(0, -2)
 PhysicsSystem.MAX_VELOCITY = 8 // Meter/Second
-PhysicsSystem.GAME_SPACE_WIDTH_METER = 10
 
 function PhysicsSystem(maxEntities) {
   this.playerEntityId = -1
@@ -120,13 +119,14 @@ PhysicsSystem.prototype.CylinderProjection = function() {
   // Still works without player entity id.
   if (this.playerEntityId < 0 || !this.actives[this.playerEntityId]) return 
   const playerX = this.components[this.playerEntityId].position.x
+	const halfWidth = GAME_SPACE_WIDTH_METER / 2
   this.components.forEach((component, entityId) => {
     if (!this.actives[entityId]) return
 		const position = component.position
     let x = position.x
-    x = (x - playerX) / PhysicsSystem.GAME_SPACE_WIDTH_METER * Math.PI
+    x = (x - playerX) / halfWidth * Math.PI
     x = Angle.normalize(x)
-    x = x / Math.PI * PhysicsSystem.GAME_SPACE_WIDTH_METER
+    x = x / Math.PI * halfWidth
     position.x = x
   })
 }

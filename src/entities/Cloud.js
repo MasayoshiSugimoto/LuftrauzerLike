@@ -2,9 +2,8 @@
 
 Cloud.IMAGE = 'images/Cloud.png'
 Cloud.OPACITY = 0.5
-Cloud.MIN_SCALE = 1
+Cloud.MIN_SCALE = 0.5
 Cloud.MAX_SCALE = 2
-Cloud.SKY_SIZE_METER = 20 // Square size.
 Cloud.CLOUD_NUMBER = 100
 
 function Cloud() {}
@@ -26,21 +25,20 @@ Cloud.createSky = function(entityManager, images) {
   const createCloud = Cloud.createFactory(entityManager, images)
   const physicsSystem = entityManager.getPhysicsSystem()
   const graphicSystem = entityManager.getGraphicSystem()
-  const minSkyCoordinate = -Cloud.SKY_SIZE_METER / 2
   for (let i = 0; i < Cloud.CLOUD_NUMBER; i++) {
     const entityId = createCloud()
+		// Higher distribution of cloud higher in the sky.
+		const r = Math.sqrt((Math.random()*100))/10
+		const y = r*SKY_Y_COORDINATE_METER
     physicsSystem.setPosition(entityId, new Vector2D(
-      minSkyCoordinate + Math.random() * Cloud.SKY_SIZE_METER,
-      Math.random() * Cloud.SKY_SIZE_METER
+      -(GAME_SPACE_WIDTH_METER / 2) + Math.random() * GAME_SPACE_WIDTH_METER,
+      y
     ))
-    graphicSystem.setScale(entityId, Cloud.randomScale())
+		// Higher clouds will be bigger.
+		const scale = r
+			* (Cloud.MAX_SCALE - Cloud.MIN_SCALE)
+			+ Cloud.MIN_SCALE
+    graphicSystem.setScale(entityId, scale)
 		graphicSystem.setOpacity(entityId, Cloud.OPACITY)
   }
 }
-
-Cloud.randomScale = function() {
-  return Math.random()
-    * (Cloud.MAX_SCALE - Cloud.MIN_SCALE)
-    + Cloud.MIN_SCALE
-}
-
