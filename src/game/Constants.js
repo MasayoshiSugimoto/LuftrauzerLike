@@ -5,3 +5,4 @@
  ******************************************************************************/
 
 const SEA_Y_COORDINATE_METER = -1
+const SKY_Y_COORDINATE_METER = 2

@@ -116,4 +116,5 @@ Reisen.update = function(appContext, elapsedTimeSecond) {
   appContext.getPlayerShip().update(elapsedTimeSecond)
   appContext.getEntityManager().update(elapsedTimeSecond)
 	appContext.getSea().draw()
+	drawSky(appContext.getCanvas(), appContext.getCamera())
 }
