@@ -41,6 +41,7 @@ PlayerShip.IMAGE_PATHS = [
 ]
 PlayerShip.TOP_VIEW_INDEX = 15
 PlayerShip.MAX_VELOCITY = 4
+PlayerShip.MAX_HP = 100
 
 function PlayerShip(entityId, entityManager, images, blaster) {
 	const controlSystem = new ControlSystem(entityManager.getPhysicsSystem(), entityId)
@@ -60,19 +61,26 @@ function PlayerShip(entityId, entityManager, images, blaster) {
 		entityId
 	)
 
+	// Initialize game components.
 	entityManager.getGameSystem().addComponent(
 		entityId,
 		GAME_COMPONENT_ID_CONTROL,
 		controlSystem
 	)
-	this.graphicSystem = entityManager.getGraphicSystem()
+	entityManager.getGameSystem().addComponent(
+		entityId,
+		GAME_COMPONENT_ID_LIFE,
+		new LifeComponent(PlayerShip.MAX_HP, entityManager)
+	)
 
+	// Initialize physics component.
 	const physicsComponent = entityManager.getPhysicsSystem().getComponent(entityId)
 	physicsComponent.maxVelocity = PlayerShip.MAX_VELOCITY
 	physicsComponent.gravity = true
 	physicsComponent.vectorFieldIndices = [0, 1]
 
 	// Initialize with an image.
+	this.graphicSystem = entityManager.getGraphicSystem()
   this.graphicSystem.setupImage(this.entityId, this.images[PlayerShip.TOP_VIEW_INDEX])
 }
 

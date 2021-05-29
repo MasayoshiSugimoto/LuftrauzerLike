@@ -77,7 +77,10 @@ Reisen.initialize = function(appContext = {}) {
     )
   }
 
-  appContext.getDebug = () => new Debug(appContext.getEntityManager())
+  appContext.getDebug = () => new Debug(
+		appContext.getEntityManager(),
+		appContext.getPlayerEntityId()
+	)
 
   // Replace all getters by a lazy getter.
   const lazy = f => {

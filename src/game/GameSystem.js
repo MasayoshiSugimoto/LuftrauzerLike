@@ -8,7 +8,8 @@
 const GAME_COMPONENT_ID_CONTROL = 0
 const GAME_COMPONENT_ID_TINY_SHIP = 1
 const GAME_COMPONENT_ID_DEACTIVATION_TIMER = 2
-const GAME_COMPONENT_ID_MAX = 3
+const GAME_COMPONENT_ID_LIFE = 3
+const GAME_COMPONENT_ID_MAX = 4
 
 function GameSystem(maxEntities) {
 	this.components = []
