@@ -4,20 +4,35 @@
 * PhysicsSystem apply gravity and update velocity of game entities.
 ********************************************************************************/
 
-PhysicsSystem.GRAVITY_VECTOR = new Vector2D(0, -2)
-PhysicsSystem.MAX_VELOCITY = 8 // Meter/Second
+PhysicsSystem.GRAVITY = -4 // Meter/Second
+PhysicsSystem.GRAVITY_VECTOR = new Vector2D(0, PhysicsSystem.GRAVITY)
+PhysicsSystem.MAX_VELOCITY = 10 // Meter/Second
+PhysicsSystem.VECTOR_FIELD_ACCELERATION = 10 // Meter/Second
 
 function PhysicsSystem(maxEntities) {
   this.playerEntityId = -1
+
 	this.actives = []
 	this.components = []
-
 	for (let i = 0; i < maxEntities; i++) {
 		this.actives[i] = false
     const component = {}
     PhysicsSystem.initComponent(component)
 		this.components.push(component)
 	}
+
+	// Sky and Sea vector fields.
+	this.vectorFields = new Array(VECTOR_FIELD_ID_MAX)
+	this.vectorFields[VECTOR_FIELD_ID_SEA] = new YVectorField(
+		SEA_Y_COORDINATE_METER,
+		-Infinity,
+		new Vector2D(0, PhysicsSystem.VECTOR_FIELD_ACCELERATION)
+	)
+	this.vectorFields[VECTOR_FIELD_ID_SKY] = new YVectorField(
+		SKY_Y_COORDINATE_METER,
+		+Infinity,
+		new Vector2D(0, -PhysicsSystem.VECTOR_FIELD_ACCELERATION)
+	)
 }
 
 PhysicsSystem.prototype.update = function(elapsedTimeSecond) {
@@ -27,15 +42,20 @@ PhysicsSystem.prototype.update = function(elapsedTimeSecond) {
 		const position = component.position
 
     // Update gravity.
+		let acceleration = component.acceleration
     if (component.gravity) {
-      component.acceleration = component.acceleration
-        .add(PhysicsSystem.GRAVITY_VECTOR)
+      acceleration = acceleration.add(PhysicsSystem.GRAVITY_VECTOR)
     }
+
+		// Update vector fields.
+		component.vectorFieldIndices.forEach(i => {
+			acceleration = acceleration.add(this.vectorFields[i].getAcceleration(component))
+		})
 
     // Update velocity.
     if (component.velocityUpdate) {
       component.velocity = component.velocity
-        .add(component.acceleration.scalarMultiply(elapsedTimeSecond))
+        .add(acceleration.scalarMultiply(elapsedTimeSecond))
         .cut(component.maxVelocity)
     }
 
@@ -64,6 +84,7 @@ PhysicsSystem.initComponent = function(component) {
   component.acceleration = Vector2D.zero()
 	component.maxVelocity = PhysicsSystem.MAX_VELOCITY
   component.velocityUpdate = true
+	component.vectorFieldIndices = []
 }
 
 PhysicsSystem.prototype.setupComponent = function(entityId, component) {
@@ -134,3 +155,25 @@ PhysicsSystem.prototype.CylinderProjection = function() {
 PhysicsSystem.prototype.setPlayerEntityId = function(playerEntityId) {
   this.playerEntityId = playerEntityId
 }
+
+
+/********************************************************************************
+* Y Vector fields.
+********************************************************************************/
+
+function YVectorField(yStart, yEnd, acceleration) {
+	const start = Math.min(yStart, yEnd)
+	const end = Math.max(yStart, yEnd)
+	this.yStart = start
+	this.yEnd = end
+	this.acceleration = acceleration
+}
+
+YVectorField.prototype.getAcceleration = function(component) {
+	const y = component.position.y
+	if (this.yStart <= y && y <= this.yEnd) {
+		return this.acceleration
+	}
+	return Vector2D.ZERO
+}
+

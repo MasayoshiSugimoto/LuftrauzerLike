@@ -5,7 +5,7 @@
  ******************************************************************************/
 
 PlayerShip.ROTATION_UNIT = Math.PI * 2; // Rotation allowed per second.
-PlayerShip.BOOST_UNIT = 5 // Velocity in meter/s^2.
+PlayerShip.BOOST_UNIT = 10 // Velocity in meter/s^2.
 PlayerShip.IMAGE_PATHS = [
   "images/Reisen15.png",
   "images/Reisen14.png",
@@ -40,7 +40,7 @@ PlayerShip.IMAGE_PATHS = [
   "images/Reisen-15.png",
 ]
 PlayerShip.TOP_VIEW_INDEX = 15
-PlayerShip.MAX_VELOCITY = 3
+PlayerShip.MAX_VELOCITY = 4
 
 function PlayerShip(entityId, entityManager, images, blaster) {
 	const controlSystem = new ControlSystem(entityManager.getPhysicsSystem(), entityId)
@@ -66,7 +66,11 @@ function PlayerShip(entityId, entityManager, images, blaster) {
 		controlSystem
 	)
 	this.graphicSystem = entityManager.getGraphicSystem()
-	entityManager.getPhysicsSystem().getComponent(entityId).maxVelocity = PlayerShip.MAX_VELOCITY
+
+	const physicsComponent = entityManager.getPhysicsSystem().getComponent(entityId)
+	physicsComponent.maxVelocity = PlayerShip.MAX_VELOCITY
+	physicsComponent.gravity = true
+	physicsComponent.vectorFieldIndices = [0, 1]
 
 	// Initialize with an image.
   this.graphicSystem.setupImage(this.entityId, this.images[PlayerShip.TOP_VIEW_INDEX])

@@ -8,15 +8,18 @@
 
 function ControlSystem(physicsSystem, entityId) {
 	this.seaController = new SeaController(physicsSystem, entityId)
+	this.skyController = new SkyController(physicsSystem, entityId)
 }
 
 ControlSystem.prototype.getInputData = function() {
 	if (this.seaController.isInSea()) return this.seaController.inputData
+	if (this.skyController.isInSky()) return this.skyController.inputData
 	return KeyboardControl.inputData
 }
 
 ControlSystem.prototype.update = function(entityId, elapsedTimeSecond) {
 	this.seaController.update(elapsedTimeSecond)
+	this.skyController.update(elapsedTimeSecond)
 }
 
 function KeyboardControl() {}
@@ -99,4 +102,40 @@ SeaController.prototype.update = function(elapsedTimeSecond) {
 SeaController.prototype.isInSea = function() {
 	const component = this.physicsSystem.getComponent(this.entityId)
 	return component.position.y <= SEA_Y_COORDINATE_METER
+}
+
+function SkyController(physicsSystem, entityId) {
+	this.physicsSystem = physicsSystem
+	this.entityId = entityId
+	this.inputData = {
+		boost: true,
+		left: false,
+		right: false,
+		fire: false
+	}
+}
+
+SkyController.prototype.update = function(elapsedTimeSecond) {
+	const component = this.physicsSystem.getComponent(this.entityId)
+	const baseAngle = Angle.normalize(component.direction+Math.PI/2)
+	if (this.isInSky()) {
+		if (Math.abs(baseAngle) >= 3 * (Math.PI / 4)) {
+			this.inputData.left = false
+			this.inputData.right = false
+		} else if (baseAngle <= 0) {
+			this.inputData.left = true
+			this.inputData.right = false
+		} else {
+			this.inputData.left = false
+			this.inputData.right = true
+		}
+	} else {
+		this.inputData.left = false
+		this.inputData.right = false
+	}
+}
+
+SkyController.prototype.isInSky = function() {
+	const component = this.physicsSystem.getComponent(this.entityId)
+	return component.position.y >= SKY_Y_COORDINATE_METER
 }
