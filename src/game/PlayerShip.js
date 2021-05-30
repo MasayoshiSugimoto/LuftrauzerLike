@@ -42,6 +42,11 @@ PlayerShip.IMAGE_PATHS = [
 PlayerShip.TOP_VIEW_INDEX = 15
 PlayerShip.MAX_VELOCITY = 4
 PlayerShip.MAX_HP = 100
+PlayerShip.FADEOUT_TIME_SECOND = 1
+PlayerShip.EXPLOSION_IMAGE_PATH = 'images/Explosion.png'
+
+const PLAYER_STATE_ALIVE = 0
+const PLAYER_STATE_DYING = 1
 
 function PlayerShip(entityId, entityManager, images, blaster) {
 	const controlSystem = new ControlSystem(entityManager.getPhysicsSystem(), entityId)
@@ -62,26 +67,30 @@ function PlayerShip(entityId, entityManager, images, blaster) {
 	)
 
 	// Initialize game components.
-	entityManager.getGameSystem().addComponent(
+	const gameSystem = entityManager.getGameSystem()
+	gameSystem.addComponent(
 		entityId,
 		GAME_COMPONENT_ID_CONTROL,
 		controlSystem
 	)
-	entityManager.getGameSystem().addComponent(
+	gameSystem.addComponent(
 		entityId,
 		GAME_COMPONENT_ID_LIFE,
 		new LifeComponent(PlayerShip.MAX_HP, entityManager)
 	)
+	this.explosionImage = images.get(PlayerShip.EXPLOSION_IMAGE_PATH)
 
 	// Initialize physics component.
 	const physicsComponent = entityManager.getPhysicsSystem().getComponent(entityId)
 	physicsComponent.maxVelocity = PlayerShip.MAX_VELOCITY
-	physicsComponent.gravity = true
+	//physicsComponent.gravity = true
 	physicsComponent.vectorFieldIndices = [0, 1]
 
 	// Initialize with an image.
 	this.graphicSystem = entityManager.getGraphicSystem()
   this.graphicSystem.setupImage(this.entityId, this.images[PlayerShip.TOP_VIEW_INDEX])
+
+	this.state = PLAYER_STATE_ALIVE
 }
 
 PlayerShip.prototype.update = function(elapsedTimeSecond) {
@@ -106,4 +115,19 @@ PlayerShip.prototype.update = function(elapsedTimeSecond) {
 
   // Update blaster.
   this.blaster.update(elapsedTimeSecond)
+
+	// Update state.
+	const gameSystem = this.entityManager.getGameSystem()
+	const lifeComponent = gameSystem.getComponent(this.entityId, GAME_COMPONENT_ID_LIFE)
+	if (this.state === PLAYER_STATE_ALIVE && lifeComponent && lifeComponent.isDying()) {
+		this.state = PLAYER_STATE_DYING
+		// Display explosion when dying.
+		const fadeoutComponent = new FadeoutComponent(
+			this.entityId,
+			this.explosionImage,
+			PlayerShip.FADEOUT_TIME_SECOND,
+			this.entityManager.getGraphicSystem()
+		)
+		gameSystem.addComponent(this.entityId, GAME_COMPONENT_ID_FADEOUT, fadeoutComponent)
+	} 
 }
