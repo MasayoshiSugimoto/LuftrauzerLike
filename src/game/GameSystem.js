@@ -51,5 +51,6 @@ GameSystem.prototype.removeComponent = function(entityId, componentId) {
 }
 
 GameSystem.prototype.getComponent = function(entityId, componentId) {
+	if (!this.components[entityId]) return undefined
 	return this.components[entityId][componentId]
 }

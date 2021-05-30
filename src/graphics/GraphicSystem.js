@@ -8,7 +8,7 @@ GraphicSystem.SKY_COLOR = '#66ccff'
 GraphicSystem.MAX_BASE = 100
 GraphicSystem.BASE_COLOR = '#FF0000'
 
-function GraphicSystem(maxEntity, physicsSystem, canvas) {
+function GraphicSystem(maxEntity, physicsSystem, canvas, gameSystem) {
   this.canvas = canvas
   this.actives = []
   this.components = []
@@ -20,6 +20,7 @@ function GraphicSystem(maxEntity, physicsSystem, canvas) {
   }
   this.physicsSystem = physicsSystem
 	this.targetEntityId = -1
+	this.gameSystem = gameSystem
 }
 
 GraphicSystem.prototype.createComponent = function(entityId) {
@@ -60,6 +61,8 @@ GraphicSystem.prototype.update = function(elapsedTimeSecond) {
       component.size.y
     )
     canvas.restore()
+
+		drawHealthBar(this.gameSystem, entityId, component.position, canvas)
   })
   //if (DEBUG_ENABLED) this.drawBase()
 	canvas.restore()

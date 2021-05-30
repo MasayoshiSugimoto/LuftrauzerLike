@@ -17,6 +17,13 @@ function Debug(entityManager, playerEntityId) {
 			case '`':
 				DEBUG_ENABLED = !DEBUG_ENABLED
 				break
+			case 'i':
+				if (DEBUG_ENABLED) {
+					entityManager.getGameSystem()
+						.getComponent(playerEntityId, GAME_COMPONENT_ID_LIFE)
+						.addDamage(10)
+				}
+				break
 		}
   })
 

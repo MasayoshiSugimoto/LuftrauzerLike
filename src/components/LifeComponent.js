@@ -7,6 +7,7 @@
 const LIFE_COMPONENT_DYING_TIME_MILLISECOND = 1000
 
 function LifeComponent(maxHP, entityManager) {
+	this.maxHP = maxHP
 	this.hp = maxHP
 	this.entityManager = entityManager
 	this.dyingTimer = LIFE_COMPONENT_DYING_TIME_MILLISECOND
@@ -35,6 +36,10 @@ LifeComponent.prototype.isDying = function() {
 
 LifeComponent.prototype.getHP = function() {
 	return this.hp
+}
+
+LifeComponent.prototype.getMaxHP = function() {
+	return this.maxHP
 }
 
 /*

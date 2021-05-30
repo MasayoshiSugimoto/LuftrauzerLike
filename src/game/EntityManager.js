@@ -14,10 +14,11 @@ function EntityManager(canvas) {
 	}
 	this.lastEntityId = 0
   const physicsSystem = new PhysicsSystem(maxEntities)
+	const gameSystem = new GameSystem(maxEntities)
 	this.systems = [
-		new GameSystem(maxEntities),
+		gameSystem,
 		physicsSystem,
-    new GraphicSystem(maxEntities, physicsSystem, canvas)
+    new GraphicSystem(maxEntities, physicsSystem, canvas, gameSystem)
 	]
 }
 
