@@ -112,6 +112,12 @@ Reisen.setup = function(appContext) {
 	appContext.getEntityManager().getGraphicSystem().setTargetEntityId(appContext.getPlayerEntityId())
 
 	CreateDiscEntities(appContext.getEntityManager())
+	new RectangleEntity(
+		appContext.getEntityManager(),
+		appContext.getPlayerEntityId(),
+		300,
+		200	
+	)
 
   return appContext
 }

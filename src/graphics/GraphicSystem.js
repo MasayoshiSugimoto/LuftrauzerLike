@@ -12,6 +12,7 @@ GraphicSystem.DEFAULT_COLOR = 'red'
 
 GraphicSystem.DRAW_TYPE_IMAGE = 0
 GraphicSystem.DRAW_TYPE_DISK = 1
+GraphicSystem.DRAW_TYPE_RECTANGLE = 2
 
 function GraphicSystem(maxEntity, physicsSystem, canvas, gameSystem) {
   this.canvas = canvas
@@ -64,6 +65,9 @@ GraphicSystem.prototype.update = function(elapsedTimeSecond) {
 				break
 			case GraphicSystem.DRAW_TYPE_DISK:
 				this.drawDisk(canvas, component)
+				break
+			case GraphicSystem.DRAW_TYPE_RECTANGLE:
+				this.drawRectangle(canvas, component)
 				break
 		}
     canvas.restore()
@@ -119,6 +123,13 @@ GraphicSystem.prototype.setDisk = function(entityId) {
 	component.drawType = GraphicSystem.DRAW_TYPE_DISK
 }
 
+GraphicSystem.prototype.setRectangle = function(entityId, width, height) {
+	const component = this.components[entityId]
+	if (!component) return
+	component.drawType = GraphicSystem.DRAW_TYPE_RECTANGLE
+	component.size = new Vector2D(width, height)
+}
+
 GraphicSystem.prototype.drawBase = function() {
 	const context = this.canvas.getContext()
 	context.save()
@@ -157,6 +168,28 @@ GraphicSystem.prototype.drawDisk = function(context, component) {
 	context.fillStyle = component.color
 	context.arc(0, 0, component.size.x, 0, Math.PI*2)
 	context.fill()
+}
+
+GraphicSystem.prototype.drawRectangle = function(context, component) {
+	context.strokeStyle = component.color
+	context.beginPath()
+	const x = component.position.x
+	const y = component.position.y
+	const width = component.size.x
+	const height = component.size.y
+	context.rect(
+		- width / 2,
+		- height / 2,
+		width,
+		height
+	)
+	context.stroke()
+}
+
+GraphicSystem.prototype.setColor = function(entityId, color) {
+	const component = this.components[entityId]
+	if (!component) return
+	component.color = color
 }
 
 

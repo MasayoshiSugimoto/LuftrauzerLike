@@ -11,7 +11,7 @@ function DiscEntity(entityManager) {
     EntityManager.SYSTEM_TYPES.GRAPHICS
   ])
 	this.physicsSystem.getComponent(this.entityId).velocity = DISC_ENTITY_VELOCITY
-		.scalarMultiply(Math.random() )
+		.scalarMultiply(Math.random())
 		.rotate(Math.random() * Math.PI * 2)
 	const graphicSystem = entityManager.getGraphicSystem()
 	graphicSystem.setDisk(this.entityId)
