@@ -110,10 +110,13 @@ Reisen.setup = function(appContext) {
   Cloud.createSky(appContext.getEntityManager(), appContext.getImages())
 	// Center the screen on the player ship.
 	appContext.getEntityManager().getGraphicSystem().setTargetEntityId(appContext.getPlayerEntityId())
+
+	CreateDiscEntities(appContext.getEntityManager())
+
   return appContext
 }
 
-Reisen.update = function(appContext, elapsedTimeSecond) {
+Reisen.update = function(appContext, elapsedTimeSecond, canvas) {
   appContext.getDebug().update(elapsedTimeSecond)
   //appContext.getTinyShipPopper().update(elapsedTimeSecond)
   appContext.getPlayerShip().update(elapsedTimeSecond)

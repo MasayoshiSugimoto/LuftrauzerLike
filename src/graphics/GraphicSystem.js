@@ -7,6 +7,11 @@
 GraphicSystem.SKY_COLOR = '#66ccff'
 GraphicSystem.MAX_BASE = 100
 GraphicSystem.BASE_COLOR = '#FF0000'
+GraphicSystem.DEFAULT_SIZE = new Vector2D(10, 10)
+GraphicSystem.DEFAULT_COLOR = 'red'
+
+GraphicSystem.DRAW_TYPE_IMAGE = 0
+GraphicSystem.DRAW_TYPE_DISK = 1
 
 function GraphicSystem(maxEntity, physicsSystem, canvas, gameSystem) {
   this.canvas = canvas
@@ -53,13 +58,14 @@ GraphicSystem.prototype.update = function(elapsedTimeSecond) {
     canvas.translate(component.position.x, component.position.y)
     canvas.rotate(component.direction)
     canvas.globalAlpha = component.opacity
-    canvas.drawImage(
-      component.image,
-      -component.size.x / 2,
-      -component.size.y / 2,
-      component.size.x,
-      component.size.y
-    )
+		switch (component.drawType) {
+			case GraphicSystem.DRAW_TYPE_IMAGE:
+				this.drawImage(canvas, component)
+				break
+			case GraphicSystem.DRAW_TYPE_DISK:
+				this.drawDisk(canvas, component)
+				break
+		}
     canvas.restore()
 
 		drawHealthBar(this.gameSystem, entityId, component.position, canvas)
@@ -107,6 +113,12 @@ GraphicSystem.prototype.setTargetEntityId = function(targetEntityId) {
 	this.targetEntityId = targetEntityId
 }
 
+GraphicSystem.prototype.setDisk = function(entityId) {
+	const component = this.components[entityId]
+	if (!component) return
+	component.drawType = GraphicSystem.DRAW_TYPE_DISK
+}
+
 GraphicSystem.prototype.drawBase = function() {
 	const context = this.canvas.getContext()
 	context.save()
@@ -130,6 +142,23 @@ GraphicSystem.prototype.drawBase = function() {
 	context.restore()
 }
 
+GraphicSystem.prototype.drawImage = function(context, component) {
+	context.drawImage(
+		component.image,
+		-component.size.x / 2,
+		-component.size.y / 2,
+		component.size.x,
+		component.size.y
+	)
+}
+
+GraphicSystem.prototype.drawDisk = function(context, component) {
+	context.beginPath()
+	context.fillStyle = component.color
+	context.arc(0, 0, component.size.x, 0, Math.PI*2)
+	context.fill()
+}
+
 
 /********************************************************************************
  * Static Functions
@@ -141,7 +170,9 @@ GraphicSystem.initComponent = function(component) {
   component.scale =  1.0
   component.opacity = 1.0
   component.image = undefined
-  component.size = 0.0
+  component.size = GraphicSystem.DEFAULT_SIZE
+	component.drawType = GraphicSystem.DRAW_TYPE_IMAGE
+	component.color = GraphicSystem.DEFAULT_COLOR
 }
 
 GraphicSystem.toScreenPosition = function(gameSpacePosition) {

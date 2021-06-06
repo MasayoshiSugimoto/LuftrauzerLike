@@ -5,7 +5,7 @@
 ********************************************************************************/
 
 function EntityManager(canvas) {
-	const maxEntities = 1000
+	const maxEntities = 2000
 
   this.activeCount = 0
 	this.actives = []
