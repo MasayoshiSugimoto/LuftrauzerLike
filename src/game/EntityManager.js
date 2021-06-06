@@ -14,7 +14,7 @@ function EntityManager(canvas) {
 	}
 	this.lastEntityId = 0
   const physicsSystem = new PhysicsSystem(maxEntities)
-	const gameSystem = new GameSystem(maxEntities)
+	const gameSystem = new GameSystem(maxEntities, this)
 	this.systems = [
 		gameSystem,
 		physicsSystem,

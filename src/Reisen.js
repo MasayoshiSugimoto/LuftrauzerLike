@@ -112,21 +112,49 @@ Reisen.setup = function(appContext) {
 	appContext.getEntityManager().getGraphicSystem().setTargetEntityId(appContext.getPlayerEntityId())
 
 	CreateDiscEntities(appContext.getEntityManager())
-	new RectangleEntity(
+	const rectangle = new RectangleEntity(
 		appContext.getEntityManager(),
 		appContext.getPlayerEntityId(),
 		300,
 		200	
 	)
 
+  appContext.rectangle = rectangle
+
   return appContext
 }
 
 Reisen.update = function(appContext, elapsedTimeSecond, canvas) {
+  test2DMap(appContext.getEntityManager(), appContext.rectangle.entityId)
   appContext.getDebug().update(elapsedTimeSecond)
   //appContext.getTinyShipPopper().update(elapsedTimeSecond)
   appContext.getPlayerShip().update(elapsedTimeSecond)
   appContext.getEntityManager().update(elapsedTimeSecond)
 	appContext.getSea().draw()
 	drawSky(appContext.getCanvas(), appContext.getCamera())
+}
+
+function test2DMap(entityManager, rectangleEntityId) {
+  const gameSystem = entityManager.getGameSystem()
+  const graphicSystem = entityManager.getGraphicSystem()
+  const physicsSystem = entityManager.getPhysicsSystem()
+  const map2D = gameSystem.map2D 
+
+  graphicSystem.components.forEach(component => {
+    if (component.drawType === GraphicSystem.DRAW_TYPE_DISK) {
+      component.color = 'red' 
+    }
+  })
+
+  const rectangle = physicsSystem.getComponent(rectangleEntityId)
+  const position = rectangle.position
+  const size = rectangle.size
+  const x = position.x - size.x/2
+  const y = position.y - size.y/2
+  const width = rectangle.size.x
+  const height = rectangle.size.y
+  const entityIds = map2D.searchEntities(x, y, width, height)
+  entityIds.forEach(entityId => {
+    graphicSystem.setColor(entityId, 'green')
+  })
 }

@@ -4,11 +4,11 @@
 * HashMap2D. Data structure to quickly query entities from coordinates.
 ********************************************************************************/
 
-function HashMap2D(x, y, height, width, cellInterval) {
+function HashMap2D(x, y, width, height, cellInterval) {
 	this.x = x
 	this.y = y
-	this.height = height
 	this.width = width
+	this.height = height
 	this.cellInterval = cellInterval
 
 	// We need a map [entityId, {position, radius}].
@@ -52,7 +52,7 @@ HashMap2D.prototype.removeEntity = function(entityId) {
 		for (let j = this.toCellY(position.y); j <= this.toCellY(position.y + radius); j++) {
 			const cell = this.cells.get(`${i}.${j}`)
 			if (!cell) continue
-			cell.remove(entityId)	
+      this.remove(cell, entityId)
 		}
 	}
 }
@@ -75,4 +75,19 @@ HashMap2D.prototype.toCellX = function(x) {
 
 HashMap2D.prototype.toCellY = function(y) {
 	return Math.floor((y - this.y) / this.cellInterval)
+}
+
+HashMap2D.prototype.remove = function(array, entityId) {
+  if (array.length === 0) return
+  if (array.length > 1 && array[array.length-1] !== entityId) {
+    for (let i = 0; i < array.length; i++) {
+      if (array[i] === entityId) {
+        array[i] = array[array.length - 1]
+        array.pop()
+        return
+      }
+    }
+  } else {
+    array.pop() 
+  }
 }
