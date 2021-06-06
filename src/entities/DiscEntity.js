@@ -2,6 +2,7 @@
 
 const DISC_ENTITY_VELOCITY = new Vector2D(1, 0)
 const DISC_ENTITY_ENTITY_MAX = 1000
+const DISC_ENTITY_RADIUS = 0.05
 
 function DiscEntity(entityManager) {
   this.physicsSystem = entityManager.getPhysicsSystem()
@@ -10,9 +11,13 @@ function DiscEntity(entityManager) {
     EntityManager.SYSTEM_TYPES.PHYSICS,
     EntityManager.SYSTEM_TYPES.GRAPHICS
   ])
-	this.physicsSystem.getComponent(this.entityId).velocity = DISC_ENTITY_VELOCITY
+
+  const physicComponent = this.physicsSystem.getComponent(this.entityId)
+	physicComponent.velocity = DISC_ENTITY_VELOCITY
 		.scalarMultiply(Math.random())
 		.rotate(Math.random() * Math.PI * 2)
+  physicComponent.size = new Vector2D(DISC_ENTITY_RADIUS, DISC_ENTITY_RADIUS)
+
 	const graphicSystem = entityManager.getGraphicSystem()
 	graphicSystem.setDisk(this.entityId)
 	entityManager.getGameSystem().addComponent(this.entityId, GAME_COMPONENT_ID_DISK_ENTITY, this)

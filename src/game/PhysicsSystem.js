@@ -8,6 +8,7 @@ PhysicsSystem.GRAVITY = -4 // Meter/Second
 PhysicsSystem.GRAVITY_VECTOR = new Vector2D(0, PhysicsSystem.GRAVITY)
 PhysicsSystem.MAX_VELOCITY = 10 // Meter/Second
 PhysicsSystem.VECTOR_FIELD_ACCELERATION = 10 // Meter/Second
+PhysicsSystem.DEFAULT_SIZE = new Vector2D(0.1, 0.1)
 
 function PhysicsSystem(maxEntities) {
   this.playerEntityId = -1
@@ -85,6 +86,7 @@ PhysicsSystem.initComponent = function(component) {
 	component.maxVelocity = PhysicsSystem.MAX_VELOCITY
   component.velocityUpdate = true
 	component.vectorFieldIndices = []
+	component.size = PhysicsSystem.DEFAULT_SIZE
 }
 
 PhysicsSystem.prototype.setupComponent = function(entityId, component) {
@@ -156,6 +158,18 @@ PhysicsSystem.prototype.setPlayerEntityId = function(playerEntityId) {
   this.playerEntityId = playerEntityId
 }
 
+PhysicsSystem.prototype.setSize = function(entityId, size) {
+	const component = this.components[entityId]
+	if (!component) return
+	component.size = size
+}
+
+PhysicsSystem.prototype.setSizeFromImage = function(entityId, image, scale) {
+	const component = this.components[entityId]
+	if (!component) return
+  component.size = new Vector2D(image.width, image.height)
+    .scalarMultiply(scale/PIXEL_PER_METER)
+}
 
 /********************************************************************************
 * Y Vector fields.

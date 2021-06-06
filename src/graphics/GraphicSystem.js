@@ -53,6 +53,8 @@ GraphicSystem.prototype.update = function(elapsedTimeSecond) {
       component.position = new Vector2D(position.x, -position.y)
         .scalarMultiply(PIXEL_PER_METER)
       component.direction = physicsComponent.direction
+
+      component.size = physicsComponent.size.scalarMultiply(PIXEL_PER_METER)
     }
 
     canvas.save()

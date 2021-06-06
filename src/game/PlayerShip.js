@@ -44,6 +44,7 @@ PlayerShip.MAX_VELOCITY = 4
 PlayerShip.MAX_HP = 100
 PlayerShip.FADEOUT_TIME_SECOND = 1
 PlayerShip.EXPLOSION_IMAGE_PATH = 'images/Explosion.png'
+PlayerShip.SCALE = 1
 
 const PLAYER_STATE_ALIVE = 0
 const PLAYER_STATE_DYING = 1
@@ -56,6 +57,7 @@ function PlayerShip(entityId, entityManager, images, blaster) {
     entityManager.getPhysicsSystem()
   )
   this.images = PlayerShip.IMAGE_PATHS.map(path => images.get(path))
+  const image = this.images[PlayerShip.TOP_VIEW_INDEX]
   this.entityManager = entityManager
   this.entityId = entityId
   this.angle = 0
@@ -85,10 +87,11 @@ function PlayerShip(entityId, entityManager, images, blaster) {
 	physicsComponent.maxVelocity = PlayerShip.MAX_VELOCITY
 	//physicsComponent.gravity = true
 	physicsComponent.vectorFieldIndices = [0, 1]
+  entityManager.getPhysicsSystem().setSizeFromImage(entityId, image, PlayerShip.SCALE)
 
 	// Initialize with an image.
 	this.graphicSystem = entityManager.getGraphicSystem()
-  this.graphicSystem.setupImage(this.entityId, this.images[PlayerShip.TOP_VIEW_INDEX])
+  this.graphicSystem.setupImage(this.entityId, image)
 
 	this.state = PLAYER_STATE_ALIVE
 }

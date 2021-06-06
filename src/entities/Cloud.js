@@ -8,8 +8,7 @@ Cloud.CLOUD_NUMBER = 100
 
 function Cloud() {}
 
-Cloud.createFactory = function(entityManager, images) {
-  const image = images.get(Cloud.IMAGE)
+Cloud.createFactory = function(entityManager, image) {
   return () => {
     const graphicSystem = entityManager.getGraphicSystem()
     const entityId = entityManager.createEntity([
@@ -22,7 +21,8 @@ Cloud.createFactory = function(entityManager, images) {
 }
 
 Cloud.createSky = function(entityManager, images) {
-  const createCloud = Cloud.createFactory(entityManager, images)
+  const image = images.get(Cloud.IMAGE)
+  const createCloud = Cloud.createFactory(entityManager, image)
   const physicsSystem = entityManager.getPhysicsSystem()
   const graphicSystem = entityManager.getGraphicSystem()
   for (let i = 0; i < Cloud.CLOUD_NUMBER; i++) {
@@ -38,7 +38,7 @@ Cloud.createSky = function(entityManager, images) {
 		const scale = r
 			* (Cloud.MAX_SCALE - Cloud.MIN_SCALE)
 			+ Cloud.MIN_SCALE
-    graphicSystem.setScale(entityId, scale)
+    physicsSystem.setSizeFromImage(entityId, image, scale)
 		graphicSystem.setOpacity(entityId, Cloud.OPACITY)
   }
 }
