@@ -14,27 +14,14 @@ const GAME_COMPONENT_ID_DISK_ENTITY = 5
 const GAME_COMPONENT_ID_RECTANGLE = 6
 const GAME_COMPONENT_ID_MAX = 7
 
-const GAME_SYSTEM_CELL_INTERVAL = 0.1
-
-function GameSystem(maxEntities, entityManager) {
+function GameSystem(maxEntities) {
 	this.components = []
 	for (let i = 0; i < maxEntities; i++) {
 		this.components[i] = undefined
 	}
-
-  this.map2D = new HashMap2D(
-    -GAME_SPACE_WIDTH_METER/2,
-    SEA_Y_COORDINATE_METER,
-    GAME_SPACE_WIDTH_METER,
-    SKY_Y_COORDINATE_METER - SEA_Y_COORDINATE_METER,
-    GAME_SYSTEM_CELL_INTERVAL
-  )
-
-  this.entityManager = entityManager
 }
 
 GameSystem.prototype.update = function(elapsedTimeSecond) {
-  const physicsSystem = this.entityManager.getPhysicsSystem()
 	for (let entityId = 0; entityId < this.components.length; entityId++) {
 		const components = this.components[entityId]
 		if (!components) continue
@@ -42,11 +29,6 @@ GameSystem.prototype.update = function(elapsedTimeSecond) {
 			if (!components[componentId]) continue
 			components[componentId].update(entityId, elapsedTimeSecond)
 		}
-
-    // Update 2D map with entity.
-    const physicComponent = physicsSystem.getComponent(entityId)
-    const size = physicComponent.size
-    this.map2D.updateEntity(entityId, physicComponent.position, Math.max(size.x, size.y))
 	}
 }
 
@@ -56,15 +38,10 @@ GameSystem.prototype.createComponent = function(entityId) {
 	for (let i = 0; i < GAME_COMPONENT_ID_MAX; i++) {
 		components[i] = undefined
 	}
-
-  const physicComponent = this.entityManager.getPhysicsSystem().getComponent(entityId)
-  const size = physicComponent.size
-  this.map2D.addEntity(entityId, physicComponent.position, Math.max(size.x, size.y))
 }
 
 GameSystem.prototype.deleteComponent = function(entityId) {
 	this.components[entityId] = undefined
-  this.map2D.removeEntity(entityId)
 }
 
 GameSystem.prototype.addComponent = function(entityId, componentId, component) {
