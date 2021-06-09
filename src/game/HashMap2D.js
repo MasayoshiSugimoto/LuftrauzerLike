@@ -18,14 +18,9 @@ function HashMap2D(x, y, width, height, cellInterval) {
 }
 
 HashMap2D.prototype.addEntity = function(entityId, position, radius) {
-	const left = Math.floor((position.x - radius) / this.cellInterval) - this.x
-	const right = Math.floor((position.x + radius) / this.cellInterval) - this.x
-	const top = Math.floor((position.y + radius) / this.cellInterval) - this.y
-	const bottom = Math.floor((position.y - radius) / this.cellInterval) - this.y
-
 	this.entityMap.set(entityId, { position, radius })
-	for (let i = this.toCellX(position.x); i <= this.toCellX(position.x + radius); i++) {
-		for (let j = this.toCellY(position.y); j <= this.toCellY(position.y + radius); j++) {
+	for (let i = this.toCellX(position.x); i <= this.toCellX(position.x + radius)+1; i++) {
+		for (let j = this.toCellY(position.y); j <= this.toCellY(position.y + radius)+1; j++) {
 			const key = `${i}.${j}`
 			let cell = this.cells.get(key)	
 			if (!cell) {
@@ -48,8 +43,8 @@ HashMap2D.prototype.removeEntity = function(entityId) {
 
 	const position = entityInfo.position
 	const radius = entityInfo.radius
-	for (let i = this.toCellX(position.x); i <= this.toCellX(position.x + radius); i++) {
-		for (let j = this.toCellY(position.y); j <= this.toCellY(position.y + radius); j++) {
+	for (let i = this.toCellX(position.x); i <= this.toCellX(position.x + radius)+1; i++) {
+		for (let j = this.toCellY(position.y); j <= this.toCellY(position.y + radius)+1; j++) {
 			const cell = this.cells.get(`${i}.${j}`)
 			if (!cell) continue
       this.remove(cell, entityId)
@@ -59,8 +54,8 @@ HashMap2D.prototype.removeEntity = function(entityId) {
 
 HashMap2D.prototype.searchEntities = function(x, y, width, height) {
 	const set = new Set()
-	for (let i = this.toCellX(x); i <= this.toCellX(x+width); i++) {
-		for (let j = this.toCellY(y); j <= this.toCellY(y+height); j++) {
+	for (let i = this.toCellX(x); i <= this.toCellX(x+width)+1; i++) {
+		for (let j = this.toCellY(y); j <= this.toCellY(y+height)+1; j++) {
 			const cell = this.cells.get(`${i}.${j}`)
 			if (!cell) continue
 			cell.forEach(entityId => set.add(entityId))

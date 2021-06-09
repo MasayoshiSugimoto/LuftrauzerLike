@@ -112,13 +112,13 @@ Reisen.setup = function(appContext) {
 	appContext.getEntityManager().getGraphicSystem().setTargetEntityId(appContext.getPlayerEntityId())
 
 	CreateDiscEntities(appContext.getEntityManager())
+
 	const rectangle = new RectangleEntity(
 		appContext.getEntityManager(),
 		appContext.getPlayerEntityId(),
 		300,
 		200	
 	)
-
   appContext.rectangle = rectangle
 
   return appContext
@@ -138,7 +138,7 @@ function test2DMap(entityManager, rectangleEntityId) {
   const gameSystem = entityManager.getGameSystem()
   const graphicSystem = entityManager.getGraphicSystem()
   const physicsSystem = entityManager.getPhysicsSystem()
-  const map2D = gameSystem.map2D 
+  const map2D = physicsSystem.map2D
 
   graphicSystem.components.forEach(component => {
     if (component.drawType === GraphicSystem.DRAW_TYPE_DISK) {

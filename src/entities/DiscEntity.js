@@ -2,7 +2,8 @@
 
 const DISC_ENTITY_VELOCITY = new Vector2D(1, 0)
 const DISC_ENTITY_ENTITY_MAX = 1000
-const DISC_ENTITY_RADIUS = 0.05
+const DISC_ENTITY_RADIUS_MIN = 0.05
+const DISC_ENTITY_RADIUS_MAX = 0.2
 
 function DiscEntity(entityManager) {
   this.physicsSystem = entityManager.getPhysicsSystem()
@@ -16,7 +17,9 @@ function DiscEntity(entityManager) {
 	physicComponent.velocity = DISC_ENTITY_VELOCITY
 		.scalarMultiply(Math.random())
 		.rotate(Math.random() * Math.PI * 2)
-  physicComponent.size = new Vector2D(DISC_ENTITY_RADIUS, DISC_ENTITY_RADIUS)
+  const size = Math.random() * (DISC_ENTITY_RADIUS_MAX-DISC_ENTITY_RADIUS_MIN) + DISC_ENTITY_RADIUS_MIN
+  physicComponent.size = new Vector2D(size, size)
+  physicComponent.searchable = true
 
 	const graphicSystem = entityManager.getGraphicSystem()
 	graphicSystem.setDisk(this.entityId)

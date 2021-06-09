@@ -10,6 +10,8 @@ PhysicsSystem.MAX_VELOCITY = 10 // Meter/Second
 PhysicsSystem.VECTOR_FIELD_ACCELERATION = 10 // Meter/Second
 PhysicsSystem.DEFAULT_SIZE = new Vector2D(0.1, 0.1)
 
+const MAP_CELL_INTERVAL = 0.1
+
 function PhysicsSystem(maxEntities) {
   this.playerEntityId = -1
 
@@ -34,6 +36,14 @@ function PhysicsSystem(maxEntities) {
 		+Infinity,
 		new Vector2D(0, -PhysicsSystem.VECTOR_FIELD_ACCELERATION)
 	)
+
+  this.map2D = new HashMap2D(
+    -GAME_SPACE_WIDTH_METER/2,
+    SEA_Y_COORDINATE_METER,
+    GAME_SPACE_WIDTH_METER,
+    SKY_Y_COORDINATE_METER - SEA_Y_COORDINATE_METER,
+    MAP_CELL_INTERVAL
+  )
 }
 
 PhysicsSystem.prototype.update = function(elapsedTimeSecond) {
@@ -64,17 +74,29 @@ PhysicsSystem.prototype.update = function(elapsedTimeSecond) {
     component.position = position.add(
       component.velocity.scalarMultiply(elapsedTimeSecond)
     )
+
+    // Update 2D map with entity.
+    if (component.searchable) {
+      const size = component.size
+      this.map2D.updateEntity(entityId, position, Math.max(size.x, size.y))
+    }
   })
+
   this.CylinderProjection()
 }
 
 PhysicsSystem.prototype.createComponent = function(entityId) {
 	this.actives[entityId] = true
-	PhysicsSystem.initComponent(this.components[entityId])
+  const component = this.components[entityId]
+	PhysicsSystem.initComponent(component)
+  if (component.searchable) {
+    this.map2D.addEntity(entityId, component)
+  }
 }
 
 PhysicsSystem.prototype.deleteComponent = function(entityId) {
 	this.actives[entityId] = false
+  this.map2D.removeEntity(entityId) // Do not check searchability in case the flag changed
 }
 
 PhysicsSystem.initComponent = function(component) {
@@ -87,6 +109,7 @@ PhysicsSystem.initComponent = function(component) {
   component.velocityUpdate = true
 	component.vectorFieldIndices = []
 	component.size = PhysicsSystem.DEFAULT_SIZE
+  component.searchable = false
 }
 
 PhysicsSystem.prototype.setupComponent = function(entityId, component) {
