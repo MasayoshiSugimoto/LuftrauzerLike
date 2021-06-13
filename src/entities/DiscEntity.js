@@ -1,7 +1,7 @@
 "use strict"
 
 const DISC_ENTITY_VELOCITY = new Vector2D(1, 0)
-const DISC_ENTITY_ENTITY_MAX = 1000
+const DISC_ENTITY_ENTITY_MAX = 3000
 const DISC_ENTITY_RADIUS_MIN = 0.05
 const DISC_ENTITY_RADIUS_MAX = 0.2
 
@@ -19,7 +19,7 @@ function DiscEntity(entityManager) {
 		.rotate(Math.random() * Math.PI * 2)
   const size = Math.random() * (DISC_ENTITY_RADIUS_MAX-DISC_ENTITY_RADIUS_MIN) + DISC_ENTITY_RADIUS_MIN
   physicComponent.size = new Vector2D(size, size)
-  physicComponent.searchable = true
+  physicComponent.collision = true
 
 	const graphicSystem = entityManager.getGraphicSystem()
 	graphicSystem.setDisk(this.entityId)

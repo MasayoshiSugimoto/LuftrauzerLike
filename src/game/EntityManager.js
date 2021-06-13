@@ -5,7 +5,7 @@
 ********************************************************************************/
 
 function EntityManager(canvas) {
-	const maxEntities = 2000
+	const maxEntities = 4000
 
   this.activeCount = 0
 	this.actives = []
@@ -13,7 +13,7 @@ function EntityManager(canvas) {
 		this.actives[i] = false
 	}
 	this.lastEntityId = 0
-  const physicsSystem = new PhysicsSystem(maxEntities)
+  const physicsSystem = new PhysicsSystem(maxEntities, (id1, id2) => this.debugOnCollision(id1, id2))
 	const gameSystem = new GameSystem(maxEntities)
 	this.systems = [
 		gameSystem,
@@ -74,4 +74,10 @@ EntityManager.prototype.getGraphicSystem = function() {
 
 EntityManager.prototype.getActiveCount = function() {
   return this.activeCount
+}
+
+EntityManager.prototype.debugOnCollision = function(entityId1, entityId2) {
+  const graphicSystem = this.getGraphicSystem()
+  graphicSystem.setColor(entityId1, 'red')
+  graphicSystem.setColor(entityId2, 'red')
 }

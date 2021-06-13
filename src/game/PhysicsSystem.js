@@ -12,7 +12,11 @@ PhysicsSystem.DEFAULT_SIZE = new Vector2D(0.1, 0.1)
 
 const MAP_CELL_INTERVAL = 0.1
 
-function PhysicsSystem(maxEntities) {
+/*
+ * onCollision: (entityId1, entityId2) => void
+ * `onCollision` is called when 2 entities collide.
+ */
+function PhysicsSystem(maxEntities, onCollision) {
   this.playerEntityId = -1
 
 	this.actives = []
@@ -44,6 +48,8 @@ function PhysicsSystem(maxEntities) {
     SKY_Y_COORDINATE_METER - SEA_Y_COORDINATE_METER,
     MAP_CELL_INTERVAL
   )
+
+  this.onCollision = onCollision
 }
 
 PhysicsSystem.prototype.update = function(elapsedTimeSecond) {
@@ -76,11 +82,13 @@ PhysicsSystem.prototype.update = function(elapsedTimeSecond) {
     )
 
     // Update 2D map with entity.
-    if (component.searchable) {
+    if (component.collision) {
       const size = component.size
       this.map2D.updateEntity(entityId, position, Math.max(size.x, size.y))
     }
   })
+
+  this.updateCollisions()
 
   this.CylinderProjection()
 }
@@ -89,14 +97,14 @@ PhysicsSystem.prototype.createComponent = function(entityId) {
 	this.actives[entityId] = true
   const component = this.components[entityId]
 	PhysicsSystem.initComponent(component)
-  if (component.searchable) {
+  if (component.collision) {
     this.map2D.addEntity(entityId, component)
   }
 }
 
 PhysicsSystem.prototype.deleteComponent = function(entityId) {
 	this.actives[entityId] = false
-  this.map2D.removeEntity(entityId) // Do not check searchability in case the flag changed
+  this.map2D.removeEntity(entityId)
 }
 
 PhysicsSystem.initComponent = function(component) {
@@ -109,7 +117,7 @@ PhysicsSystem.initComponent = function(component) {
   component.velocityUpdate = true
 	component.vectorFieldIndices = []
 	component.size = PhysicsSystem.DEFAULT_SIZE
-  component.searchable = false
+  component.collision = false
 }
 
 PhysicsSystem.prototype.setupComponent = function(entityId, component) {
@@ -154,6 +162,41 @@ PhysicsSystem.prototype.getAcceleration = function(entityId) {
 
 PhysicsSystem.prototype.isActive = function(entityId) {
   return this.actives[entityId]
+}
+
+PhysicsSystem.prototype.updateCollisions = function() {
+  this.components.forEach((component, entityId) => {
+    if (!this.actives[entityId]) return
+    if (!component) return
+    if (!component.collision) return
+
+    const size = component.size
+    const radius = Math.max(size.x, size.y)
+    if (radius <= 0) return
+
+    const position = component.position
+    const entitiesNearby = this.map2D.searchEntities(position.x, position.y, size.x, size.y)
+
+    entitiesNearby.forEach(id => {
+      if (id === entityId) return
+      if (!this.actives[id]) return
+
+      const component2 = this.components[id]
+      if (!component2) return
+      if (!component2.collision) return
+
+      const size2 = component2.size
+      const radius2 = Math.max(size2.x, size2.y)
+      if (radius2 <= 0) return
+
+      const position2 = component2.position
+      const collisionDistance = radius + radius2
+      const distance = Vector2D.distanceBetween(position, position2)
+      if (distance <= collisionDistance) {
+        this.onCollision(entityId, id)
+      }
+    })
+  })
 }
 
 /*

@@ -85,8 +85,9 @@ function PlayerShip(entityId, entityManager, images, blaster) {
 	// Initialize physics component.
 	const physicsComponent = entityManager.getPhysicsSystem().getComponent(entityId)
 	physicsComponent.maxVelocity = PlayerShip.MAX_VELOCITY
-	//physicsComponent.gravity = true
+	// physicsComponent.gravity = true
 	physicsComponent.vectorFieldIndices = [0, 1]
+  physicsComponent.collision = true
   entityManager.getPhysicsSystem().setSizeFromImage(entityId, image, PlayerShip.SCALE)
 
 	// Initialize with an image.
