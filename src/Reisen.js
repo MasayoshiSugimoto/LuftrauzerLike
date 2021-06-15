@@ -111,38 +111,14 @@ Reisen.setup = function(appContext) {
 	// Center the screen on the player ship.
 	appContext.getEntityManager().getGraphicSystem().setTargetEntityId(appContext.getPlayerEntityId())
 
-	CreateDiscEntities(appContext.getEntityManager())
-
-	//const rectangle = new RectangleEntity(
-	//	appContext.getEntityManager(),
-	//	appContext.getPlayerEntityId(),
-	//	300,
-	//	200	
-	//)
-  //appContext.rectangle = rectangle
-
   return appContext
 }
 
 Reisen.update = function(appContext, elapsedTimeSecond, canvas) {
-  test2DMap(appContext.getEntityManager())
   appContext.getDebug().update(elapsedTimeSecond)
   //appContext.getTinyShipPopper().update(elapsedTimeSecond)
   appContext.getPlayerShip().update(elapsedTimeSecond)
   appContext.getEntityManager().update(elapsedTimeSecond)
 	appContext.getSea().draw()
 	drawSky(appContext.getCanvas(), appContext.getCamera())
-}
-
-function test2DMap(entityManager) {
-  const gameSystem = entityManager.getGameSystem()
-  const graphicSystem = entityManager.getGraphicSystem()
-  const physicsSystem = entityManager.getPhysicsSystem()
-  const map2D = physicsSystem.map2D
-
-  graphicSystem.components.forEach(component => {
-    if (component.drawType === GraphicSystem.DRAW_TYPE_DISK) {
-      component.color = 'green' 
-    }
-  })
 }

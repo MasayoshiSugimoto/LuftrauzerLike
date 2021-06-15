@@ -8,11 +8,12 @@ function Projectile() {}
 
 Projectile.IMAGE_FILE = 'images/Explosion.png'
 Projectile.SPEED = 5 // Meter per second.
-Projectile.scale = 0.4
+Projectile.SIZE = new Vector2D(0.2, 0.2)
 Projectile.LIFE_TIME_SECOND = 2
 
 Projectile.createFactory = function(entityManager, images) {
   const graphicSystem = entityManager.getGraphicSystem()
+  const physicsSystem = entityManager.getPhysicsSystem()
   const image = images.get(Projectile.IMAGE_FILE)
   return () => {
     const entityId = entityManager.createEntity([
@@ -31,6 +32,9 @@ Projectile.createFactory = function(entityManager, images) {
       GAME_COMPONENT_ID_DEACTIVATION_TIMER,
       deactivationTimerComponent
     )
+
+    // Physic system setup.
+    physicsSystem.setSize(entityId, Projectile.SIZE)
 
     // Graphic system setup.
     graphicSystem.setupImage(entityId, image) 

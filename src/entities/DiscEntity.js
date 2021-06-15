@@ -1,7 +1,7 @@
 "use strict"
 
 const DISC_ENTITY_VELOCITY = new Vector2D(1, 0)
-const DISC_ENTITY_ENTITY_MAX = 3000
+const DISC_ENTITY_ENTITY_MAX = 1000
 const DISC_ENTITY_RADIUS_MIN = 0.05
 const DISC_ENTITY_RADIUS_MAX = 0.2
 
@@ -30,8 +30,12 @@ DiscEntity.prototype.update = function(entityId, elapsedTimeSecond) {
 	const y = this.physicsSystem.getPosition(entityId).y
 	const v = this.physicsSystem.getVelocity(entityId)
 
-	if (y < SEA_Y_COORDINATE_METER || y > SKY_Y_COORDINATE_METER) {
-		this.physicsSystem.setVelocity(entityId, new Vector2D(v.x, -v.y))
+	if (y < SEA_Y_COORDINATE_METER) {
+		this.physicsSystem.setVelocity(entityId, new Vector2D(v.x, Math.abs(v.y)))
+	}
+
+	if (y > SKY_Y_COORDINATE_METER) {
+		this.physicsSystem.setVelocity(entityId, new Vector2D(v.x, -Math.abs(v.y)))
 	}
 }
 
