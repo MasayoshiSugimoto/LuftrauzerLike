@@ -80,6 +80,11 @@ function PlayerShip(entityId, entityManager, images, blaster) {
 		GAME_COMPONENT_ID_LIFE,
 		new LifeComponent(PlayerShip.MAX_HP, entityManager)
 	)
+  gameSystem.addComponent(
+    entityId,
+    GAME_COMPONENT_ID_BATTALION,
+    BattalionComponent.createPlayerComponent()
+  )
 	this.explosionImage = images.get(PlayerShip.EXPLOSION_IMAGE_PATH)
 
 	// Initialize physics component.
@@ -133,5 +138,10 @@ PlayerShip.prototype.update = function(elapsedTimeSecond) {
 			this.entityManager.getGraphicSystem()
 		)
 		gameSystem.addComponent(this.entityId, GAME_COMPONENT_ID_FADEOUT, fadeoutComponent)
+
+    // Update size
+    this.entityManager
+      .getPhysicsSystem()
+      .setSizeFromImage(this.entityId, this.explosionImage, PlayerShip.SCALE)
 	} 
 }

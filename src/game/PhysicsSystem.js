@@ -199,6 +199,12 @@ PhysicsSystem.prototype.updateCollisions = function() {
   })
 }
 
+PhysicsSystem.prototype.enableCollision = function(entityId) {
+  const component = this.components[entityId]
+  if (!component) return
+  component.collision = true
+}
+
 /*
  * We project on a cylinder, center on the player, then project again on the
  * game space. This is done in order to have infinite scrolling on left and

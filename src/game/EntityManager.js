@@ -13,8 +13,12 @@ function EntityManager(canvas) {
 		this.actives[i] = false
 	}
 	this.lastEntityId = 0
-  const physicsSystem = new PhysicsSystem(maxEntities, (id1, id2) => this.debugOnCollision(id1, id2))
+
+  this.deathSubscription = new Subscription()
+
 	const gameSystem = new GameSystem(maxEntities)
+  const battalionSystem = new BattalionSystem(gameSystem, this.deathSubscription)
+  const physicsSystem = new PhysicsSystem(maxEntities, (id1, id2) => battalionSystem.onCollision(id1, id2))
 	this.systems = [
 		gameSystem,
 		physicsSystem,
@@ -80,4 +84,8 @@ EntityManager.prototype.debugOnCollision = function(entityId1, entityId2) {
   const graphicSystem = this.getGraphicSystem()
   graphicSystem.setColor(entityId1, 'red')
   graphicSystem.setColor(entityId2, 'red')
+}
+
+EntityManager.prototype.getDeathSubscription = function() {
+  return this.deathSubscription;
 }

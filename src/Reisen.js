@@ -116,7 +116,7 @@ Reisen.setup = function(appContext) {
 
 Reisen.update = function(appContext, elapsedTimeSecond, canvas) {
   appContext.getDebug().update(elapsedTimeSecond)
-  //appContext.getTinyShipPopper().update(elapsedTimeSecond)
+  appContext.getTinyShipPopper().update(elapsedTimeSecond)
   appContext.getPlayerShip().update(elapsedTimeSecond)
   appContext.getEntityManager().update(elapsedTimeSecond)
 	appContext.getSea().draw()

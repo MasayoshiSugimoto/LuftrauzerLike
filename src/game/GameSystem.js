@@ -12,7 +12,8 @@ const GAME_COMPONENT_ID_LIFE = 3
 const GAME_COMPONENT_ID_FADEOUT = 4
 const GAME_COMPONENT_ID_DISK_ENTITY = 5
 const GAME_COMPONENT_ID_RECTANGLE = 6
-const GAME_COMPONENT_ID_MAX = 7
+const GAME_COMPONENT_ID_BATTALION = 7
+const GAME_COMPONENT_ID_MAX = 8
 
 function GameSystem(maxEntities) {
 	this.components = []

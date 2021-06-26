@@ -9,6 +9,7 @@ const TINY_SHIP_IMAGE_PATH = 'images/Reisen.png'
 const TINY_SHIP_SCALE = 0.5
 const TINY_SHIP_POP_Y = 2
 const TINY_SHIP_POP_X_FORBIDDEN_RANGE = 4
+const TINY_SHIP_DAMAGE = 10
 
 function TinyShip(entityManager, targetEntityId, image) {
   this.physicsSystem = entityManager.getPhysicsSystem()
@@ -18,11 +19,25 @@ function TinyShip(entityManager, targetEntityId, image) {
     EntityManager.SYSTEM_TYPES.PHYSICS,
     EntityManager.SYSTEM_TYPES.GRAPHICS
   ])
-  entityManager.getGameSystem().addComponent(
+
+  // Game system setup.
+  const gameSystem = entityManager.getGameSystem()
+  gameSystem.addComponent(
     this.entityId,
     GAME_COMPONENT_ID_TINY_SHIP,
     this
   )
+  gameSystem.addComponent(
+    this.entityId,
+    GAME_COMPONENT_ID_BATTALION,
+    BattalionComponent.createEnnemyComponent()
+  )
+
+  // Physics system setup.
+  const physicsSystem = entityManager.getPhysicsSystem()
+  physicsSystem.enableCollision(this.entityId)
+
+  // Graphic system setup.
   const graphicSystem = entityManager.getGraphicSystem()
   graphicSystem.setupImage(this.entityId, image)
   graphicSystem.setScale(this.entityId, TINY_SHIP_SCALE)
