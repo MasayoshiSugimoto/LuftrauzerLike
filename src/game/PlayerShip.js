@@ -106,6 +106,7 @@ PlayerShip.prototype.update = function(elapsedTimeSecond) {
   // Update physics based on user inputs.
   let direction = this.physicEntity.getDirection()
 	const controlComponent = this.entityManager.getGameSystem().getComponent(this.entityId, GAME_COMPONENT_ID_CONTROL)
+  if (!controlComponent) return
 	controlComponent.update(this.entityId, elapsedTimeSecond)
 	const inputData = controlComponent.getInputData()
   if (inputData.left) {
