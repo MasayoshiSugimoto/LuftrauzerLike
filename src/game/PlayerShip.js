@@ -71,11 +71,6 @@ function PlayerShip(entityId, entityManager, images, blaster) {
 
   // Initialize game components.
   const gameSystem = entityManager.getGameSystem()
-  gameSystem.addComponent(
-    entityId,
-    GAME_COMPONENT_ID_CONTROL,
-    controlSystem
-  )
   componentFactory.createLifeComponent(PlayerShip.MAX_HP)
   gameSystem.addComponent(
     entityId,

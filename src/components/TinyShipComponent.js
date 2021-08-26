@@ -21,11 +21,6 @@ function TinyShipComponent(entityId, entityManager, targetEntityId, image) {
   const gameSystem = entityManager.getGameSystem()
   gameSystem.addComponent(
     this.entityId,
-    GAME_COMPONENT_ID_TINY_SHIP,
-    this
-  )
-  gameSystem.addComponent(
-    this.entityId,
     GAME_COMPONENT_ID_BATTALION,
     BattalionComponent.createEnnemyComponent()
   )
