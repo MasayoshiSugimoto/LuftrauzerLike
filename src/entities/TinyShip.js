@@ -10,6 +10,7 @@ const TINY_SHIP_SCALE = 0.5
 const TINY_SHIP_POP_Y = 2
 const TINY_SHIP_POP_X_FORBIDDEN_RANGE = 4
 const TINY_SHIP_DAMAGE = 10
+const TINY_SHIP_MAX_HP = 1
 
 function TinyShip(entityManager, targetEntityId, image) {
   this.physicsSystem = entityManager.getPhysicsSystem()
@@ -32,6 +33,11 @@ function TinyShip(entityManager, targetEntityId, image) {
     GAME_COMPONENT_ID_BATTALION,
     BattalionComponent.createEnnemyComponent()
   )
+	gameSystem.addComponent(
+		this.entityId,
+		GAME_COMPONENT_ID_LIFE,
+		new LifeComponent(TINY_SHIP_MAX_HP, entityManager)
+	)
 
   // Physics system setup.
   const physicsSystem = entityManager.getPhysicsSystem()
