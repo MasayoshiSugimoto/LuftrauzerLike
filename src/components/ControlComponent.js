@@ -1,23 +1,24 @@
 "use strict"
 
 /*******************************************************************************
- * ControlSystem
+ * ControlComponent
  *
- * This class manages user inputs.
+ * This class manages user inputs. It also takes control of the player if he
+ * goes in the sea on in the sky.
  ******************************************************************************/
 
-function ControlSystem(physicsSystem, entityId) {
+function ControlComponent(physicsSystem, entityId) {
 	this.seaController = new SeaController(physicsSystem, entityId)
 	this.skyController = new SkyController(physicsSystem, entityId)
 }
 
-ControlSystem.prototype.getInputData = function() {
+ControlComponent.prototype.getInputData = function() {
 	if (this.seaController.isInSea()) return this.seaController.inputData
 	if (this.skyController.isInSky()) return this.skyController.inputData
 	return KeyboardControl.inputData
 }
 
-ControlSystem.prototype.update = function(entityId, elapsedTimeSecond) {
+ControlComponent.prototype.update = function(entityId, elapsedTimeSecond) {
 	this.seaController.update(elapsedTimeSecond)
 	this.skyController.update(elapsedTimeSecond)
 }

@@ -1,4 +1,4 @@
-"use strict";
+"use strict"
 
 /*******************************************************************************
  * Player Ship
@@ -50,7 +50,8 @@ const PLAYER_STATE_ALIVE = 0
 const PLAYER_STATE_DYING = 1
 
 function PlayerShip(entityId, entityManager, images, blaster) {
-	const controlSystem = new ControlSystem(entityManager.getPhysicsSystem(), entityId)
+  const componentFactory = new ComponentFactory(entityId, entityManager)
+  const controlSystem = componentFactory.createControlComponent()
 
   this.physicEntity = new PhysicEntity(
     entityId,
@@ -62,53 +63,49 @@ function PlayerShip(entityId, entityManager, images, blaster) {
   this.entityId = entityId
   this.angle = 0
   this.blaster = new Blaster(
-		() => controlSystem.getInputData(),
-		Projectile.createFactory(entityManager, images),
-		entityManager.getPhysicsSystem(),
-		entityId
-	)
+    () => controlSystem.getInputData(),
+    Projectile.createFactory(entityManager, images),
+    entityManager.getPhysicsSystem(),
+    entityId
+  )
 
-	// Initialize game components.
-	const gameSystem = entityManager.getGameSystem()
-	gameSystem.addComponent(
-		entityId,
-		GAME_COMPONENT_ID_CONTROL,
-		controlSystem
-	)
-	gameSystem.addComponent(
-		entityId,
-		GAME_COMPONENT_ID_LIFE,
-		new LifeComponent(PlayerShip.MAX_HP, entityManager)
-	)
+  // Initialize game components.
+  const gameSystem = entityManager.getGameSystem()
+  gameSystem.addComponent(
+    entityId,
+    GAME_COMPONENT_ID_CONTROL,
+    controlSystem
+  )
+  componentFactory.createLifeComponent(PlayerShip.MAX_HP)
   gameSystem.addComponent(
     entityId,
     GAME_COMPONENT_ID_BATTALION,
     BattalionComponent.createPlayerComponent()
   )
-	this.explosionImage = images.get(PlayerShip.EXPLOSION_IMAGE_PATH)
+  this.explosionImage = images.get(PlayerShip.EXPLOSION_IMAGE_PATH)
 
-	// Initialize physics component.
-	const physicsComponent = entityManager.getPhysicsSystem().getComponent(entityId)
-	physicsComponent.maxVelocity = PlayerShip.MAX_VELOCITY
-	// physicsComponent.gravity = true
-	physicsComponent.vectorFieldIndices = [0, 1]
+  // Initialize physics component.
+  const physicsComponent = entityManager.getPhysicsSystem().getComponent(entityId)
+  physicsComponent.maxVelocity = PlayerShip.MAX_VELOCITY
+  // physicsComponent.gravity = true
+  physicsComponent.vectorFieldIndices = [0, 1]
   physicsComponent.collision = true
   entityManager.getPhysicsSystem().setSizeFromImage(entityId, image, PlayerShip.SCALE)
 
-	// Initialize with an image.
-	this.graphicSystem = entityManager.getGraphicSystem()
+  // Initialize with an image.
+  this.graphicSystem = entityManager.getGraphicSystem()
   this.graphicSystem.setupImage(this.entityId, image)
 
-	this.state = PLAYER_STATE_ALIVE
+  this.state = PLAYER_STATE_ALIVE
 }
 
 PlayerShip.prototype.update = function(elapsedTimeSecond) {
   // Update physics based on user inputs.
   let direction = this.physicEntity.getDirection()
-	const controlComponent = this.entityManager.getGameSystem().getComponent(this.entityId, GAME_COMPONENT_ID_CONTROL)
+  const controlComponent = this.entityManager.getGameSystem().getComponent(this.entityId, GAME_COMPONENT_ID_CONTROL)
   if (!controlComponent) return
-	controlComponent.update(this.entityId, elapsedTimeSecond)
-	const inputData = controlComponent.getInputData()
+  controlComponent.update(this.entityId, elapsedTimeSecond)
+  const inputData = controlComponent.getInputData()
   if (inputData.left) {
     direction -= PlayerShip.ROTATION_UNIT * elapsedTimeSecond
   } else if (inputData.right) {
@@ -126,23 +123,18 @@ PlayerShip.prototype.update = function(elapsedTimeSecond) {
   // Update blaster.
   this.blaster.update(elapsedTimeSecond)
 
-	// Update state.
-	const gameSystem = this.entityManager.getGameSystem()
-	const lifeComponent = gameSystem.getComponent(this.entityId, GAME_COMPONENT_ID_LIFE)
-	if (this.state === PLAYER_STATE_ALIVE && lifeComponent && lifeComponent.isDying()) {
-		this.state = PLAYER_STATE_DYING
-		// Display explosion when dying.
-		const fadeoutComponent = new FadeoutComponent(
-			this.entityId,
-			this.explosionImage,
-			PlayerShip.FADEOUT_TIME_SECOND,
-			this.entityManager.getGraphicSystem()
-		)
-		gameSystem.addComponent(this.entityId, GAME_COMPONENT_ID_FADEOUT, fadeoutComponent)
+  // Update state.
+  const gameSystem = this.entityManager.getGameSystem()
+  const lifeComponent = gameSystem.getComponent(this.entityId, GAME_COMPONENT_ID_LIFE)
+  if (this.state === PLAYER_STATE_ALIVE && lifeComponent && lifeComponent.isDying()) {
+    this.state = PLAYER_STATE_DYING
+    // Display explosion when dying.
+    const componentFactory = new ComponentFactory(this.entityId, this.entityManager)
+    componentFactory.createFadeoutComponent(this.explosionImage, PlayerShip.FADEOUT_TIME_SECOND)
 
     // Update size
     this.entityManager
       .getPhysicsSystem()
       .setSizeFromImage(this.entityId, this.explosionImage, PlayerShip.SCALE)
-	} 
+  } 
 }

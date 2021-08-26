@@ -21,17 +21,10 @@ Projectile.createFactory = function(entityManager, images) {
       EntityManager.SYSTEM_TYPES.PHYSICS,
       EntityManager.SYSTEM_TYPES.GRAPHICS
     ])
+    const componentFactory = new ComponentFactory(entityId, entityManager)
 
     // Game system setup.
-    const deactivationTimerComponent = new DeactivationTimerComponent(
-      Projectile.LIFE_TIME_SECOND,
-      entityManager
-    )
-    entityManager.getGameSystem().addComponent(
-      entityId,
-      GAME_COMPONENT_ID_DEACTIVATION_TIMER,
-      deactivationTimerComponent
-    )
+    const deactivationTimerComponent = componentFactory.createDeactivationTimerComponent(Projectile.LIFE_TIME_SECOND)
 
     // Physic system setup.
     physicsSystem.setSize(entityId, Projectile.SIZE)
