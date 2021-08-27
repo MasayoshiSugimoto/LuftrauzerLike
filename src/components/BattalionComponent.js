@@ -8,27 +8,14 @@ const BATTALION_ID_PLAYER = 0
 const BATTALION_ID_ENNEMY = 1
 
 const BATTALION_DEFAULT_DAMAGE = 10
-
 const BATTALION_COLLISION_COOLDOWN_SECOND = 1
 
-function BattalionComponent(battalionId) {
+function BattalionComponent(battalionId, damage) {
   this.battalionId = battalionId
-  this.damage = BATTALION_DEFAULT_DAMAGE
+  this.damage = damage ? damage : BATTALION_DEFAULT_DAMAGE
 }
 
 BattalionComponent.prototype.update = function(entityId, elapsedTimeSecond) {
-}
-
-BattalionComponent.createPlayerComponent = function(damage) {
-  const component = new BattalionComponent(BATTALION_ID_PLAYER)
-  if (damage) component.damage = damage
-  return component
-}
-
-BattalionComponent.createEnnemyComponent = function(damage) {
-  const component = new BattalionComponent(BATTALION_ID_ENNEMY)
-  if (damage) component.damage = damage
-  return component
 }
 
 function BattalionSystem(gameSystem, deathSubscription) {

@@ -65,6 +65,22 @@ ComponentFactory.prototype.createFadeoutComponent = function(explosionImage, fad
 
 ComponentFactory.prototype.createDiscComponent = function() {
   const discComponent = new DiscComponent(this.entityId, this.entityManager)
-	this.entityManager.getGameSystem().addComponent(this.entityId, GAME_COMPONENT_ID_DISK_ENTITY, discComponent)
+  this.entityManager.getGameSystem().addComponent(this.entityId, GAME_COMPONENT_ID_DISK_ENTITY, discComponent)
   return discComponent
+}
+
+ComponentFactory.prototype.createRectangleComponent = function(playerEntityId, width, height) {
+  const rectangleComponent = new RectangleComponent(this.entityId, this.entityManager, playerEntityId, width, height)
+  this.entityManager.getGameSystem().addComponent(this.entityId, GAME_COMPONENT_ID_RECTANGLE, rectangleComponent)
+  return rectangleComponent
+}
+
+ComponentFactory.prototype.createBattalionComponent = function(battalionId, damage) {
+  let battalionComponent = new BattalionComponent(battalionId, damage)
+  this.entityManager.getGameSystem().addComponent(
+    this.entityId,
+    GAME_COMPONENT_ID_BATTALION,
+    battalionComponent
+  )
+  return battalionComponent
 }

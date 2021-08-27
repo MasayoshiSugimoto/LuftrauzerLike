@@ -72,11 +72,7 @@ function PlayerShip(entityId, entityManager, images, blaster) {
   // Initialize game components.
   const gameSystem = entityManager.getGameSystem()
   componentFactory.createLifeComponent(PlayerShip.MAX_HP)
-  gameSystem.addComponent(
-    entityId,
-    GAME_COMPONENT_ID_BATTALION,
-    BattalionComponent.createPlayerComponent()
-  )
+  componentFactory.createBattalionComponent(BATTALION_ID_PLAYER)
   this.explosionImage = images.get(PlayerShip.EXPLOSION_IMAGE_PATH)
 
   // Initialize physics component.

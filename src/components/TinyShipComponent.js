@@ -19,11 +19,7 @@ function TinyShipComponent(entityId, entityManager, targetEntityId, image) {
 
   // Game system setup.
   const gameSystem = entityManager.getGameSystem()
-  gameSystem.addComponent(
-    this.entityId,
-    GAME_COMPONENT_ID_BATTALION,
-    BattalionComponent.createEnnemyComponent()
-  )
+  componentFactory.createBattalionComponent(BATTALION_ID_ENNEMY)
   componentFactory.createLifeComponent(GAME_COMPONENT_ID_LIFE)
 
   // Physics system setup.
