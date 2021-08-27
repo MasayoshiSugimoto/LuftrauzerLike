@@ -16,11 +16,7 @@ Projectile.createFactory = function(entityManager, images) {
   const physicsSystem = entityManager.getPhysicsSystem()
   const image = images.get(Projectile.IMAGE_FILE)
   return () => {
-    const entityId = entityManager.createEntity([
-      EntityManager.SYSTEM_TYPES.GAME,
-      EntityManager.SYSTEM_TYPES.PHYSICS,
-      EntityManager.SYSTEM_TYPES.GRAPHICS
-    ])
+    const entityId = entityManager.createEntity()
     const componentFactory = new ComponentFactory(entityId, entityManager)
 
     // Game system setup.

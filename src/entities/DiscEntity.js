@@ -7,11 +7,7 @@
 const DISC_ENTITY_ENTITY_MAX = 1000
 
 function DiskEntity(entityManager) {
-  this.entityId = entityManager.createEntity([
-    EntityManager.SYSTEM_TYPES.GAME,
-    EntityManager.SYSTEM_TYPES.PHYSICS,
-    EntityManager.SYSTEM_TYPES.GRAPHICS
-  ])
+  this.entityId = entityManager.createEntity()
   const componentFactory = new ComponentFactory(this.entityId, entityManager)
   componentFactory.createDiscComponent()
 }

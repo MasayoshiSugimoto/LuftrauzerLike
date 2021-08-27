@@ -32,11 +32,7 @@ Reisen.initialize = function(appContext = {}) {
 
   // This creates the player entity on first call.
   appContext.getPlayerEntityId = () => {
-    const playerEntityId = appContext.getEntityManager().createEntity([
-			EntityManager.SYSTEM_TYPES.GAME,
-      EntityManager.SYSTEM_TYPES.PHYSICS,
-      EntityManager.SYSTEM_TYPES.GRAPHICS
-    ])
+    const playerEntityId = appContext.getEntityManager().createEntity()
     appContext
       .getEntityManager()
       .getPhysicsSystem()

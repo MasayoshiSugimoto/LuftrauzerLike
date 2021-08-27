@@ -15,10 +15,7 @@ function Cloud() {}
 Cloud.createFactory = function(entityManager, image) {
   return () => {
     const graphicSystem = entityManager.getGraphicSystem()
-    const entityId = entityManager.createEntity([
-      EntityManager.SYSTEM_TYPES.PHYSICS,
-      EntityManager.SYSTEM_TYPES.GRAPHICS
-    ])
+    const entityId = entityManager.createEntity()
     graphicSystem.setupImage(entityId, image)
     return entityId
   }

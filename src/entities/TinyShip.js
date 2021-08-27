@@ -35,11 +35,7 @@ TinyShipPopper.prototype.update = function(elapsedTimeSecond) {
 }
 
 TinyShipPopper.prototype.createTinyShip = function() {
-  const entityId = this.entityManager.createEntity([
-    EntityManager.SYSTEM_TYPES.GAME,
-    EntityManager.SYSTEM_TYPES.PHYSICS,
-    EntityManager.SYSTEM_TYPES.GRAPHICS
-  ])
+  const entityId = this.entityManager.createEntity()
   const componentFactory = new ComponentFactory(entityId, this.entityManager)
   return componentFactory.createTinyShipComponent(this.playerEntityId, this.image)
 }
