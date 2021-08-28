@@ -13,7 +13,7 @@ function ComponentFactory(entityId, entityManager) {
 }
 
 ComponentFactory.prototype.createControlComponent = function() {
-  const controlComponent = new ControlComponent(this.entityManager.getPhysicsSystem(), this.entityId)
+  const controlComponent = new ControlComponent(this.entityId, this.entityManager)
   this.entityManager.getGameSystem().addComponent(
     this.entityId,
     GAME_COMPONENT_ID_CONTROL,

@@ -53,10 +53,6 @@ function PlayerPlaneEntity(entityId, entityManager, images, blaster) {
   const componentFactory = new ComponentFactory(entityId, entityManager)
   const controlSystem = componentFactory.createControlComponent()
 
-  this.physicEntity = new PhysicEntity(
-    entityId,
-    entityManager.getPhysicsSystem()
-  )
   this.images = PlayerPlaneEntity.IMAGE_PATHS.map(path => images.get(path))
   const image = this.images[PlayerPlaneEntity.TOP_VIEW_INDEX]
   this.entityManager = entityManager
@@ -91,27 +87,6 @@ function PlayerPlaneEntity(entityId, entityManager, images, blaster) {
 }
 
 PlayerPlaneEntity.prototype.update = function(elapsedTimeSecond) {
-  // Update physics based on user inputs.
-  let direction = this.physicEntity.getDirection()
-  const controlComponent = this.entityManager
-    .getGameSystem()
-    .getComponent(this.entityId, GAME_COMPONENT_ID_CONTROL)
-  if (!controlComponent) return
-  const inputData = controlComponent.getInputData()
-  if (inputData.left) {
-    direction -= PlayerPlaneEntity.ROTATION_UNIT * elapsedTimeSecond
-  } else if (inputData.right) {
-    direction += PlayerPlaneEntity.ROTATION_UNIT * elapsedTimeSecond
-  }
-  direction = Angle.normalize2PI(direction)
-  this.physicEntity.setDirection(direction)
-
-  let boost = 0
-  if (inputData.boost) {
-    boost = PlayerPlaneEntity.BOOST_UNIT
-  }
-  this.physicEntity.setAcceleration(new Vector2D(boost, 0).rotate(direction))
-
   // Update blaster.
   this.blaster.update(elapsedTimeSecond)
 

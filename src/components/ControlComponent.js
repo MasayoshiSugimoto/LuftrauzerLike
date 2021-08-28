@@ -7,7 +7,12 @@
  * goes in the sea on in the sky.
  ******************************************************************************/
 
-function ControlComponent(physicsSystem, entityId) {
+const CONTROL_COMPONENT_ROTATION_UNIT = Math.PI * 2; // Rotation allowed per second.
+const CONTROL_COMPONENT_BOOST_UNIT = 10 // Velocity in meter/s^2.
+
+function ControlComponent(entityId, entityManager) {
+  this.entityManager = entityManager
+  const physicsSystem = entityManager.getPhysicsSystem()
 	this.seaController = new SeaController(physicsSystem, entityId)
 	this.skyController = new SkyController(physicsSystem, entityId)
 }
@@ -21,6 +26,29 @@ ControlComponent.prototype.getInputData = function() {
 ControlComponent.prototype.update = function(entityId, elapsedTimeSecond) {
 	this.seaController.update(elapsedTimeSecond)
 	this.skyController.update(elapsedTimeSecond)
+
+  const inputData = this.getInputData()
+  const physicEntity = new PhysicEntity(
+    entityId,
+    this.entityManager.getPhysicsSystem()
+  )
+
+  // Rotates depending on inputs.
+  let direction = physicEntity.getDirection(entityId)
+  if (inputData.left) {
+    direction -= CONTROL_COMPONENT_ROTATION_UNIT * elapsedTimeSecond
+  } else if (inputData.right) {
+    direction += CONTROL_COMPONENT_ROTATION_UNIT * elapsedTimeSecond
+  }
+  direction = Angle.normalize2PI(direction)
+  physicEntity.setDirection(direction)
+
+  // Change acceleration depending on inputs.
+  let boost = 0
+  if (inputData.boost) {
+    boost = CONTROL_COMPONENT_BOOST_UNIT
+  }
+  physicEntity.setAcceleration(new Vector2D(boost, 0).rotate(direction))
 }
 
 function KeyboardControl() {}
