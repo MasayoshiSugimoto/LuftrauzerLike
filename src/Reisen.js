@@ -40,8 +40,8 @@ Reisen.initialize = function(appContext = {}) {
     return playerEntityId
   }
 
-  appContext.getPlayerShip = () => {
-    return new PlayerShip(
+  appContext.getPlayerPlaneEntity = () => {
+    return new PlayerPlaneEntity(
       appContext.getPlayerEntityId(),
       appContext.getEntityManager(),
       appContext.getImages()
@@ -113,7 +113,7 @@ Reisen.setup = function(appContext) {
 Reisen.update = function(appContext, elapsedTimeSecond, canvas) {
   appContext.getDebug().update(elapsedTimeSecond)
   appContext.getTinyPlanePopper().update(elapsedTimeSecond)
-  appContext.getPlayerShip().update(elapsedTimeSecond)
+  appContext.getPlayerPlaneEntity().update(elapsedTimeSecond)
   appContext.getEntityManager().update(elapsedTimeSecond)
   appContext.getSea().draw()
   drawSky(appContext.getCanvas(), appContext.getCamera())

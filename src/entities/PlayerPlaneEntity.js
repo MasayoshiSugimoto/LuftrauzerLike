@@ -1,12 +1,12 @@
 "use strict"
 
 /*******************************************************************************
- * Player Ship
+ * PlayerPlaneEntity
  ******************************************************************************/
 
-PlayerShip.ROTATION_UNIT = Math.PI * 2; // Rotation allowed per second.
-PlayerShip.BOOST_UNIT = 10 // Velocity in meter/s^2.
-PlayerShip.IMAGE_PATHS = [
+PlayerPlaneEntity.ROTATION_UNIT = Math.PI * 2; // Rotation allowed per second.
+PlayerPlaneEntity.BOOST_UNIT = 10 // Velocity in meter/s^2.
+PlayerPlaneEntity.IMAGE_PATHS = [
   "images/Reisen15.png",
   "images/Reisen14.png",
   "images/Reisen13.png",
@@ -39,17 +39,17 @@ PlayerShip.IMAGE_PATHS = [
   "images/Reisen-14.png",
   "images/Reisen-15.png",
 ]
-PlayerShip.TOP_VIEW_INDEX = 15
-PlayerShip.MAX_VELOCITY = 4
-PlayerShip.MAX_HP = 100
-PlayerShip.FADEOUT_TIME_SECOND = 1
-PlayerShip.EXPLOSION_IMAGE_PATH = 'images/Explosion.png'
-PlayerShip.SCALE = 1
+PlayerPlaneEntity.TOP_VIEW_INDEX = 15
+PlayerPlaneEntity.MAX_VELOCITY = 4
+PlayerPlaneEntity.MAX_HP = 100
+PlayerPlaneEntity.FADEOUT_TIME_SECOND = 1
+PlayerPlaneEntity.EXPLOSION_IMAGE_PATH = 'images/Explosion.png'
+PlayerPlaneEntity.SCALE = 1
 
 const PLAYER_STATE_ALIVE = 0
 const PLAYER_STATE_DYING = 1
 
-function PlayerShip(entityId, entityManager, images, blaster) {
+function PlayerPlaneEntity(entityId, entityManager, images, blaster) {
   const componentFactory = new ComponentFactory(entityId, entityManager)
   const controlSystem = componentFactory.createControlComponent()
 
@@ -57,8 +57,8 @@ function PlayerShip(entityId, entityManager, images, blaster) {
     entityId,
     entityManager.getPhysicsSystem()
   )
-  this.images = PlayerShip.IMAGE_PATHS.map(path => images.get(path))
-  const image = this.images[PlayerShip.TOP_VIEW_INDEX]
+  this.images = PlayerPlaneEntity.IMAGE_PATHS.map(path => images.get(path))
+  const image = this.images[PlayerPlaneEntity.TOP_VIEW_INDEX]
   this.entityManager = entityManager
   this.entityId = entityId
   this.angle = 0
@@ -71,17 +71,17 @@ function PlayerShip(entityId, entityManager, images, blaster) {
 
   // Initialize game components.
   const gameSystem = entityManager.getGameSystem()
-  componentFactory.createLifeComponent(PlayerShip.MAX_HP)
+  componentFactory.createLifeComponent(PlayerPlaneEntity.MAX_HP)
   componentFactory.createBattalionComponent(BATTALION_ID_PLAYER)
-  this.explosionImage = images.get(PlayerShip.EXPLOSION_IMAGE_PATH)
+  this.explosionImage = images.get(PlayerPlaneEntity.EXPLOSION_IMAGE_PATH)
 
   // Initialize physics component.
   const physicsComponent = entityManager.getPhysicsSystem().getComponent(entityId)
-  physicsComponent.maxVelocity = PlayerShip.MAX_VELOCITY
+  physicsComponent.maxVelocity = PlayerPlaneEntity.MAX_VELOCITY
   // physicsComponent.gravity = true
   physicsComponent.vectorFieldIndices = [0, 1]
   physicsComponent.collision = true
-  entityManager.getPhysicsSystem().setSizeFromImage(entityId, image, PlayerShip.SCALE)
+  entityManager.getPhysicsSystem().setSizeFromImage(entityId, image, PlayerPlaneEntity.SCALE)
 
   // Initialize with an image.
   this.graphicSystem = entityManager.getGraphicSystem()
@@ -90,24 +90,25 @@ function PlayerShip(entityId, entityManager, images, blaster) {
   this.state = PLAYER_STATE_ALIVE
 }
 
-PlayerShip.prototype.update = function(elapsedTimeSecond) {
+PlayerPlaneEntity.prototype.update = function(elapsedTimeSecond) {
   // Update physics based on user inputs.
   let direction = this.physicEntity.getDirection()
-  const controlComponent = this.entityManager.getGameSystem().getComponent(this.entityId, GAME_COMPONENT_ID_CONTROL)
+  const controlComponent = this.entityManager
+    .getGameSystem()
+    .getComponent(this.entityId, GAME_COMPONENT_ID_CONTROL)
   if (!controlComponent) return
-  controlComponent.update(this.entityId, elapsedTimeSecond)
   const inputData = controlComponent.getInputData()
   if (inputData.left) {
-    direction -= PlayerShip.ROTATION_UNIT * elapsedTimeSecond
+    direction -= PlayerPlaneEntity.ROTATION_UNIT * elapsedTimeSecond
   } else if (inputData.right) {
-    direction += PlayerShip.ROTATION_UNIT * elapsedTimeSecond
+    direction += PlayerPlaneEntity.ROTATION_UNIT * elapsedTimeSecond
   }
   direction = Angle.normalize2PI(direction)
   this.physicEntity.setDirection(direction)
 
   let boost = 0
   if (inputData.boost) {
-    boost = PlayerShip.BOOST_UNIT
+    boost = PlayerPlaneEntity.BOOST_UNIT
   }
   this.physicEntity.setAcceleration(new Vector2D(boost, 0).rotate(direction))
 
@@ -121,11 +122,11 @@ PlayerShip.prototype.update = function(elapsedTimeSecond) {
     this.state = PLAYER_STATE_DYING
     // Display explosion when dying.
     const componentFactory = new ComponentFactory(this.entityId, this.entityManager)
-    componentFactory.createFadeoutComponent(this.explosionImage, PlayerShip.FADEOUT_TIME_SECOND)
+    componentFactory.createFadeoutComponent(this.explosionImage, PlayerPlaneEntity.FADEOUT_TIME_SECOND)
 
     // Update size
     this.entityManager
       .getPhysicsSystem()
-      .setSizeFromImage(this.entityId, this.explosionImage, PlayerShip.SCALE)
+      .setSizeFromImage(this.entityId, this.explosionImage, PlayerPlaneEntity.SCALE)
   } 
 }
