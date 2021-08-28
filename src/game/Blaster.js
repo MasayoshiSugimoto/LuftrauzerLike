@@ -28,14 +28,14 @@ Blaster.prototype.update = function(elapsedTimeSecond) {
   const component = this.physicsSystem.getComponent(entityId)
   component.direction = playerComponent.direction
   component.position = playerComponent.position
-  component.velocity = new Vector2D(Projectile.SPEED, 0)
+  component.velocity = new Vector2D(BulletEntity.SPEED, 0)
     .rotate(playerComponent.direction)
     .add(playerComponent.velocity)
 
-  // Prevent the projectile to lose too much speed.
+  // Prevent the bullet to lose too much speed.
   const distance = component.velocity.distance()
-  if (distance < Projectile.SPEED && distance > 0.0001) {
+  if (distance < BulletEntity.SPEED && distance > 0.0001) {
     component.velocity = component.velocity
-      .scalarMultiply(Projectile.SPEED / distance)
+      .scalarMultiply(BulletEntity.SPEED / distance)
   }
 }

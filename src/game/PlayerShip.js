@@ -64,7 +64,7 @@ function PlayerShip(entityId, entityManager, images, blaster) {
   this.angle = 0
   this.blaster = new Blaster(
     () => controlSystem.getInputData(),
-    Projectile.createFactory(entityManager, images),
+    BulletEntity.createFactory(entityManager, images),
     entityManager.getPhysicsSystem(),
     entityId
   )
