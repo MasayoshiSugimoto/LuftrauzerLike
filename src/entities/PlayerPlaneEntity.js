@@ -49,7 +49,7 @@ PlayerPlaneEntity.SCALE = 1
 const PLAYER_STATE_ALIVE = 0
 const PLAYER_STATE_DYING = 1
 
-function PlayerPlaneEntity(entityId, entityManager, images, blaster) {
+function PlayerPlaneEntity(entityId, entityManager, images) {
   const componentFactory = new ComponentFactory(entityId, entityManager)
   const controlSystem = componentFactory.createControlComponent()
 
@@ -58,15 +58,9 @@ function PlayerPlaneEntity(entityId, entityManager, images, blaster) {
   this.entityManager = entityManager
   this.entityId = entityId
   this.angle = 0
-  this.blaster = new Blaster(
-    () => controlSystem.getInputData(),
-    BulletEntity.createFactory(entityManager, images),
-    entityManager.getPhysicsSystem(),
-    entityId
-  )
 
   // Initialize game components.
-  const gameSystem = entityManager.getGameSystem()
+  componentFactory.createMachineGunComponent(images)
   componentFactory.createLifeComponent(PlayerPlaneEntity.MAX_HP)
   componentFactory.createBattalionComponent(BATTALION_ID_PLAYER)
   this.explosionImage = images.get(PlayerPlaneEntity.EXPLOSION_IMAGE_PATH)
@@ -87,9 +81,6 @@ function PlayerPlaneEntity(entityId, entityManager, images, blaster) {
 }
 
 PlayerPlaneEntity.prototype.update = function(elapsedTimeSecond) {
-  // Update blaster.
-  this.blaster.update(elapsedTimeSecond)
-
   // Update state.
   const gameSystem = this.entityManager.getGameSystem()
   const lifeComponent = gameSystem.getComponent(this.entityId, GAME_COMPONENT_ID_LIFE)

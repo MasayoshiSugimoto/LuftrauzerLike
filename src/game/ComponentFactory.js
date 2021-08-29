@@ -76,11 +76,21 @@ ComponentFactory.prototype.createRectangleComponent = function(playerEntityId, w
 }
 
 ComponentFactory.prototype.createBattalionComponent = function(battalionId, damage) {
-  let battalionComponent = new BattalionComponent(battalionId, damage)
+  const battalionComponent = new BattalionComponent(battalionId, damage)
   this.entityManager.getGameSystem().addComponent(
     this.entityId,
     GAME_COMPONENT_ID_BATTALION,
     battalionComponent
   )
   return battalionComponent
+}
+
+ComponentFactory.prototype.createMachineGunComponent = function(images) {
+  const component = new MachineGunComponent(this.entityManager, images)
+  this.entityManager.getGameSystem().addComponent(
+    this.entityId,
+    GAME_COMPONENT_ID_MACHINE_GUN,
+    component
+  )
+  return component
 }

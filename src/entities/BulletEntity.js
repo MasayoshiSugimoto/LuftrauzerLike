@@ -7,7 +7,6 @@
 function BulletEntity() {}
 
 BulletEntity.IMAGE_FILE = 'images/Explosion.png'
-BulletEntity.SPEED = 5 // Meter per second.
 BulletEntity.SIZE = new Vector2D(0.2, 0.2)
 BulletEntity.LIFE_TIME_SECOND = 2
 
