@@ -94,3 +94,13 @@ ComponentFactory.prototype.createMachineGunComponent = function(images) {
   )
   return component
 }
+
+ComponentFactory.prototype.createExplosionComponent = function(images) {
+  const component = new ExplosionComponent(this.entityManager, images)
+  this.entityManager.getGameSystem().addComponent(
+    this.entityId,
+    GAME_COMPONENT_ID_DEATH_COMPONENT,
+    component
+  )
+  return component
+}
