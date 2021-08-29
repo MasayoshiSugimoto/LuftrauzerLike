@@ -26,7 +26,7 @@ ComponentFactory.prototype.createTinyPlaneComponent = function(targetEntityId, i
   const tinyPlaneComponent = new TinyPlaneComponent(this.entityId, this.entityManager, targetEntityId, image)
   this.entityManager.getGameSystem().addComponent(
     this.entityId,
-    GAME_COMPONENT_ID_TINY_PLANE,
+    GAME_COMPONENT_ID_CONTROL,
     tinyPlaneComponent
   )
   return tinyPlaneComponent

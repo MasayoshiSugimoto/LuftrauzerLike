@@ -8,6 +8,12 @@
 
 const TINY_SHIP_MAX_ROTATION_RADIAN_PER_SECOND = Math.PI / 2
 const TINY_SHIP_MAX_HP = 1
+const TINY_PLANE_INPUT_DATA = {
+  left: false,
+  right: false,
+  boost: false,
+  fire: true
+}
 
 function TinyPlaneComponent(entityId, entityManager, targetEntityId, image) {
   this.physicsSystem = entityManager.getPhysicsSystem()
@@ -36,4 +42,8 @@ TinyPlaneComponent.prototype.update = function(entityId, elapsedTimeSecond) {
   component.direction = Angle.normalize(direction + deltaDirection)
   component.velocity = Vector2D.X_ONE.rotate(component.direction)
   component.velocityUpdate = false
+}
+
+TinyPlaneComponent.prototype.getInputData = function() {
+  return TINY_PLANE_INPUT_DATA
 }
