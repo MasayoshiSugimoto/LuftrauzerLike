@@ -46,31 +46,31 @@ PlayerPlaneEntity.FADEOUT_TIME_SECOND = 1
 PlayerPlaneEntity.SCALE = 1
 PlayerPlaneEntity.EXPLOSION_SCALE = 1
 
-const PLAYER_STATE_ALIVE = 0
-const PLAYER_STATE_DYING = 1
-
 function PlayerPlaneEntity() {}
 
 PlayerPlaneEntity.create = function(entityId, entityManager, images) {
+  const {
+    gameSystem,
+    physicsSystem,
+    graphicSystem
+  } = entityManager.getSystems()
   const componentFactory = new ComponentFactory(entityId, entityManager)
-  const controlSystem = componentFactory.createControlComponent()
   const image = images.get(PlayerPlaneEntity.IMAGE_PATHS[PlayerPlaneEntity.TOP_VIEW_INDEX])
 
   // Initialize game components.
+  componentFactory.createControlComponent()
   componentFactory.createMachineGunComponent(images)
   componentFactory.createLifeComponent(PlayerPlaneEntity.MAX_HP)
   componentFactory.createBattalionComponent(BATTALION_ID_PLAYER)
   componentFactory.createExplosionComponent(images, PlayerPlaneEntity.EXPLOSION_SCALE)
 
-  // Initialize physics component.
-  const physicsComponent = entityManager.getPhysicsSystem().getComponent(entityId)
+  const physicsComponent = physicsSystem.getComponent(entityId)
   physicsComponent.maxVelocity = PlayerPlaneEntity.MAX_VELOCITY
   // physicsComponent.gravity = true
   physicsComponent.vectorFieldIndices = [0, 1]
   physicsComponent.collision = true
-  entityManager.getPhysicsSystem().setSizeFromImage(entityId, image, PlayerPlaneEntity.SCALE)
+  physicsSystem.setSizeFromImage(entityId, image, PlayerPlaneEntity.SCALE)
 
   // Initialize with an image.
-  const graphicSystem = entityManager.getGraphicSystem()
   graphicSystem.setupImage(entityId, image)
 }
