@@ -9,6 +9,7 @@ const TINY_PLANE_IMAGE_PATH = 'images/Reisen.png'
 const TINY_PLANE_POP_Y = 2
 const TINY_PLANE_POP_X_FORBIDDEN_RANGE = 4
 const TINY_PLANE_SCALE = 0.5
+const TINY_PLANE_MAX_HP = 1
 
 function TinyPlaneEntity() {}
 
@@ -21,7 +22,7 @@ TinyPlaneEntity.create = function(entityManager, playerEntityId, image, images) 
   // componentFactory.createMachineGunComponent(images)
   componentFactory.createFollowControlComponent(playerEntityId, image)
   componentFactory.createBattalionComponent(BATTALION_ID_ENNEMY)
-  componentFactory.createLifeComponent(GAME_COMPONENT_ID_LIFE)
+  componentFactory.createLifeComponent(TINY_PLANE_MAX_HP)
   componentFactory.createExplosionComponent(images)
 
   // Physics system setup.

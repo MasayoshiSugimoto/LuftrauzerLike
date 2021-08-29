@@ -4,7 +4,7 @@
 * PhysicsSystem apply gravity and update velocity of game entities.
 ********************************************************************************/
 
-PhysicsSystem.GRAVITY = -4 // Meter/Second
+PhysicsSystem.GRAVITY = -3 // Meter/Second
 PhysicsSystem.GRAVITY_VECTOR = new Vector2D(0, PhysicsSystem.GRAVITY)
 PhysicsSystem.MAX_VELOCITY = 10 // Meter/Second
 PhysicsSystem.VECTOR_FIELD_ACCELERATION = 10 // Meter/Second
