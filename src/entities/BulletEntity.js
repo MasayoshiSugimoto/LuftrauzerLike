@@ -27,6 +27,7 @@ BulletEntity.create = function(entityManager, physicsSystem, graphicSystem, imag
 
   // Physic system setup.
   physicsSystem.setSize(entityId, BulletEntity.SIZE)
+  physicsSystem.enableCollision(entityId)
 
   // Graphic system setup.
   graphicSystem.setupImage(entityId, image) 

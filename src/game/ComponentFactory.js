@@ -85,8 +85,8 @@ ComponentFactory.prototype.createBattalionComponent = function(battalionId, dama
   return battalionComponent
 }
 
-ComponentFactory.prototype.createMachineGunComponent = function(images) {
-  const component = new MachineGunComponent(this.entityManager, images)
+ComponentFactory.prototype.createMachineGunComponent = function(images, damage, battalionId) {
+  const component = new MachineGunComponent(this.entityManager, images, damage, battalionId)
   this.entityManager.getGameSystem().addComponent(
     this.entityId,
     GAME_COMPONENT_ID_MACHINE_GUN,

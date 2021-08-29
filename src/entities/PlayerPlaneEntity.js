@@ -45,6 +45,7 @@ PlayerPlaneEntity.MAX_HP = 100
 PlayerPlaneEntity.FADEOUT_TIME_SECOND = 1
 PlayerPlaneEntity.SCALE = 1
 PlayerPlaneEntity.EXPLOSION_SCALE = 1
+PlayerPlaneEntity.DAMAGE = 1
 
 function PlayerPlaneEntity() {}
 
@@ -59,7 +60,7 @@ PlayerPlaneEntity.create = function(entityId, entityManager, images) {
 
   // Initialize game components.
   componentFactory.createControlComponent()
-  componentFactory.createMachineGunComponent(images)
+  componentFactory.createMachineGunComponent(images, PlayerPlaneEntity.DAMAGE, BATTALION_ID_PLAYER)
   componentFactory.createLifeComponent(PlayerPlaneEntity.MAX_HP)
   componentFactory.createBattalionComponent(BATTALION_ID_PLAYER)
   componentFactory.createExplosionComponent(images, PlayerPlaneEntity.EXPLOSION_SCALE)
