@@ -8,13 +8,28 @@ const TINY_PLANE_POP_TIME_SECOND = 0.5
 const TINY_PLANE_IMAGE_PATH = 'images/Reisen.png'
 const TINY_PLANE_POP_Y = 2
 const TINY_PLANE_POP_X_FORBIDDEN_RANGE = 4
+const TINY_PLANE_SCALE = 0.5
 
 function TinyPlaneEntity() {}
 
-TinyPlaneEntity.create = function(entityManager, playerEntityId, image) {
+TinyPlaneEntity.create = function(entityManager, playerEntityId, image, images) {
   const entityId = entityManager.createEntity()
   const componentFactory = new ComponentFactory(entityId, entityManager)
+  const gameSystem = entityManager.getGameSystem()
+
   componentFactory.createTinyShipComponent(playerEntityId, image)
+  componentFactory.createBattalionComponent(BATTALION_ID_ENNEMY)
+  componentFactory.createLifeComponent(GAME_COMPONENT_ID_LIFE)
+
+  // Physics system setup.
+  const physicsSystem = entityManager.getPhysicsSystem()
+  physicsSystem.enableCollision(entityId)
+
+  // Graphic system setup.
+  const graphicSystem = entityManager.getGraphicSystem()
+  graphicSystem.setupImage(entityId, image)
+  graphicSystem.setScale(entityId, TINY_PLANE_SCALE)
+
   return entityId
 }
 
@@ -23,12 +38,13 @@ function TinyPlanePopper(entityManager, playerEntityId, images) {
   this.playerEntityId = playerEntityId
   this.timeAccumulator = 0
   this.image = images.get(TINY_PLANE_IMAGE_PATH)
+  this.images = images
 }
 
 TinyPlanePopper.prototype.update = function(elapsedTimeSecond) {
   this.timeAccumulator += elapsedTimeSecond
   if (this.timeAccumulator >= TINY_PLANE_POP_TIME_SECOND) {
-    const entityId = TinyPlaneEntity.create(this.entityManager, this.playerEntityId, this.image)
+    const entityId = TinyPlaneEntity.create(this.entityManager, this.playerEntityId, this.image, this.images)
     const popPosition = new Vector2D(
       (Math.random() - 0.5 >= 0 )
         ? TINY_PLANE_POP_X_FORBIDDEN_RANGE

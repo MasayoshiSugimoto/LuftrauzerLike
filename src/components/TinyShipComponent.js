@@ -6,7 +6,6 @@
 * Weak enemy. It's a small copy of the player for the time being. 
 ********************************************************************************/
 
-const TINY_SHIP_SCALE = 0.5
 const TINY_SHIP_MAX_ROTATION_RADIAN_PER_SECOND = Math.PI / 2
 const TINY_SHIP_MAX_HP = 1
 
@@ -14,22 +13,6 @@ function TinyShipComponent(entityId, entityManager, targetEntityId, image) {
   this.physicsSystem = entityManager.getPhysicsSystem()
   this.targetEntityId = targetEntityId
   this.entityId = entityId
-
-  const componentFactory = new ComponentFactory(entityId, entityManager)
-
-  // Game system setup.
-  const gameSystem = entityManager.getGameSystem()
-  componentFactory.createBattalionComponent(BATTALION_ID_ENNEMY)
-  componentFactory.createLifeComponent(GAME_COMPONENT_ID_LIFE)
-
-  // Physics system setup.
-  const physicsSystem = entityManager.getPhysicsSystem()
-  physicsSystem.enableCollision(this.entityId)
-
-  // Graphic system setup.
-  const graphicSystem = entityManager.getGraphicSystem()
-  graphicSystem.setupImage(this.entityId, image)
-  graphicSystem.setScale(this.entityId, TINY_SHIP_SCALE)
 }
 
 TinyShipComponent.prototype.update = function(entityId, elapsedTimeSecond) {
