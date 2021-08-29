@@ -17,7 +17,7 @@ TinyPlaneEntity.create = function(entityManager, playerEntityId, image, images) 
   const componentFactory = new ComponentFactory(entityId, entityManager)
   const gameSystem = entityManager.getGameSystem()
 
-  componentFactory.createTinyShipComponent(playerEntityId, image)
+  componentFactory.createTinyPlaneComponent(playerEntityId, image)
   componentFactory.createBattalionComponent(BATTALION_ID_ENNEMY)
   componentFactory.createLifeComponent(GAME_COMPONENT_ID_LIFE)
 

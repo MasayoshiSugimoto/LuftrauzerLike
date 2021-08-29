@@ -22,14 +22,14 @@ ComponentFactory.prototype.createControlComponent = function() {
   return controlComponent
 }
 
-ComponentFactory.prototype.createTinyShipComponent = function(targetEntityId, image) {
-  const tinyShipComponent = new TinyShipComponent(this.entityId, this.entityManager, targetEntityId, image)
+ComponentFactory.prototype.createTinyPlaneComponent = function(targetEntityId, image) {
+  const tinyPlaneComponent = new TinyPlaneComponent(this.entityId, this.entityManager, targetEntityId, image)
   this.entityManager.getGameSystem().addComponent(
     this.entityId,
-    GAME_COMPONENT_ID_TINY_SHIP,
-    tinyShipComponent
+    GAME_COMPONENT_ID_TINY_PLANE,
+    tinyPlaneComponent
   )
-  return tinyShipComponent
+  return tinyPlaneComponent
 }
 
 ComponentFactory.prototype.createDeactivationTimerComponent = function(timeToDeactivateSecond) {
