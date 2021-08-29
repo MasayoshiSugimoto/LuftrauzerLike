@@ -95,8 +95,8 @@ ComponentFactory.prototype.createMachineGunComponent = function(images) {
   return component
 }
 
-ComponentFactory.prototype.createExplosionComponent = function(images) {
-  const component = new ExplosionComponent(this.entityManager, images)
+ComponentFactory.prototype.createExplosionComponent = function(images, scale) {
+  const component = new ExplosionComponent(this.entityManager, images, scale)
   this.entityManager.getGameSystem().addComponent(
     this.entityId,
     GAME_COMPONENT_ID_DEATH_COMPONENT,

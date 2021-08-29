@@ -41,7 +41,7 @@ Reisen.initialize = function(appContext = {}) {
   }
 
   appContext.getPlayerPlaneEntity = () => {
-    return new PlayerPlaneEntity(
+    return PlayerPlaneEntity.create(
       appContext.getPlayerEntityId(),
       appContext.getEntityManager(),
       appContext.getImages()
@@ -101,7 +101,7 @@ Reisen.setup = function(appContext) {
   KeyboardControl.setupKeyboardHandlers()
   appContext.getCanvas().fullScreen()
   // Force the player to be at index 0.
-  appContext.getPlayerEntityId()
+  appContext.getPlayerPlaneEntity()
   // Create the sky.
   CloudEntity.createSky(appContext.getEntityManager(), appContext.getImages())
   // Center the screen on the player ship.
@@ -113,7 +113,6 @@ Reisen.setup = function(appContext) {
 Reisen.update = function(appContext, elapsedTimeSecond, canvas) {
   appContext.getDebug().update(elapsedTimeSecond)
   appContext.getTinyPlanePopper().update(elapsedTimeSecond)
-  appContext.getPlayerPlaneEntity().update(elapsedTimeSecond)
   appContext.getEntityManager().update(elapsedTimeSecond)
   appContext.getSea().draw()
   drawSky(appContext.getCanvas(), appContext.getCamera())

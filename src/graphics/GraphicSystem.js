@@ -194,6 +194,10 @@ GraphicSystem.prototype.setColor = function(entityId, color) {
 	component.color = color
 }
 
+GraphicSystem.prototype.getImage = function(entityId) {
+  return this.components[entityId]?.image
+}
+
 
 /********************************************************************************
  * Static Functions

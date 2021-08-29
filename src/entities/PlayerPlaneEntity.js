@@ -43,27 +43,24 @@ PlayerPlaneEntity.TOP_VIEW_INDEX = 15
 PlayerPlaneEntity.MAX_VELOCITY = 4
 PlayerPlaneEntity.MAX_HP = 100
 PlayerPlaneEntity.FADEOUT_TIME_SECOND = 1
-PlayerPlaneEntity.EXPLOSION_IMAGE_PATH = 'images/Explosion.png'
 PlayerPlaneEntity.SCALE = 1
+PlayerPlaneEntity.EXPLOSION_SCALE = 1
 
 const PLAYER_STATE_ALIVE = 0
 const PLAYER_STATE_DYING = 1
 
-function PlayerPlaneEntity(entityId, entityManager, images) {
+function PlayerPlaneEntity() {}
+
+PlayerPlaneEntity.create = function(entityId, entityManager, images) {
   const componentFactory = new ComponentFactory(entityId, entityManager)
   const controlSystem = componentFactory.createControlComponent()
-
-  this.images = PlayerPlaneEntity.IMAGE_PATHS.map(path => images.get(path))
-  const image = this.images[PlayerPlaneEntity.TOP_VIEW_INDEX]
-  this.entityManager = entityManager
-  this.entityId = entityId
-  this.angle = 0
+  const image = images.get(PlayerPlaneEntity.IMAGE_PATHS[PlayerPlaneEntity.TOP_VIEW_INDEX])
 
   // Initialize game components.
   componentFactory.createMachineGunComponent(images)
   componentFactory.createLifeComponent(PlayerPlaneEntity.MAX_HP)
   componentFactory.createBattalionComponent(BATTALION_ID_PLAYER)
-  this.explosionImage = images.get(PlayerPlaneEntity.EXPLOSION_IMAGE_PATH)
+  componentFactory.createExplosionComponent(images, PlayerPlaneEntity.EXPLOSION_SCALE)
 
   // Initialize physics component.
   const physicsComponent = entityManager.getPhysicsSystem().getComponent(entityId)
@@ -74,25 +71,6 @@ function PlayerPlaneEntity(entityId, entityManager, images) {
   entityManager.getPhysicsSystem().setSizeFromImage(entityId, image, PlayerPlaneEntity.SCALE)
 
   // Initialize with an image.
-  this.graphicSystem = entityManager.getGraphicSystem()
-  this.graphicSystem.setupImage(this.entityId, image)
-
-  this.state = PLAYER_STATE_ALIVE
-}
-
-PlayerPlaneEntity.prototype.update = function(elapsedTimeSecond) {
-  // Update state.
-  const gameSystem = this.entityManager.getGameSystem()
-  const lifeComponent = gameSystem.getComponent(this.entityId, GAME_COMPONENT_ID_LIFE)
-  if (this.state === PLAYER_STATE_ALIVE && lifeComponent && lifeComponent.isDying()) {
-    this.state = PLAYER_STATE_DYING
-    // Display explosion when dying.
-    const componentFactory = new ComponentFactory(this.entityId, this.entityManager)
-    componentFactory.createFadeoutComponent(this.explosionImage, PlayerPlaneEntity.FADEOUT_TIME_SECOND)
-
-    // Update size
-    this.entityManager
-      .getPhysicsSystem()
-      .setSizeFromImage(this.entityId, this.explosionImage, PlayerPlaneEntity.SCALE)
-  } 
+  const graphicSystem = entityManager.getGraphicSystem()
+  graphicSystem.setupImage(entityId, image)
 }

@@ -77,6 +77,14 @@ EntityManager.prototype.getGraphicSystem = function() {
   return this.systems[EntityManager.SYSTEM_TYPES.GRAPHICS]
 }
 
+EntityManager.prototype.getSystems = function() {
+  return {
+    gameSystem: this.getGameSystem(),
+    physicsSystem: this.getPhysicsSystem(),
+    graphicSystem: this.getGraphicSystem()
+  }
+}
+
 EntityManager.prototype.getActiveCount = function() {
   return this.activeCount
 }
