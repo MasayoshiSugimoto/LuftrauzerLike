@@ -18,7 +18,7 @@ function BattalionComponent(battalionId, damage) {
 BattalionComponent.prototype.update = function(entityId, elapsedTimeSecond) {
 }
 
-function BattalionSystem(gameSystem, deathSubscription) {
+function BattalionSystem(gameSystem) {
   this.gameSystem = gameSystem
   this.collisionMap = new Map()
 }

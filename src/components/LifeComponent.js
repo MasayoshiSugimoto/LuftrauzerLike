@@ -4,27 +4,18 @@
 * LifeComponent manages HP and death.
 ********************************************************************************/
 
-const LIFE_COMPONENT_DYING_TIME_SECOND = 1
 const LIFE_COMPONENT_COOLDOWN_SECOND = 0.5
 
 function LifeComponent(maxHP, entityManager) {
 	this.maxHP = maxHP
 	this.hp = maxHP
 	this.entityManager = entityManager
-	this.dyingTimer = LIFE_COMPONENT_DYING_TIME_SECOND
-  this.deathSubscription = entityManager.getDeathSubscription()
   this.cooldown = 0
 }
 
 LifeComponent.prototype.update = function(entityId, elapsedTimeSecond) {
 	if (this.hp > 0) {
     this.cooldown = Math.max(0, this.cooldown - elapsedTimeSecond)
-  } else {
-    this.dyingTimer = Math.max(0, this.dyingTimer - elapsedTimeSecond)
-    if (this.dyingTimer <= 0) {
-      this.deathSubscription.publish({ entityId })
-      this.entityManager.deleteEntity(entityId)
-    }
   }
 }
 
@@ -36,10 +27,6 @@ LifeComponent.prototype.takeDamage = function(damage) {
   if (this.cooldown > 0) return
 	this.hp = Math.max(0, this.hp - damage)
   this.cooldown = LIFE_COMPONENT_COOLDOWN_SECOND
-}
-
-LifeComponent.prototype.isDying = function() {
-	return this.isDead() && this.dyingTimer > 0
 }
 
 LifeComponent.prototype.getHP = function() {
@@ -100,3 +87,4 @@ LifeComponent.test = function() {
   check(lifeComponent)
 }
 
+//LifeComponent.test()
