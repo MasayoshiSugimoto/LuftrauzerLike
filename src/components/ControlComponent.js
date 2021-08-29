@@ -44,10 +44,7 @@ ControlComponent.prototype.update = function(entityId, elapsedTimeSecond) {
   physicEntity.setDirection(direction)
 
   // Change acceleration depending on inputs.
-  let boost = 0
-  if (inputData.boost) {
-    boost = CONTROL_COMPONENT_BOOST_UNIT
-  }
+  const boost = inputData.boost ? CONTROL_COMPONENT_BOOST_UNIT : 0
   physicEntity.setAcceleration(new Vector2D(boost, 0).rotate(direction))
 }
 
