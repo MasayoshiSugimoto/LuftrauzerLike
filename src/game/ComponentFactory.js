@@ -22,8 +22,8 @@ ComponentFactory.prototype.createControlComponent = function() {
   return controlComponent
 }
 
-ComponentFactory.prototype.createTinyPlaneComponent = function(targetEntityId, image) {
-  const tinyPlaneComponent = new TinyPlaneComponent(this.entityId, this.entityManager, targetEntityId, image)
+ComponentFactory.prototype.createFollowControlComponent = function(targetEntityId, image) {
+  const tinyPlaneComponent = new FollowControlComponent(this.entityId, this.entityManager, targetEntityId, image)
   this.entityManager.getGameSystem().addComponent(
     this.entityId,
     GAME_COMPONENT_ID_CONTROL,

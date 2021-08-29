@@ -19,7 +19,7 @@ TinyPlaneEntity.create = function(entityManager, playerEntityId, image, images) 
 
   // TODO: Revert and make it more configurable (scale, bullet color, speed, frequency...)
   // componentFactory.createMachineGunComponent(images)
-  componentFactory.createTinyPlaneComponent(playerEntityId, image)
+  componentFactory.createFollowControlComponent(playerEntityId, image)
   componentFactory.createBattalionComponent(BATTALION_ID_ENNEMY)
   componentFactory.createLifeComponent(GAME_COMPONENT_ID_LIFE)
 
