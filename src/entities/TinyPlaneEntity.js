@@ -22,7 +22,8 @@ TinyPlaneEntity.create = function(entityManager, playerEntityId, image, images) 
   // componentFactory.createMachineGunComponent(images)
   componentFactory.createFollowControlComponent(playerEntityId, image)
   componentFactory.createBattalionComponent(BATTALION_ID_ENNEMY)
-  componentFactory.createLifeComponent(TINY_PLANE_MAX_HP)
+  const lifeComponent = componentFactory.createLifeComponent(TINY_PLANE_MAX_HP)
+  lifeComponent.renderLifeBar = false
   componentFactory.createExplosionComponent(images)
 
   // Physics system setup.

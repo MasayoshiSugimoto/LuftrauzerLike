@@ -15,7 +15,7 @@ const HEALTH_BAR_BORDER_PX = 1
 // entity.
 function drawHealthBar(gameSystem, entityId, position, context) {
 	const lifeComponent = gameSystem.getComponent(entityId, GAME_COMPONENT_ID_LIFE)
-	if (!lifeComponent) return
+	if (!lifeComponent || !lifeComponent.renderLifeBar) return
 	if (lifeComponent.getHP() <= 0) return
 
 	const p = position.add(new Vector2D(-HEALTH_BAR_WIDTH/2, HEALTH_BAR_DELTA_Y))

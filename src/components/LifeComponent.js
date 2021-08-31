@@ -11,6 +11,7 @@ function LifeComponent(maxHP, entityManager) {
 	this.hp = maxHP
 	this.entityManager = entityManager
   this.cooldown = 0
+  this.renderLifeBar = true
 }
 
 LifeComponent.prototype.update = function(entityId, elapsedTimeSecond) {
