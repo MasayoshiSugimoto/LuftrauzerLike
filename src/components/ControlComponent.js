@@ -7,6 +7,12 @@
  * goes in the sea on in the sky.
  ******************************************************************************/
 
+const KEYBOARD_KEY_ENTER  = 13;
+const KEYBOARD_KEY_E      = 87;
+const KEYBOARD_KEY_A      = 65;
+const KEYBOARD_KEY_D      = 68;
+const KEYBOARD_KEY_SPACE  = 32;
+
 const CONTROL_COMPONENT_ROTATION_UNIT = Math.PI * 2; // Rotation allowed per second.
 const CONTROL_COMPONENT_BOOST_UNIT = 10 // Velocity in meter/s^2.
 
