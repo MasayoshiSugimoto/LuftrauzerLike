@@ -7,11 +7,14 @@
  * goes in the sea on in the sky.
  ******************************************************************************/
 
-const KEYBOARD_KEY_ENTER  = 13;
-const KEYBOARD_KEY_E      = 87;
-const KEYBOARD_KEY_A      = 65;
-const KEYBOARD_KEY_D      = 68;
-const KEYBOARD_KEY_SPACE  = 32;
+const KEYBOARD_KEY_ENTER  = 'Enter'
+const KEYBOARD_KEY_E      = 'KeyE'
+const KEYBOARD_KEY_A      = 'KeyA'
+const KEYBOARD_KEY_D      = 'KeyD'
+const KEYBOARD_KEY_SPACE  = 'Space'
+const KEYBOARD_KEY_UP     = 'ArrowUp'
+const KEYBOARD_KEY_LEFT   = 'ArrowLeft'
+const KEYBOARD_KEY_RIGHT  = 'ArrowRight'
 
 const CONTROL_COMPONENT_ROTATION_UNIT = Math.PI * 2; // Rotation allowed per second.
 const CONTROL_COMPONENT_BOOST_UNIT = 10 // Velocity in meter/s^2.
@@ -63,40 +66,52 @@ KeyboardControl.inputData = {
 	fire: false
 }
 
+KeyboardControl.keys = [
+  'Enter',
+  'KeyW',
+  'KeyA',
+  'KeyD',
+  'Space',
+  'ArrowUp',
+  'ArrowLeft',
+  'ArrowRight'
+]
+
+KeyboardControl.keyStates = new Array(KeyboardControl.keys.length).map(x => false)
+
 KeyboardControl.setupKeyboardHandlers = function() {
 	const inputData = KeyboardControl.inputData
   window.onkeydown = event => {
-    switch (event.which) {
-      case KEYBOARD_KEY_E:
-        inputData.boost = true
-        break
-      case KEYBOARD_KEY_A:
-        inputData.left = true
-        break
-      case KEYBOARD_KEY_D:
-        inputData.right = true
-        break
-      case KEYBOARD_KEY_SPACE:
-        inputData.fire = true
-        break
-    }
+    KeyboardControl.keys.forEach((key, index) => {
+      if (event.code === key) {
+        KeyboardControl.keyStates[index] = true
+      }
+    })
+    KeyboardControl.update()
   }
 
   window.onkeyup = event => {
-    switch (event.which) {
-      case KEYBOARD_KEY_E:
-        inputData.boost = false
-        break
-      case KEYBOARD_KEY_A:
-        inputData.left = false
-        break
-      case KEYBOARD_KEY_D:
-        inputData.right = false
-        break
-      case KEYBOARD_KEY_SPACE:
-        inputData.fire = false
-        break
-    }
+    KeyboardControl.keys.forEach((key, index) => {
+      if (event.code === key) {
+        KeyboardControl.keyStates[index] = false
+      }
+    })
+    KeyboardControl.update()
+  }
+}
+
+KeyboardControl.update = function() {
+  const isDown = keyCode => {
+    const index = KeyboardControl.keys.indexOf(keyCode)
+    if (index < 0) return false
+    return KeyboardControl.keyStates[index]
+  }
+
+  KeyboardControl.inputData = {
+    left: isDown('KeyA') || isDown('ArrowLeft'),
+    right: isDown('KeyD') || isDown('ArrowRight'),
+    boost: isDown('KeyW') || isDown('ArrowUp'),
+    fire: isDown('Space')
   }
 }
 
