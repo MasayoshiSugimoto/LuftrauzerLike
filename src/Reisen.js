@@ -6,24 +6,29 @@
 
 function Reisen() {}
 
-Reisen.start = function(appContext = {}) {
-  Reisen.initialize()
-    .then(Reisen.setup)
+Reisen.prototype.start = function(appContext = {}) {
+  this.restart = false
+  this.initialize()
+    .then(this.setup)
     .then(appContext => {
       let begin = 0
       const updateFrame = now => {
+        if (this.restart) {
+          new Reisen().start()
+          return
+        }
+
         // We set a positive value to avoid dividing by 0.
         const elapsedTimeMillisecond = (begin === 0) ? 1 : now - begin 
         begin = now
-        Reisen.update(appContext, elapsedTimeMillisecond/1000)
+        this.update(appContext, elapsedTimeMillisecond/1000)
         window.requestAnimationFrame(updateFrame)
       }
-
       window.requestAnimationFrame(updateFrame)
     })
 }
 
-Reisen.initialize = function(appContext = {}) {
+Reisen.prototype.initialize = function(appContext = {}) {
 
   appContext.getEntityManager = () => new EntityManager(appContext.getCanvas())
 
@@ -97,7 +102,7 @@ Reisen.initialize = function(appContext = {}) {
     })
 }
 
-Reisen.setup = function(appContext) {
+Reisen.prototype.setup = function(appContext) {
   KeyboardControl.setupKeyboardHandlers()
   appContext.getCanvas().fullScreen()
   // Force the player to be at index 0.
@@ -110,10 +115,23 @@ Reisen.setup = function(appContext) {
   return appContext
 }
 
-Reisen.update = function(appContext, elapsedTimeSecond, canvas) {
+Reisen.prototype.update = function(appContext, elapsedTimeSecond, canvas) {
   appContext.getDebug().update(elapsedTimeSecond)
   appContext.getTinyPlanePopper().update(elapsedTimeSecond)
   appContext.getEntityManager().update(elapsedTimeSecond)
   appContext.getSea().draw()
   drawSky(appContext.getCanvas(), appContext.getCamera())
+  this.checkGameOver(appContext)
+}
+
+Reisen.prototype.checkGameOver = function(appContext) {
+  const playerId = appContext.getPlayerEntityId()
+  if (!appContext.getEntityManager().isActive(playerId)) {
+    this.scheduleRestart()
+  }
+}
+
+Reisen.prototype.scheduleRestart = function() {
+  const restartDelayMillisecond = 2000
+  setTimeout(() => this.restart = true, restartDelayMillisecond)
 }

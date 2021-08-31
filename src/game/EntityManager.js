@@ -98,3 +98,7 @@ EntityManager.prototype.debugOnCollision = function(entityId1, entityId2) {
 EntityManager.prototype.getDeathSubscription = function() {
   return this.deathSubscription;
 }
+
+EntityManager.prototype.isActive = function(entityId) {
+  return this.actives[entityId]
+}
