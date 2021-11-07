@@ -20,8 +20,9 @@ Reisen.prototype.start = function(appContext = {}) {
 
         // We set a positive value to avoid dividing by 0.
         const elapsedTimeMillisecond = (begin === 0) ? 1 : now - begin 
+        const cappedElapsedTimeMillisecond = Math.min(elapsedTimeMillisecond, 1000/30)
         begin = now
-        this.update(appContext, elapsedTimeMillisecond/1000)
+        this.update(appContext, cappedElapsedTimeMillisecond/1000)
         window.requestAnimationFrame(updateFrame)
       }
       window.requestAnimationFrame(updateFrame)
