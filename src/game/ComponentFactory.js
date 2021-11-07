@@ -104,3 +104,13 @@ ComponentFactory.prototype.createExplosionComponent = function(images, scale) {
   )
   return component
 }
+
+ComponentFactory.prototype.createPlayerComponent = function(entityManager, particleSystem) {
+  const component = new PlayerComponent(entityManager, particleSystem)
+  this.entityManager.getGameSystem().addComponent(
+    this.entityId, 
+    GAME_COMPONENT_ID_PLAYER_COMPONENT,
+    component
+  )
+  return component
+}

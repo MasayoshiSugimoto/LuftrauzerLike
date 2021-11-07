@@ -24,6 +24,8 @@ function EntityManager(canvas) {
     physicsSystem,
     new GraphicSystem(maxEntities, physicsSystem, canvas, gameSystem)
   ]
+
+  this.maxEntities = maxEntities
 }
 
 EntityManager.SYSTEM_TYPES = {

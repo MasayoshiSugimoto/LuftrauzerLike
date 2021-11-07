@@ -49,7 +49,7 @@ PlayerPlaneEntity.DAMAGE = 1
 
 function PlayerPlaneEntity() {}
 
-PlayerPlaneEntity.create = function(entityId, entityManager, images) {
+PlayerPlaneEntity.create = function(entityId, entityManager, images, particleSystem) {
   const {
     gameSystem,
     physicsSystem,
@@ -64,6 +64,7 @@ PlayerPlaneEntity.create = function(entityId, entityManager, images) {
   componentFactory.createLifeComponent(PlayerPlaneEntity.MAX_HP)
   componentFactory.createBattalionComponent(BATTALION_ID_PLAYER)
   componentFactory.createExplosionComponent(images, PlayerPlaneEntity.EXPLOSION_SCALE)
+  componentFactory.createPlayerComponent(entityManager, particleSystem)
 
   const physicsComponent = physicsSystem.getComponent(entityId)
   physicsComponent.maxVelocity = PlayerPlaneEntity.MAX_VELOCITY

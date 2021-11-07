@@ -49,7 +49,8 @@ Reisen.prototype.initialize = function(appContext = {}) {
     return PlayerPlaneEntity.create(
       appContext.getPlayerEntityId(),
       appContext.getEntityManager(),
-      appContext.getImages()
+      appContext.getImages(),
+      appContext.getParticleSystem()
     )
   }
 
@@ -81,6 +82,10 @@ Reisen.prototype.initialize = function(appContext = {}) {
   appContext.getDebug = () => new Debug(
     appContext.getEntityManager(),
     appContext.getPlayerEntityId()
+  )
+
+  appContext.getParticleSystem = () => new ParticleSystem(
+    appContext.getEntityManager().maxEntities
   )
 
   // Replace all getters by a lazy getter.
@@ -116,9 +121,12 @@ Reisen.prototype.setup = function(appContext) {
 }
 
 Reisen.prototype.update = function(appContext, elapsedTimeSecond, canvas) {
+  const entityManager = appContext.getEntityManager()
+
   appContext.getDebug().update(elapsedTimeSecond)
   appContext.getTinyPlanePopper().update(elapsedTimeSecond)
-  appContext.getEntityManager().update(elapsedTimeSecond)
+  appContext.getParticleSystem().update(elapsedTimeSecond, entityManager)
+  entityManager.update(elapsedTimeSecond)
   appContext.getSea().draw()
   drawSky(appContext.getCanvas(), appContext.getCamera())
   this.checkGameOver(appContext)

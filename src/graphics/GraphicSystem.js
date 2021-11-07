@@ -73,10 +73,8 @@ GraphicSystem.prototype.update = function(elapsedTimeSecond) {
 				break
 		}
     canvas.restore()
-
-		drawHealthBar(this.gameSystem, entityId, component.position, canvas)
   })
-  //if (DEBUG_ENABLED) this.drawBase()
+  // if (DEBUG_ENABLED) this.drawBase()
 	canvas.restore()
 }
 

@@ -26,3 +26,8 @@ Angle.normalize2PI = function(angle) {
   const sign = angle >= 0 ? 1 : -1
   return angle - (circleRatio * Angle.PI2)
 }
+
+Angle.random = function() {
+  return Math.random() * Angle.PI2 - Angle.PI
+}
+

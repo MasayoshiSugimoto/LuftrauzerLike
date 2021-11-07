@@ -31,6 +31,10 @@ Vector2D.unitY = function() {
   return Vector2D.Y_ONE
 }
 
+Vector2D.randomUnit = function() {
+  return Vector2D.X_ONE.rotate(Angle.random())
+}
+
 
 Vector2D.distanceBetween = function(v1, v2) {
   return v1.substract(v2).distance();
