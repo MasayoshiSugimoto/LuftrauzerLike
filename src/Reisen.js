@@ -85,7 +85,8 @@ Reisen.prototype.initialize = function(appContext = {}) {
   )
 
   appContext.getParticleSystem = () => new ParticleSystem(
-    appContext.getEntityManager().maxEntities
+    appContext.getEntityManager().maxEntities,
+    appContext.getCanvas()
   )
 
   // Replace all getters by a lazy getter.

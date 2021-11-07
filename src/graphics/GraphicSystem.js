@@ -171,19 +171,17 @@ GraphicSystem.prototype.drawDisk = function(context, component) {
 }
 
 GraphicSystem.prototype.drawRectangle = function(context, component) {
-	context.strokeStyle = component.color
-	context.beginPath()
+	context.fillStyle = component.color
 	const x = component.position.x
 	const y = component.position.y
 	const width = component.size.x
 	const height = component.size.y
-	context.rect(
+	context.fillRect(
 		- width / 2,
 		- height / 2,
 		width,
 		height
 	)
-	context.stroke()
 }
 
 GraphicSystem.prototype.setColor = function(entityId, color) {
