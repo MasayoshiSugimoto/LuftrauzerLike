@@ -10,9 +10,6 @@ GraphicSystem.BASE_COLOR = '#FF0000'
 GraphicSystem.DEFAULT_SIZE = new Vector2D(10, 10)
 GraphicSystem.DEFAULT_COLOR = 'red'
 
-GraphicSystem.DRAW_TYPE_IMAGE = 0
-GraphicSystem.DRAW_TYPE_DISK = 1
-GraphicSystem.DRAW_TYPE_RECTANGLE = 2
 
 function GraphicSystem(maxEntity, physicsSystem, canvas, gameSystem) {
   this.canvas = canvas
@@ -59,19 +56,7 @@ GraphicSystem.prototype.update = function(elapsedTimeSecond) {
 
     canvas.save()
     canvas.translate(component.position.x, component.position.y)
-    canvas.rotate(component.direction)
-    canvas.globalAlpha = component.opacity
-		switch (component.drawType) {
-			case GraphicSystem.DRAW_TYPE_IMAGE:
-				this.drawImage(canvas, component)
-				break
-			case GraphicSystem.DRAW_TYPE_DISK:
-				this.drawDisk(canvas, component)
-				break
-			case GraphicSystem.DRAW_TYPE_RECTANGLE:
-				this.drawRectangle(canvas, component)
-				break
-		}
+    component.drawFunctions.forEach(f => f(canvas, component))
     canvas.restore()
   })
   // if (DEBUG_ENABLED) this.drawBase()
@@ -120,13 +105,13 @@ GraphicSystem.prototype.setTargetEntityId = function(targetEntityId) {
 GraphicSystem.prototype.setDisk = function(entityId) {
 	const component = this.components[entityId]
 	if (!component) return
-	component.drawType = GraphicSystem.DRAW_TYPE_DISK
+  component.drawFunctions = [GraphicSystem.drawDisk]
 }
 
 GraphicSystem.prototype.setRectangle = function(entityId, width, height) {
 	const component = this.components[entityId]
 	if (!component) return
-	component.drawType = GraphicSystem.DRAW_TYPE_RECTANGLE
+  component.drawFunctions = [GraphicSystem.drawRectangle]
 	component.size = new Vector2D(width, height)
 }
 
@@ -153,37 +138,6 @@ GraphicSystem.prototype.drawBase = function() {
 	context.restore()
 }
 
-GraphicSystem.prototype.drawImage = function(context, component) {
-	context.drawImage(
-		component.image,
-		-component.size.x / 2,
-		-component.size.y / 2,
-		component.size.x,
-		component.size.y
-	)
-}
-
-GraphicSystem.prototype.drawDisk = function(context, component) {
-	context.beginPath()
-	context.fillStyle = component.color
-	context.arc(0, 0, component.size.x, 0, Math.PI*2)
-	context.fill()
-}
-
-GraphicSystem.prototype.drawRectangle = function(context, component) {
-	context.fillStyle = component.color
-	const x = component.position.x
-	const y = component.position.y
-	const width = component.size.x
-	const height = component.size.y
-	context.fillRect(
-		- width / 2,
-		- height / 2,
-		width,
-		height
-	)
-}
-
 GraphicSystem.prototype.setColor = function(entityId, color) {
 	const component = this.components[entityId]
 	if (!component) return
@@ -206,10 +160,53 @@ GraphicSystem.initComponent = function(component) {
   component.opacity = 1.0
   component.image = undefined
   component.size = GraphicSystem.DEFAULT_SIZE
-	component.drawType = GraphicSystem.DRAW_TYPE_IMAGE
 	component.color = GraphicSystem.DEFAULT_COLOR
+  component.drawFunctions = [GraphicSystem.drawImage]
 }
 
 GraphicSystem.toScreenPosition = function(gameSpacePosition) {
   return gameSpacePosition.scalarMultiply(PIXEL_PER_METER) 
+}
+
+GraphicSystem.drawImage = function(context, component) {
+  context.save()
+  context.rotate(component.direction)
+  context.globalAlpha = component.opacity
+	context.drawImage(
+		component.image,
+		-component.size.x / 2,
+		-component.size.y / 2,
+		component.size.x,
+		component.size.y
+	)
+  context.restore()
+}
+
+
+GraphicSystem.drawDisk = function(context, component) {
+  context.save()
+  context.rotate(component.direction)
+  context.globalAlpha = component.opacity
+	context.beginPath()
+	context.fillStyle = component.color
+	context.arc(0, 0, component.size.x, 0, Math.PI*2)
+	context.fill()
+  context.restore()
+}
+
+GraphicSystem.drawRectangle = function(context, component) {
+  context.save()
+	context.fillStyle = component.color
+  context.rotate(component.direction)
+	const x = component.position.x
+	const y = component.position.y
+	const width = component.size.x
+	const height = component.size.y
+	context.fillRect(
+		- width / 2,
+		- height / 2,
+		width,
+		height
+	)
+  context.restore()
 }

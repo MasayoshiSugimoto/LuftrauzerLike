@@ -75,4 +75,5 @@ PlayerPlaneEntity.create = function(entityId, entityManager, images, particleSys
 
   // Initialize with an image.
   graphicSystem.setupImage(entityId, image)
+  enableHealthBar(entityId, entityManager)
 }
