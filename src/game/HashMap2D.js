@@ -1,10 +1,8 @@
-"use strict"
-
 /********************************************************************************
 * HashMap2D. Data structure to quickly query entities from coordinates.
 ********************************************************************************/
 
-function HashMap2D(x, y, width, height, cellInterval) {
+export function HashMap2D(x, y, width, height, cellInterval) {
 	this.x = x
 	this.y = y
 	this.width = width

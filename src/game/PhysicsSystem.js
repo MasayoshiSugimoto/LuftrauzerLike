@@ -3,6 +3,7 @@
 ********************************************************************************/
 
 import {Angle} from '../geometry/Angle.js'
+import {HashMap2D} from '../game/HashMap2D.js'
 
 
 PhysicsSystem.GRAVITY = -3 // Meter/Second
