@@ -1,4 +1,6 @@
-"use strict";
+"use strict"
+
+import {setupDebug, updateDebug} from './game/Debug.js';
 
 /*******************************************************************************
  * Reisen
@@ -80,11 +82,6 @@ Reisen.prototype.initialize = function(appContext = {}) {
     )
   }
 
-  appContext.getDebug = () => new Debug(
-    appContext.getEntityManager(),
-    appContext.getPlayerEntityId()
-  )
-
   appContext.getParticleSystem = () => new ParticleSystem(
     appContext.getEntityManager().maxEntities,
     appContext.getCanvas()
@@ -119,13 +116,15 @@ Reisen.prototype.setup = function(appContext) {
   // Center the screen on the player ship.
   appContext.getEntityManager().getGraphicSystem().setTargetEntityId(appContext.getPlayerEntityId())
 
+  setupDebug()
+
   return appContext
 }
 
 Reisen.prototype.update = function(appContext, elapsedTimeSecond, canvas) {
   const entityManager = appContext.getEntityManager()
 
-  appContext.getDebug().update(elapsedTimeSecond)
+  updateDebug(entityManager, elapsedTimeSecond)
   appContext.getTinyPlanePopper().update(elapsedTimeSecond)
   appContext.getParticleSystem().update(elapsedTimeSecond, entityManager)
   entityManager.update(elapsedTimeSecond)
@@ -145,3 +144,6 @@ Reisen.prototype.scheduleRestart = function() {
   const restartDelayMillisecond = 2000
   setTimeout(() => this.restart = true, restartDelayMillisecond)
 }
+
+window.onload = function() { new Reisen().start() }
+
