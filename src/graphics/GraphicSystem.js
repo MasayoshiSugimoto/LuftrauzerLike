@@ -8,7 +8,6 @@ GraphicSystem.BASE_COLOR = '#FF0000'
 GraphicSystem.DEFAULT_SIZE = new Vector2D(10, 10)
 GraphicSystem.DEFAULT_COLOR = 'red'
 
-
 export function GraphicSystem(maxEntity, physicsSystem, canvas, gameSystem) {
   this.canvas = canvas
   this.actives = []
