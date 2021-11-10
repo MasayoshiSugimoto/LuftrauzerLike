@@ -1,11 +1,12 @@
-"use strict"
-
 /*******************************************************************************
  * ControlComponent
  *
  * This class manages user inputs. It also takes control of the player if he
  * goes in the sea on in the sky.
  ******************************************************************************/
+
+import {Angle} from '../geometry/Angle.js'
+
 
 const KEYBOARD_KEY_ENTER  = 'Enter'
 const KEYBOARD_KEY_E      = 'KeyE'
@@ -19,7 +20,7 @@ const KEYBOARD_KEY_RIGHT  = 'ArrowRight'
 const CONTROL_COMPONENT_ROTATION_UNIT = Math.PI * 2; // Rotation allowed per second.
 const CONTROL_COMPONENT_BOOST_UNIT = 10 // Velocity in meter/s^2.
 
-function ControlComponent(entityId, entityManager) {
+export function ControlComponent(entityId, entityManager) {
   this.entityManager = entityManager
   const physicsSystem = entityManager.getPhysicsSystem()
 	this.seaController = new SeaController(physicsSystem, entityId)
@@ -57,7 +58,8 @@ ControlComponent.prototype.update = function(entityId, elapsedTimeSecond) {
   physicEntity.setAcceleration(new Vector2D(boost, 0).rotate(direction))
 }
 
-function KeyboardControl() {}
+
+export function KeyboardControl() {}
 
 KeyboardControl.inputData = {
 	left: false,

@@ -1,5 +1,3 @@
-"use strict";
-
 /*******************************************************************************
  * Angle keeps an angle between -Pi and Pi.
  ******************************************************************************/
@@ -7,7 +5,7 @@
 Angle.PI = 3.14159265359
 Angle.PI2 = 2 * Angle.PI
 
-function Angle() {}
+export function Angle() {}
 
 Angle.normalize = function(angle) {
   let circleRatio = Math.floor(angle / Angle.PI2)

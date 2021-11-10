@@ -8,6 +8,8 @@
 import {BattalionComponent} from '../components/BattalionComponent.js'
 import {MachineGunComponent} from '../components/MachineGunComponent.js'
 import {ExplosionComponent} from '../components/ExplosionComponent.js'
+import {ControlComponent} from '../components/ControlComponent.js'
+import {FollowControlComponent} from '../components/FollowControlComponent.js'
 
 
 export function ComponentFactory(entityId, entityManager) {

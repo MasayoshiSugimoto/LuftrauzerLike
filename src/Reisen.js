@@ -10,6 +10,7 @@ import {Sea} from './graphics/Sea.js'
 import {drawSky} from './graphics/Sky.js'
 import {TinyPlanePopper} from './entities/TinyPlaneEntity.js'
 import {ParticleSystem} from './game/ParticleSystem.js'
+import {KeyboardControl} from './components/ControlComponent.js'
 
 
 function Reisen() {}

@@ -1,10 +1,10 @@
-"use strict"
-
 /********************************************************************************
 * FollowControlComponent
 *
 * Weak enemy. It's a small copy of the player for the time being. 
 ********************************************************************************/
+
+import {Angle} from '../geometry/Angle.js'
 
 const FOLLOW_CONTROL_COMPONENT_MAX_ROTATION_RADIAN_PER_SECOND = Math.PI / 2
 const FOLLOW_CONTROL_COMPONENT_INPUT_DATA = {
@@ -15,7 +15,7 @@ const FOLLOW_CONTROL_COMPONENT_INPUT_DATA = {
 }
 const EPSILON = 0.00001 //Small float used to compensate error intruced by floats.
 
-function FollowControlComponent(entityId, entityManager, targetEntityId, image) {
+export function FollowControlComponent(entityId, entityManager, targetEntityId, image) {
   this.physicsSystem = entityManager.getPhysicsSystem()
   this.targetEntityId = targetEntityId
   this.entityId = entityId

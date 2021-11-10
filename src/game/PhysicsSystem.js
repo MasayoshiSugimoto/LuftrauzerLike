@@ -1,8 +1,9 @@
-"use strict"
-
 /********************************************************************************
 * PhysicsSystem apply gravity and update velocity of game entities.
 ********************************************************************************/
+
+import {Angle} from '../geometry/Angle.js'
+
 
 PhysicsSystem.GRAVITY = -3 // Meter/Second
 PhysicsSystem.GRAVITY_VECTOR = new Vector2D(0, PhysicsSystem.GRAVITY)
@@ -16,7 +17,7 @@ const MAP_CELL_INTERVAL = 0.1
  * onCollision: (entityId1, entityId2) => void
  * `onCollision` is called when 2 entities collide.
  */
-function PhysicsSystem(maxEntities, onCollision) {
+export function PhysicsSystem(maxEntities, onCollision) {
   this.playerEntityId = -1
 
 	this.actives = []
