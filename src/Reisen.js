@@ -99,7 +99,7 @@ Reisen.prototype.initialize = function(appContext = {}) {
   Object.keys(appContext).forEach(f => appContext[f] = lazy(appContext[f]))
 
   // Wait for image loading.
-  return new Promise(done => ImageLoader.load(() => new Image(), IMAGE_DATA, done))
+  return new Promise(done => loadImage(IMAGE_DATA, done))
     .then(images => {
       appContext.getImages = () => images
       return appContext
@@ -145,5 +145,27 @@ Reisen.prototype.scheduleRestart = function() {
   setTimeout(() => this.restart = true, restartDelayMillisecond)
 }
 
+
+function loadImage(imageUrls, onFinishCallback) {
+  let counter = 0;
+  const images = new Map();
+
+  for (let index = 0; index < imageUrls.length; index++) {
+    //Load all the registered images.
+    const image = new Image()
+    images.set(imageUrls[index], image);
+    image.onload = () => {
+      counter++;
+      if (counter >= imageUrls.length) {
+        //When load is finished, can the callback function.
+        onFinishCallback(images);
+      }
+    };
+    image.src = imageUrls[index];
+  }
+}
+
+
+// Start the program.
 window.onload = function() { new Reisen().start() }
 
