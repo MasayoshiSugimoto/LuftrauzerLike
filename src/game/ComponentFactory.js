@@ -11,6 +11,7 @@ import {ExplosionComponent} from '../components/ExplosionComponent.js'
 import {ControlComponent} from '../components/ControlComponent.js'
 import {FollowControlComponent} from '../components/FollowControlComponent.js'
 import {PlayerComponent} from '../components/PlayerComponent.js'
+import {DeactivationTimerComponent} from '../components/DeactivationTimerComponent.js'
 import {
   GAME_COMPONENT_ID_CONTROL,
   GAME_COMPONENT_ID_DEACTIVATION_TIMER,
