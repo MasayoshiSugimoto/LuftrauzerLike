@@ -1,10 +1,8 @@
-"use strict"
-
 /*******************************************************************************
  * Fadeout component.
  ******************************************************************************/
 
-function FadeoutComponent(entityId, image, fadeoutTime, graphicSystem) {
+export function FadeoutComponent(entityId, image, fadeoutTime, graphicSystem) {
 	this.timer = fadeoutTime
 	this.maxTimer = fadeoutTime
 	this.graphicSystem = graphicSystem
