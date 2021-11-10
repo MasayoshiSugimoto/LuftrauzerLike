@@ -1,10 +1,11 @@
-"use strict"
-
 /*******************************************************************************
  * ExplosionComponent
  ******************************************************************************/
 
-function ExplosionComponent(entityManager, images, scale) {
+import {ExplosionEntity} from '../entities/ExplosionEntity.js'
+
+
+export function ExplosionComponent(entityManager, images, scale) {
   this.entityManager = entityManager
   this.images = images
   this.scale = scale

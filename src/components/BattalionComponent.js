@@ -1,16 +1,14 @@
-"use strict"
-
 /*******************************************************************************
  * Battallion component manages damages between opposing battalions.
  ******************************************************************************/
 
-const BATTALION_ID_PLAYER = 0
-const BATTALION_ID_ENNEMY = 1
+export const BATTALION_ID_PLAYER = 0
+export const BATTALION_ID_ENNEMY = 1
 
 const BATTALION_DEFAULT_DAMAGE = 10
 const BATTALION_COLLISION_COOLDOWN_SECOND = 1
 
-function BattalionComponent(battalionId, damage) {
+export function BattalionComponent(battalionId, damage) {
   this.battalionId = battalionId
   this.damage = damage ? damage : BATTALION_DEFAULT_DAMAGE
 }
@@ -18,7 +16,7 @@ function BattalionComponent(battalionId, damage) {
 BattalionComponent.prototype.update = function(entityId, elapsedTimeSecond) {
 }
 
-function BattalionSystem(gameSystem) {
+export function BattalionSystem(gameSystem) {
   this.gameSystem = gameSystem
   this.collisionMap = new Map()
 }

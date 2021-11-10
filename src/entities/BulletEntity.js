@@ -1,10 +1,11 @@
-"use strict"
-
 /*******************************************************************************
  * BulletEntity
  ******************************************************************************/
 
-function BulletEntity() {}
+import {ComponentFactory} from '../game/ComponentFactory.js'
+
+
+export function BulletEntity() {}
 
 BulletEntity.IMAGE_FILE = 'images/Explosion.png'
 BulletEntity.SIZE = new Vector2D(0.2, 0.2)

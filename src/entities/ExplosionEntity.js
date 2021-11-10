@@ -1,14 +1,14 @@
-"use strict"
-
 /*******************************************************************************
  * ExplosionEntity
  ******************************************************************************/
+
+import {ComponentFactory} from '../game/ComponentFactory.js'
 
 
 const EXPLOSION_ENTITY_IMAGE_PATH = 'images/Explosion.png'
 const EXPLOSION_ENTITY_FADEOUT_TIME_SECOND = 1
 
-function ExplosionEntity() {}
+export function ExplosionEntity() {}
 
 ExplosionEntity.create = function(entityManager, explosionImage) {
   const entityId = entityManager.createEntity()

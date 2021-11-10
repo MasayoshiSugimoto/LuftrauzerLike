@@ -1,5 +1,3 @@
-"use strict"
-
 /*******************************************************************************
  * ComponentFactory
  *
@@ -7,7 +5,12 @@
  * components.
  ******************************************************************************/
 
-function ComponentFactory(entityId, entityManager) {
+import {BattalionComponent} from '../components/BattalionComponent.js'
+import {MachineGunComponent} from '../components/MachineGunComponent.js'
+import {ExplosionComponent} from '../components/ExplosionComponent.js'
+
+
+export function ComponentFactory(entityId, entityManager) {
   this.entityId = entityId
   this.entityManager = entityManager
 }

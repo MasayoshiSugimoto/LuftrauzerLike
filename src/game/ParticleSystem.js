@@ -1,8 +1,9 @@
-"use strict"
-
 /********************************************************************************
 * ParticleSystem
 ********************************************************************************/
+
+import {ComponentFactory} from '../game/ComponentFactory.js'
+
 
 const PARTICLE_SYSTEM_DEFAULT_COOL_DOWN_MAX_SECOND = 0.1
 const PARTICLE_SYSTEM_DEFAULT_PARTICLE_SIZE_PIXEL = 40
@@ -10,7 +11,7 @@ const PARTICLE_SYSTEM_DEFAULT_COLOR = "black"
 const PARTICLE_SYSTEM_DEFAULT_DELETE_TIME_SECOND = 1
 const PARTICLE_SYSTEM_SMOKE_VELOCITY = new Vector2D(0, 0.5)
 
-function ParticleSystem(maxEntities, canvas) {
+export function ParticleSystem(maxEntities, canvas) {
 
   this.actives = new Array(maxEntities)
   for (let i = 0; i < this.actives.length; i++) {

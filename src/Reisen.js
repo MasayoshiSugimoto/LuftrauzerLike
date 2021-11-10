@@ -8,6 +8,8 @@ import {Canvas} from './core/Canvas.js'
 import {PlayerPlaneEntity} from './entities/PlayerPlaneEntity.js'
 import {Sea} from './graphics/Sea.js'
 import {drawSky} from './graphics/Sky.js'
+import {TinyPlanePopper} from './entities/TinyPlaneEntity.js'
+import {ParticleSystem} from './game/ParticleSystem.js'
 
 
 function Reisen() {}

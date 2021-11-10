@@ -2,7 +2,10 @@
  * PlayerPlaneEntity
  ******************************************************************************/
 
+import {BATTALION_ID_PLAYER} from '../components/BattalionComponent.js'
 import {enableHealthBar} from '../graphics/HealthBar.js'
+import {ComponentFactory} from '../game/ComponentFactory.js'
+
 
 PlayerPlaneEntity.ROTATION_UNIT = Math.PI * 2; // Rotation allowed per second.
 PlayerPlaneEntity.BOOST_UNIT = 10 // Velocity in meter/s^2.

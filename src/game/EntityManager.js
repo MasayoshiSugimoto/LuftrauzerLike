@@ -1,11 +1,10 @@
-"use strict"
-
 /********************************************************************************
  * EntityManager manages the lifecycle of all entities in the game.
  *******************************************************************************/
 
-import {Subscription} from '../core/Subscription.js'
+import {BattalionSystem} from '../components/BattalionComponent.js'
 import {GraphicSystem} from '../graphics/graphicSystem.js'
+import {Subscription} from '../core/Subscription.js'
 
 export function EntityManager(canvas) {
   const maxEntities = 4000

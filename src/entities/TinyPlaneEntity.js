@@ -1,8 +1,10 @@
-"use strict"
-
 /*******************************************************************************
  * TinyPlaneEntity
  ******************************************************************************/
+
+import {ComponentFactory} from '../game/ComponentFactory.js'
+import {BATTALION_ID_ENNEMY} from '../components/BattalionComponent.js'
+
 
 const TINY_PLANE_POP_TIME_SECOND = 0.5
 const TINY_PLANE_IMAGE_PATH = 'images/Reisen.png'
@@ -38,7 +40,8 @@ TinyPlaneEntity.create = function(entityManager, playerEntityId, image, images) 
   return entityId
 }
 
-function TinyPlanePopper(entityManager, playerEntityId, images) {
+
+export function TinyPlanePopper(entityManager, playerEntityId, images) {
   this.entityManager = entityManager
   this.playerEntityId = playerEntityId
   this.timeAccumulator = 0

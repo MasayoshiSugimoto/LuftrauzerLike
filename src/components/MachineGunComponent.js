@@ -1,13 +1,15 @@
-"use strict"
-
 /*******************************************************************************
  * MachineGunComponent
  ******************************************************************************/
 
+import {BulletEntity} from '../entities/BulletEntity.js'
+import {ComponentFactory} from '../game/ComponentFactory.js'
+
+
 const MACHINE_GUN_COMPONENT_FIRE_INTERVAL = 0.3 // Time between bullets in seconds.
 const MACHINE_GUN_COMPONENT_SPEED = 5 // Meter per second.
 
-function MachineGunComponent(entityManager, images, damage, battalionId) {
+export function MachineGunComponent(entityManager, images, damage, battalionId) {
   this.entityManager = entityManager
   this.cooldown = 0
   this.createBullet = BulletEntity.createFactory(entityManager, images)
