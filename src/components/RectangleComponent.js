@@ -2,6 +2,9 @@
  * RectangleComponent for debugging.
  ******************************************************************************/
 
+import {Vector2D} from '../geometry/Vector2D.js'
+
+
 const RECTANGLE_ENTITY_COLOR = "black"
 const RECTANGLE_ENTITY_SIZE = new Vector2D(2, 1)
 

@@ -2,6 +2,9 @@
  * Manages information related to camera
  *******************************************************************************/
 
+import {Vector2D} from '../geometry/Vector2D.js'
+
+
 export function Camera(canvas, targetEntityId, entityManager) {
 	this.topLeftMeter = Vector2D.zero()
 	this.canvas = canvas

@@ -7,6 +7,7 @@ import {
   GAME_COMPONENT_ID_PARTICLE_COMPONENT,
   GAME_COMPONENT_ID_DEACTIVATION_TIMER
 } from '../game/GameSystem.js'
+import {Vector2D} from '../geometry/Vector2D.js'
 
 
 const PARTICLE_SYSTEM_DEFAULT_COOL_DOWN_MAX_SECOND = 0.1

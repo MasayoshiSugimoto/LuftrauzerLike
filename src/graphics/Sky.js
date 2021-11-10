@@ -4,6 +4,9 @@
  * This needs to be drawn last to always be on top.
  ******************************************************************************/
 
+import {Vector2D} from '../geometry/Vector2D.js'
+
+
 const SKY_COORDINATES_METER = new Vector2D(0, SKY_Y_COORDINATE_METER)
 const SKY_COLOR_GRADIENT_START = '#EEEEFF00'
 const SKY_COLOR_GRADIENT_END = '#EEEEFFEE'

@@ -5,6 +5,8 @@
 ********************************************************************************/
 
 import {Angle} from '../geometry/Angle.js'
+import {Vector2D} from '../geometry/Vector2D.js'
+
 
 const FOLLOW_CONTROL_COMPONENT_MAX_ROTATION_RADIAN_PER_SECOND = Math.PI / 2
 const FOLLOW_CONTROL_COMPONENT_INPUT_DATA = {

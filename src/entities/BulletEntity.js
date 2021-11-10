@@ -3,6 +3,7 @@
  ******************************************************************************/
 
 import {ComponentFactory} from '../game/ComponentFactory.js'
+import {Vector2D} from '../geometry/Vector2D.js'
 
 
 export function BulletEntity() {}

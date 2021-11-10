@@ -4,6 +4,7 @@
 
 import {ComponentFactory} from '../game/ComponentFactory.js'
 import {BATTALION_ID_ENNEMY} from '../components/BattalionComponent.js'
+import {Vector2D} from '../geometry/Vector2D.js'
 
 
 const TINY_PLANE_POP_TIME_SECOND = 0.5

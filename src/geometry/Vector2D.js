@@ -1,12 +1,16 @@
-"use strict";
+/*******************************************************************************
+ * Vector2D
+ ******************************************************************************/
 
 const VECTOR_2D_EPSILON = 0.00001;
+
 
 Vector2D.ZERO = new Vector2D(0, 0)
 Vector2D.X_ONE = new Vector2D(1, 0)
 Vector2D.Y_ONE = new Vector2D(0, 1)
 
-function Vector2D(x, y) {
+
+export function Vector2D(x, y) {
   this.x = x;
   this.y = y;
 }

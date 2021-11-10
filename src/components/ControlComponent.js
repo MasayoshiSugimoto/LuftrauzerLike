@@ -7,6 +7,7 @@
 
 import {Angle} from '../geometry/Angle.js'
 import {PhysicEntity} from '../game/PhysicEntity.js'
+import {Vector2D} from '../geometry/Vector2D.js'
 
 
 const KEYBOARD_KEY_ENTER  = 'Enter'

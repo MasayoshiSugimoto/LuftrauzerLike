@@ -2,6 +2,9 @@
  * CloudEntity
  ******************************************************************************/
 
+import {Vector2D} from '../geometry/Vector2D.js'
+
+
 export function CloudEntity() {}
 
 CloudEntity.IMAGE = 'images/Cloud.png'

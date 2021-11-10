@@ -3,6 +3,7 @@
  *******************************************************************************/
 
 import {GAME_COMPONENT_ID_LIFE} from '../game/GameSystem.js'
+import {Vector2D} from '../geometry/Vector2D.js'
 
 
 const HEALTH_BAR_WIDTH = 50

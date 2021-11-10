@@ -5,6 +5,9 @@
  * drawn after the rest of the game entities.
  ******************************************************************************/
 
+import {Vector2D} from '../geometry/Vector2D.js'
+
+
 export function Sea(canvas, camera) {
 	this.canvas = canvas
 	this.camera = camera

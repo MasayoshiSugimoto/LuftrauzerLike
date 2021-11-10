@@ -2,6 +2,8 @@
  * GraphicSystem manages all rendering.
  *******************************************************************************/
 
+import {Vector2D} from '../geometry/Vector2D.js'
+
 GraphicSystem.SKY_COLOR = '#66ccff'
 GraphicSystem.MAX_BASE = 100
 GraphicSystem.BASE_COLOR = '#FF0000'
