@@ -99,7 +99,7 @@ Reisen.prototype.initialize = function(appContext = {}) {
   Object.keys(appContext).forEach(f => appContext[f] = lazy(appContext[f]))
 
   // Wait for image loading.
-  return new Promise(done => ImageLoader.load(ImageFactory, IMAGE_DATA, done))
+  return new Promise(done => ImageLoader.load(() => new Image(), IMAGE_DATA, done))
     .then(images => {
       appContext.getImages = () => images
       return appContext
