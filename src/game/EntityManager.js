@@ -5,6 +5,7 @@
  *******************************************************************************/
 
 import {Subscription} from '../core/Subscription.js'
+import {GraphicSystem} from '../graphics/graphicSystem.js'
 
 export function EntityManager(canvas) {
   const maxEntities = 4000

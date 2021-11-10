@@ -1,5 +1,3 @@
-"use strict"
-
 /********************************************************************************
  * GraphicSystem manages all rendering.
  *******************************************************************************/
@@ -11,7 +9,7 @@ GraphicSystem.DEFAULT_SIZE = new Vector2D(10, 10)
 GraphicSystem.DEFAULT_COLOR = 'red'
 
 
-function GraphicSystem(maxEntity, physicsSystem, canvas, gameSystem) {
+export function GraphicSystem(maxEntity, physicsSystem, canvas, gameSystem) {
   this.canvas = canvas
   this.actives = []
   this.components = []
