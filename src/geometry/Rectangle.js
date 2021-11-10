@@ -3,7 +3,6 @@
 const Rectangle = {
 
   fromData(rectangle) {
-    Util.create().assert(rectangle.type == "Rectangle");
     let rectangleObject = this.create();
     rectangleObject.setPosition(Vector2D.fromData(rectangle.position));
     rectangleObject.setDirection(rectangle.direction);
