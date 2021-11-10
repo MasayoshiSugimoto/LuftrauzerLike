@@ -6,6 +6,7 @@
  ******************************************************************************/
 
 import {Angle} from '../geometry/Angle.js'
+import {PhysicEntity} from '../game/PhysicEntity.js'
 
 
 const KEYBOARD_KEY_ENTER  = 'Enter'

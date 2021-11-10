@@ -1,10 +1,8 @@
-"use strict";
-
 /*******************************************************************************
  * PhysicEntity
  ******************************************************************************/
 
-function PhysicEntity(entityId, physicsSystem) {
+export function PhysicEntity(entityId, physicsSystem) {
   this.entityId = entityId
   this.physicsSystem = physicsSystem
 }
