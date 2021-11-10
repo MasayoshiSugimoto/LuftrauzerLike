@@ -12,6 +12,7 @@ import {TinyPlanePopper} from './entities/TinyPlaneEntity.js'
 import {ParticleSystem} from './game/ParticleSystem.js'
 import {KeyboardControl} from './components/ControlComponent.js'
 import {Camera} from './game/Camera.js'
+import {CloudEntity} from './entities/CloudEntity.js'
 
 
 function Reisen() {}

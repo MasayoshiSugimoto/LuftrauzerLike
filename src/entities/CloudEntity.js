@@ -1,10 +1,8 @@
-"use strict"
-
 /*******************************************************************************
  * CloudEntity
  ******************************************************************************/
 
-function CloudEntity() {}
+export function CloudEntity() {}
 
 CloudEntity.IMAGE = 'images/Cloud.png'
 CloudEntity.OPACITY = 0.5
