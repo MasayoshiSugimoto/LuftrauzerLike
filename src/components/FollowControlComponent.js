@@ -13,6 +13,7 @@ const FOLLOW_CONTROL_COMPONENT_INPUT_DATA = {
   boost: false,
   fire: true
 }
+const EPSILON = 0.00001 //Small float used to compensate error intruced by floats.
 
 function FollowControlComponent(entityId, entityManager, targetEntityId, image) {
   this.physicsSystem = entityManager.getPhysicsSystem()
