@@ -1,12 +1,10 @@
-"use strict"
-
 /********************************************************************************
 * LifeComponent manages HP and death.
 ********************************************************************************/
 
 const LIFE_COMPONENT_COOLDOWN_SECOND = 0.5
 
-function LifeComponent(maxHP, entityManager) {
+export function LifeComponent(maxHP, entityManager) {
 	this.maxHP = maxHP
 	this.hp = maxHP
 	this.entityManager = entityManager
