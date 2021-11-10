@@ -1,8 +1,8 @@
-"use strict"
-
 /*******************************************************************************
  * PlayerPlaneEntity
  ******************************************************************************/
+
+import {enableHealthBar} from '../graphics/HealthBar.js'
 
 PlayerPlaneEntity.ROTATION_UNIT = Math.PI * 2; // Rotation allowed per second.
 PlayerPlaneEntity.BOOST_UNIT = 10 // Velocity in meter/s^2.
@@ -47,7 +47,7 @@ PlayerPlaneEntity.SCALE = 1
 PlayerPlaneEntity.EXPLOSION_SCALE = 1
 PlayerPlaneEntity.DAMAGE = 1
 
-function PlayerPlaneEntity() {}
+export function PlayerPlaneEntity() {}
 
 PlayerPlaneEntity.create = function(entityId, entityManager, images, particleSystem) {
   const {

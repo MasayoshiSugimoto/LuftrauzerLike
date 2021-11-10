@@ -10,7 +10,7 @@ const HEALTH_BAR_FOREGROUND_COLOR = 'green'
 const HEALTH_BAR_BORDER_PX = 1
 
 
-function enableHealthBar(entityId, entityManager) {
+export function enableHealthBar(entityId, entityManager) {
   const { graphicSystem } = entityManager.getSystems()
   const graphicComponent = graphicSystem.components[entityId]
   if (!graphicComponent) return
