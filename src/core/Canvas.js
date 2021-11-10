@@ -1,10 +1,8 @@
-"use strict";
-
 /********************************************************************************
  * Manages the canvas where the game is rendered.
  *******************************************************************************/
 
-function Canvas() {
+export function Canvas() {
 	this.canvas = document.getElementById(Canvas.CANVAS_ID)
 	this.context = this.canvas.getContext("2d")
 }

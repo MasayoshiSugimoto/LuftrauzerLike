@@ -1,10 +1,11 @@
-
-import {setupDebug, updateDebug} from './game/Debug.js'
-import {EntityManager} from './game/EntityManager.js'
-
 /*******************************************************************************
  * Reisen
  ******************************************************************************/
+
+import {setupDebug, updateDebug} from './game/Debug.js'
+import {EntityManager} from './game/EntityManager.js'
+import {Canvas} from './core/Canvas.js'
+
 
 function Reisen() {}
 
