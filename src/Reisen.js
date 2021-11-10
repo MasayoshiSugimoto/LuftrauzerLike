@@ -11,6 +11,7 @@ import {drawSky} from './graphics/Sky.js'
 import {TinyPlanePopper} from './entities/TinyPlaneEntity.js'
 import {ParticleSystem} from './game/ParticleSystem.js'
 import {KeyboardControl} from './components/ControlComponent.js'
+import {Camera} from './game/Camera.js'
 
 
 function Reisen() {}

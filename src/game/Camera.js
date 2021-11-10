@@ -1,10 +1,8 @@
-"use strict"
-
 /********************************************************************************
  * Manages information related to camera
  *******************************************************************************/
 
-function Camera(canvas, targetEntityId, entityManager) {
+export function Camera(canvas, targetEntityId, entityManager) {
 	this.topLeftMeter = Vector2D.zero()
 	this.canvas = canvas
 	this.physicsSystem = entityManager.getPhysicsSystem()
