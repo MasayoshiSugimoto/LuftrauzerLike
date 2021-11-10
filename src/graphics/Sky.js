@@ -1,5 +1,3 @@
-"use strict"
-
 /*******************************************************************************
  * This class draws the sky.
  *
@@ -11,7 +9,7 @@ const SKY_COLOR_GRADIENT_START = '#EEEEFF00'
 const SKY_COLOR_GRADIENT_END = '#EEEEFFEE'
 const SKY_GRADIENT_LENGTH_PIXEL = 300
 
-function drawSky(canvas, camera) {
+export function drawSky(canvas, camera) {
 	const skyLevel = camera.toScreenCoordinates(SKY_COORDINATES_METER).y
 	const startGradient = skyLevel + SKY_GRADIENT_LENGTH_PIXEL
 	const context = canvas.getContext()

@@ -7,6 +7,7 @@ import {EntityManager} from './game/EntityManager.js'
 import {Canvas} from './core/Canvas.js'
 import {PlayerPlaneEntity} from './entities/PlayerPlaneEntity.js'
 import {Sea} from './graphics/Sea.js'
+import {drawSky} from './graphics/Sky.js'
 
 
 function Reisen() {}
