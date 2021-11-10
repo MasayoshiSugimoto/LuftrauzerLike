@@ -1,5 +1,3 @@
-"use strict"
-
 /*******************************************************************************
  * This class draws the sea.
  *
@@ -7,7 +5,7 @@
  * drawn after the rest of the game entities.
  ******************************************************************************/
 
-function Sea(canvas, camera) {
+export function Sea(canvas, camera) {
 	this.canvas = canvas
 	this.camera = camera
 }
