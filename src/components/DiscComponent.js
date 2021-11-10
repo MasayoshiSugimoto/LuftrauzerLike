@@ -1,5 +1,3 @@
-"use strict"
-
 /********************************************************************************
  * DiscComponent
  *******************************************************************************/
@@ -8,7 +6,7 @@ const DISC_COMPONENT_VELOCITY = new Vector2D(1, 0)
 const DISC_COMPONENT_RADIUS_MIN = 0.05
 const DISC_COMPONENT_RADIUS_MAX = 0.2
 
-function DiscComponent(entityId, entityManager) {
+export function DiscComponent(entityId, entityManager) {
   this.physicsSystem = entityManager.getPhysicsSystem()
   this.entityId = entityId
 

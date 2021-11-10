@@ -1,5 +1,3 @@
-"use strict"
-
 /*******************************************************************************
  * RectangleComponent for debugging.
  ******************************************************************************/
@@ -7,7 +5,7 @@
 const RECTANGLE_ENTITY_COLOR = "black"
 const RECTANGLE_ENTITY_SIZE = new Vector2D(2, 1)
 
-function RectangleComponent(entityId, entityManager, playerEntityId, width, height) {
+export function RectangleComponent(entityId, entityManager, playerEntityId, width, height) {
   this.entityId = entityId
   this.entityManager = entityManager
   this.playerEntityId = playerEntityId
