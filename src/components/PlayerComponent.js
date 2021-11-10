@@ -1,14 +1,15 @@
-"use strict"
-
 /*******************************************************************************
  * PlayerComponent
  ******************************************************************************/
+
+import {GAME_COMPONENT_ID_LIFE} from '../game/GameSystem.js'
+
 
 const PLAYER_COMPONENT_MIN_PARTICLE_COOLDOWN_SECOND = 0.01
 const PLAYER_COMPONENT_MAX_PARTICLE_COOLDOWN_SECOND = 0.1
 
 
-function PlayerComponent(entityManager, particleSystem) {
+export function PlayerComponent(entityManager, particleSystem) {
   this.entityManager = entityManager
   this.particleSystem = particleSystem
 }

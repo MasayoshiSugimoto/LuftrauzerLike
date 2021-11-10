@@ -2,6 +2,12 @@
  * Battallion component manages damages between opposing battalions.
  ******************************************************************************/
 
+import {
+  GAME_COMPONENT_ID_BATTALION,
+  GAME_COMPONENT_ID_LIFE
+} from '../game/GameSystem.js'
+
+
 export const BATTALION_ID_PLAYER = 0
 export const BATTALION_ID_ENNEMY = 1
 

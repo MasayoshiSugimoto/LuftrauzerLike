@@ -1,24 +1,23 @@
-"use strict"
-
 /********************************************************************************
 * GameSystem manages game updates. Client code is free to add the component it
 * likes.
 ********************************************************************************/
 
-const GAME_COMPONENT_ID_CONTROL = 0
-const GAME_COMPONENT_ID_DEACTIVATION_TIMER = 1
-const GAME_COMPONENT_ID_LIFE = 2
-const GAME_COMPONENT_ID_FADEOUT = 3
-const GAME_COMPONENT_ID_DISK_ENTITY = 4
-const GAME_COMPONENT_ID_RECTANGLE = 5
-const GAME_COMPONENT_ID_BATTALION = 6
-const GAME_COMPONENT_ID_MACHINE_GUN = 7
-const GAME_COMPONENT_ID_DEATH_COMPONENT = 8
-const GAME_COMPONENT_ID_PLAYER_COMPONENT = 9
-const GAME_COMPONENT_ID_PARTICLE_COMPONENT = 10
+export const GAME_COMPONENT_ID_CONTROL = 0
+export const GAME_COMPONENT_ID_DEACTIVATION_TIMER = 1
+export const GAME_COMPONENT_ID_LIFE = 2
+export const GAME_COMPONENT_ID_FADEOUT = 3
+export const GAME_COMPONENT_ID_DISK_ENTITY = 4
+export const GAME_COMPONENT_ID_RECTANGLE = 5
+export const GAME_COMPONENT_ID_BATTALION = 6
+export const GAME_COMPONENT_ID_MACHINE_GUN = 7
+export const GAME_COMPONENT_ID_DEATH_COMPONENT = 8
+export const GAME_COMPONENT_ID_PLAYER_COMPONENT = 9
+export const GAME_COMPONENT_ID_PARTICLE_COMPONENT = 10
 const GAME_COMPONENT_ID_MAX = 11
 
-function GameSystem(maxEntities) {
+
+export function GameSystem(maxEntities) {
 	this.components = []
 	for (let i = 0; i < maxEntities; i++) {
 		this.components[i] = undefined

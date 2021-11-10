@@ -3,6 +3,7 @@
  ******************************************************************************/
 
 import {ExplosionEntity} from '../entities/ExplosionEntity.js'
+import {GAME_COMPONENT_ID_LIFE} from '../game/GameSystem.js'
 
 
 export function ExplosionComponent(entityManager, images, scale) {

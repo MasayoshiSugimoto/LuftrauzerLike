@@ -4,6 +4,7 @@
 
 import {BulletEntity} from '../entities/BulletEntity.js'
 import {ComponentFactory} from '../game/ComponentFactory.js'
+import {GAME_COMPONENT_ID_CONTROL} from '../game/GameSystem.js'
 
 
 const MACHINE_GUN_COMPONENT_FIRE_INTERVAL = 0.3 // Time between bullets in seconds.

@@ -2,6 +2,9 @@
  * HealthBar draw an entity health bar.
  *******************************************************************************/
 
+import {GAME_COMPONENT_ID_LIFE} from '../game/GameSystem.js'
+
+
 const HEALTH_BAR_WIDTH = 50
 const HEALTH_BAR_HEIGHT = 5
 const HEALTH_BAR_DELTA_Y = -30

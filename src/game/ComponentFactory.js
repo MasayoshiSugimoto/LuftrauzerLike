@@ -10,6 +10,20 @@ import {MachineGunComponent} from '../components/MachineGunComponent.js'
 import {ExplosionComponent} from '../components/ExplosionComponent.js'
 import {ControlComponent} from '../components/ControlComponent.js'
 import {FollowControlComponent} from '../components/FollowControlComponent.js'
+import {PlayerComponent} from '../components/PlayerComponent.js'
+import {
+  GAME_COMPONENT_ID_CONTROL,
+  GAME_COMPONENT_ID_DEACTIVATION_TIMER,
+  GAME_COMPONENT_ID_LIFE,
+  GAME_COMPONENT_ID_FADEOUT,
+  GAME_COMPONENT_ID_DISK_ENTITY,
+  GAME_COMPONENT_ID_RECTANGLE,
+  GAME_COMPONENT_ID_BATTALION,
+  GAME_COMPONENT_ID_MACHINE_GUN,
+  GAME_COMPONENT_ID_DEATH_COMPONENT,
+  GAME_COMPONENT_ID_PLAYER_COMPONENT,
+  GAME_COMPONENT_ID_PARTICLE_COMPONENT,
+} from '../game/GameSystem.js'
 
 
 export function ComponentFactory(entityId, entityManager) {
