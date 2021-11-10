@@ -1,10 +1,8 @@
-"use strict"
-
 /*******************************************************************************
  * Subscription for event propagation.
  ******************************************************************************/
 
-function Subscription() {
+export function Subscription() {
   this.subscribers = new Set()
 }
 

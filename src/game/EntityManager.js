@@ -4,7 +4,9 @@
  * EntityManager manages the lifecycle of all entities in the game.
  *******************************************************************************/
 
-function EntityManager(canvas) {
+import {Subscription} from '../core/Subscription.js'
+
+export function EntityManager(canvas) {
   const maxEntities = 4000
 
   this.activeCount = 0

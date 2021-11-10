@@ -1,6 +1,6 @@
-"use strict"
 
-import {setupDebug, updateDebug} from './game/Debug.js';
+import {setupDebug, updateDebug} from './game/Debug.js'
+import {EntityManager} from './game/EntityManager.js'
 
 /*******************************************************************************
  * Reisen
