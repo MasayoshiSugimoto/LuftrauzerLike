@@ -15,3 +15,4 @@ const VECTOR_FIELD_ID_MAX = 2
 
 const PIXEL_PER_METER = 200
 
+const INVALID_ENTITY_ID = -1

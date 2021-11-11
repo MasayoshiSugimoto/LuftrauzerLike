@@ -50,10 +50,9 @@ Reisen.prototype.initialize = function(appContext = {}) {
   // This creates the player entity on first call.
   appContext.getPlayerEntityId = () => {
     const playerEntityId = appContext.getEntityManager().createEntity()
-    appContext
-      .getEntityManager()
-      .getPhysicsSystem()
-      .setPlayerEntityId(playerEntityId)
+    const entityManager = appContext.getEntityManager()
+    entityManager.playerEntityId = playerEntityId
+    entityManager.getPhysicsSystem().setPlayerEntityId(playerEntityId)
     return playerEntityId
   }
 
@@ -125,7 +124,6 @@ Reisen.prototype.setup = function(appContext) {
   // Center the screen on the player ship.
   appContext.getEntityManager().getGraphicSystem().setTargetEntityId(appContext.getPlayerEntityId())
 
-  setupDebug()
 
   return appContext
 }
@@ -177,4 +175,3 @@ function loadImage(imageUrls, onFinishCallback) {
 
 // Start the program.
 window.onload = function() { new Reisen().start() }
-

@@ -8,6 +8,7 @@ import {Subscription} from '../core/Subscription.js'
 import {PhysicsSystem} from '../game/PhysicsSystem.js'
 import {GameSystem} from '../game/GameSystem.js'
 
+
 export function EntityManager(canvas) {
   const maxEntities = 4000
 
@@ -30,6 +31,7 @@ export function EntityManager(canvas) {
   ]
 
   this.maxEntities = maxEntities
+  this.playerEntityId = INVALID_ENTITY_ID
 }
 
 EntityManager.SYSTEM_TYPES = {

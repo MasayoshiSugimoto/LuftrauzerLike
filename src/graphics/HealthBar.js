@@ -4,6 +4,7 @@
 
 import {GAME_COMPONENT_ID_LIFE} from '../game/GameSystem.js'
 import {Vector2D} from '../geometry/Vector2D.js'
+import {DEBUG_ENABLED} from '../game/Debug.js'
 
 
 const HEALTH_BAR_WIDTH = 50
@@ -20,6 +21,8 @@ export function enableHealthBar(entityId, entityManager) {
   if (!graphicComponent) return
 
   const draw = (context, graphicComponent) => {
+    if (!DEBUG_ENABLED) return
+
     const { gameSystem, graphicSystem } = entityManager.getSystems()
 
     const lifeComponent = gameSystem.getComponent(entityId, GAME_COMPONENT_ID_LIFE)
