@@ -5,6 +5,7 @@
 import {ComponentFactory} from '../game/ComponentFactory.js'
 import {BATTALION_ID_ENNEMY} from '../components/BattalionComponent.js'
 import {Vector2D} from '../geometry/Vector2D.js'
+import {enableCollisionCircle} from '../graphics/CollisionCircle.js'
 
 
 const TINY_PLANE_POP_TIME_SECOND = 0.5
@@ -37,6 +38,8 @@ TinyPlaneEntity.create = function(entityManager, playerEntityId, image, images) 
   const graphicSystem = entityManager.getGraphicSystem()
   graphicSystem.setupImage(entityId, image)
   graphicSystem.setScale(entityId, TINY_PLANE_SCALE)
+
+  enableCollisionCircle(entityId, entityManager)
 
   return entityId
 }

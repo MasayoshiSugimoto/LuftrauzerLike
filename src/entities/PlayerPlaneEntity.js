@@ -5,6 +5,7 @@
 import {BATTALION_ID_PLAYER} from '../components/BattalionComponent.js'
 import {enableHealthBar} from '../graphics/HealthBar.js'
 import {ComponentFactory} from '../game/ComponentFactory.js'
+import {enableCollisionCircle} from '../graphics/CollisionCircle.js'
 
 
 PlayerPlaneEntity.ROTATION_UNIT = Math.PI * 2; // Rotation allowed per second.
@@ -71,7 +72,7 @@ PlayerPlaneEntity.create = function(entityId, entityManager, images, particleSys
 
   const physicsComponent = physicsSystem.getComponent(entityId)
   physicsComponent.maxVelocity = PlayerPlaneEntity.MAX_VELOCITY
-  physicsComponent.gravity = true
+  physicsComponent.gravity = false
   physicsComponent.vectorFieldIndices = [0, 1]
   physicsComponent.collision = true
   physicsSystem.setSizeFromImage(entityId, image, PlayerPlaneEntity.SCALE)
@@ -79,4 +80,5 @@ PlayerPlaneEntity.create = function(entityId, entityManager, images, particleSys
   // Initialize with an image.
   graphicSystem.setupImage(entityId, image)
   enableHealthBar(entityId, entityManager)
+  enableCollisionCircle(entityId, entityManager)
 }

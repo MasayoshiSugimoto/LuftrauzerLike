@@ -174,7 +174,7 @@ PhysicsSystem.prototype.updateCollisions = function() {
     if (!component.collision) return
 
     const size = component.size
-    const radius = Math.max(size.x, size.y)
+    const radius = PhysicsSystem.getRadius(component)
     if (radius <= 0) return
 
     const position = component.position
@@ -188,8 +188,7 @@ PhysicsSystem.prototype.updateCollisions = function() {
       if (!component2) return
       if (!component2.collision) return
 
-      const size2 = component2.size
-      const radius2 = Math.max(size2.x, size2.y)
+      const radius2 = PhysicsSystem.getRadius(component2)
       if (radius2 <= 0) return
 
       const position2 = component2.position
@@ -246,6 +245,11 @@ PhysicsSystem.prototype.setSizeFromImage = function(entityId, image, scale) {
     .scalarMultiply(scale/PIXEL_PER_METER)
 }
 
+PhysicsSystem.getRadius = function(component) {
+  const size = component.size
+  return Math.max(size.x, size.y)
+}
+
 /********************************************************************************
 * Y Vector fields.
 ********************************************************************************/
@@ -265,4 +269,3 @@ YVectorField.prototype.getAcceleration = function(component) {
 	}
 	return Vector2D.ZERO
 }
-
