@@ -30,14 +30,17 @@ export function updateDebug(entityManager, elapsedTimeSecond) {
   nbEntitiesElement().innerText = entityManager.getActiveCount()
 }
 
+
 function setDebugMenuVisibility() {
   const debugMenu = document.getElementById(DEBUG_MENU_ROOT_ID)
   debugMenu.style.display = DEBUG_ENABLED ? 'block' : 'none'
 }
 
+
 /*******************************************************************************
  * Private functions
  ******************************************************************************/
+
 
 function fpsElement() {
   return document.getElementById(DEBUG_MENU_FPS_ID)

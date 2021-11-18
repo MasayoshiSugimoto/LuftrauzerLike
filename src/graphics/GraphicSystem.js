@@ -10,8 +10,9 @@ GraphicSystem.BASE_COLOR = '#FF0000'
 GraphicSystem.DEFAULT_SIZE = new Vector2D(10, 10)
 GraphicSystem.DEFAULT_COLOR = 'red'
 
-export function GraphicSystem(maxEntity, physicsSystem, canvas, gameSystem) {
-  this.canvas = canvas
+export function GraphicSystem(maxEntity, physicsSystem, camera, gameSystem) {
+  this.camera = camera
+  this.canvas = camera.canvas
   this.actives = []
   this.components = []
   for (let i = 0; i < maxEntity; i++) {
@@ -38,7 +39,7 @@ GraphicSystem.prototype.update = function(elapsedTimeSecond) {
 	this.canvas.setBackgroundColor(GraphicSystem.SKY_COLOR)
   const canvas = this.canvas.getContext()
 	canvas.save()
-	this.centerOn(this.canvas, this.targetEntityId)
+	this.centerOn(this.canvas, this.camera.entityId)
   this.components.forEach((component, entityId) => {
     if (!this.actives[entityId]) return
 

@@ -13,6 +13,7 @@ import {ParticleSystem} from './game/ParticleSystem.js'
 import {KeyboardControl} from './components/ControlComponent.js'
 import {Camera} from './game/Camera.js'
 import {CloudEntity} from './entities/CloudEntity.js'
+import {createMouseEntity} from './entities/MouseEntity.js'
 
 
 function Reisen() {}
@@ -42,7 +43,7 @@ Reisen.prototype.start = function(appContext = {}) {
 
 Reisen.prototype.initialize = function(appContext = {}) {
 
-  appContext.getEntityManager = () => new EntityManager(appContext.getCanvas())
+  appContext.getEntityManager = () => new EntityManager(appContext.getCamera())
 
   appContext.getProjectileFactory = () =>
     Projectile.createFactory(appContext.getEntityManager(), appContext.getImages())
@@ -68,11 +69,7 @@ Reisen.prototype.initialize = function(appContext = {}) {
   appContext.getCanvas = () => new Canvas()
 
   appContext.getCamera = () => {
-    return new Camera(
-      appContext.getCanvas(),
-      appContext.getPlayerEntityId(),
-      appContext.getEntityManager()
-    )
+    return new Camera(appContext.getCanvas())
   }
 
   appContext.getSea = () => {
@@ -115,6 +112,11 @@ Reisen.prototype.initialize = function(appContext = {}) {
 }
 
 Reisen.prototype.setup = function(appContext) {
+  const entityManager = appContext.getEntityManager()
+
+  const camera = appContext.getCamera()
+  camera.setup(entityManager, appContext.getPlayerEntityId())
+
   KeyboardControl.setupKeyboardHandlers()
   appContext.getCanvas().fullScreen()
   // Force the player to be at index 0.
@@ -124,6 +126,7 @@ Reisen.prototype.setup = function(appContext) {
   // Center the screen on the player ship.
   appContext.getEntityManager().getGraphicSystem().setTargetEntityId(appContext.getPlayerEntityId())
 
+  createMouseEntity(entityManager)
 
   return appContext
 }

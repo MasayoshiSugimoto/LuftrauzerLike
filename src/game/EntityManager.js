@@ -9,7 +9,7 @@ import {PhysicsSystem} from '../game/PhysicsSystem.js'
 import {GameSystem} from '../game/GameSystem.js'
 
 
-export function EntityManager(canvas) {
+export function EntityManager(camera) {
   const maxEntities = 4000
 
   this.activeCount = 0
@@ -27,7 +27,7 @@ export function EntityManager(canvas) {
   this.systems = [
     gameSystem,
     physicsSystem,
-    new GraphicSystem(maxEntities, physicsSystem, canvas, gameSystem)
+    new GraphicSystem(maxEntities, physicsSystem, camera, gameSystem)
   ]
 
   this.maxEntities = maxEntities
