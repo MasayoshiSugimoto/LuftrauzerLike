@@ -2,13 +2,16 @@
  * GraphicSystem manages all rendering.
  *******************************************************************************/
 
+
 import {Vector2D} from '../geometry/Vector2D.js'
+
 
 GraphicSystem.SKY_COLOR = '#66ccff'
 GraphicSystem.MAX_BASE = 100
 GraphicSystem.BASE_COLOR = '#FF0000'
 GraphicSystem.DEFAULT_SIZE = new Vector2D(10, 10)
 GraphicSystem.DEFAULT_COLOR = 'red'
+
 
 export function GraphicSystem(maxEntity, physicsSystem, camera, gameSystem) {
   this.camera = camera

@@ -5,6 +5,7 @@
  * components.
  ******************************************************************************/
 
+
 import {BattalionComponent} from '../components/BattalionComponent.js'
 import {MachineGunComponent} from '../components/MachineGunComponent.js'
 import {ExplosionComponent} from '../components/ExplosionComponent.js'
@@ -34,6 +35,7 @@ export function ComponentFactory(entityId, entityManager) {
   this.entityManager = entityManager
 }
 
+
 ComponentFactory.prototype.createControlComponent = function() {
   const controlComponent = new ControlComponent(this.entityId, this.entityManager)
   this.entityManager.getGameSystem().addComponent(
@@ -43,6 +45,7 @@ ComponentFactory.prototype.createControlComponent = function() {
   )
   return controlComponent
 }
+
 
 ComponentFactory.prototype.createFollowControlComponent = function(targetEntityId, image) {
   const tinyPlaneComponent = new FollowControlComponent(this.entityId, this.entityManager, targetEntityId, image)
@@ -54,6 +57,7 @@ ComponentFactory.prototype.createFollowControlComponent = function(targetEntityI
   return tinyPlaneComponent
 }
 
+
 ComponentFactory.prototype.createDeactivationTimerComponent = function(timeToDeactivateSecond) {
   const deactivationTimerComponent = new DeactivationTimerComponent(timeToDeactivateSecond, this.entityManager)
   this.entityManager.getGameSystem().addComponent(
@@ -64,6 +68,7 @@ ComponentFactory.prototype.createDeactivationTimerComponent = function(timeToDea
   return deactivationTimerComponent
 }
 
+
 ComponentFactory.prototype.createLifeComponent = function(lifeMax) {
   const lifeComponent = new LifeComponent(lifeMax, this.entityManager)
   this.entityManager.getGameSystem().addComponent(
@@ -73,6 +78,7 @@ ComponentFactory.prototype.createLifeComponent = function(lifeMax) {
   )
   return lifeComponent
 }
+
 
 ComponentFactory.prototype.createFadeoutComponent = function(explosionImage, fadeOutTimeSecond) {
   const fadeoutComponent = new FadeoutComponent(
@@ -85,17 +91,20 @@ ComponentFactory.prototype.createFadeoutComponent = function(explosionImage, fad
   return fadeoutComponent
 }
 
+
 ComponentFactory.prototype.createDiscComponent = function() {
   const discComponent = new DiscComponent(this.entityId, this.entityManager)
   this.entityManager.getGameSystem().addComponent(this.entityId, GAME_COMPONENT_ID_DISK_ENTITY, discComponent)
   return discComponent
 }
 
+
 ComponentFactory.prototype.createRectangleComponent = function(playerEntityId, width, height) {
   const rectangleComponent = new RectangleComponent(this.entityId, this.entityManager, playerEntityId, width, height)
   this.entityManager.getGameSystem().addComponent(this.entityId, GAME_COMPONENT_ID_RECTANGLE, rectangleComponent)
   return rectangleComponent
 }
+
 
 ComponentFactory.prototype.createBattalionComponent = function(battalionId, damage) {
   const battalionComponent = new BattalionComponent(battalionId, damage)
@@ -107,6 +116,7 @@ ComponentFactory.prototype.createBattalionComponent = function(battalionId, dama
   return battalionComponent
 }
 
+
 ComponentFactory.prototype.createMachineGunComponent = function(images, damage, battalionId) {
   const component = new MachineGunComponent(this.entityManager, images, damage, battalionId)
   this.entityManager.getGameSystem().addComponent(
@@ -117,6 +127,7 @@ ComponentFactory.prototype.createMachineGunComponent = function(images, damage, 
   return component
 }
 
+
 ComponentFactory.prototype.createExplosionComponent = function(images, scale) {
   const component = new ExplosionComponent(this.entityManager, images, scale)
   this.entityManager.getGameSystem().addComponent(
@@ -126,6 +137,7 @@ ComponentFactory.prototype.createExplosionComponent = function(images, scale) {
   )
   return component
 }
+
 
 ComponentFactory.prototype.createPlayerComponent = function(entityManager, particleSystem) {
   const component = new PlayerComponent(entityManager, particleSystem)
