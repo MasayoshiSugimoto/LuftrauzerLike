@@ -14,7 +14,7 @@ import {FollowControlComponent} from '../components/FollowControlComponent.js'
 import {PlayerComponent} from '../components/PlayerComponent.js'
 import {DeactivationTimerComponent} from '../components/DeactivationTimerComponent.js'
 import {LifeComponent} from '../components/LifeComponent.js'
-import {FadeoutComponent} from '../components/FadeoutComponent.js'
+import {FadeoutComponent} from '../components/FadeOutComponent.js'
 import {
   GAME_COMPONENT_ID_CONTROL,
   GAME_COMPONENT_ID_DEACTIVATION_TIMER,

@@ -3,7 +3,7 @@
  *******************************************************************************/
 
 import {BattalionSystem} from '../components/BattalionComponent.js'
-import {GraphicSystem} from '../graphics/graphicSystem.js'
+import {GraphicSystem} from '../graphics/GraphicSystem.js'
 import {Subscription} from '../core/Subscription.js'
 import {PhysicsSystem} from '../game/PhysicsSystem.js'
 import {GameSystem} from '../game/GameSystem.js'
