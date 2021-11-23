@@ -213,3 +213,7 @@ GraphicSystem.drawRectangle = function(context, component) {
 	)
   context.restore()
 }
+
+GraphicSystem.screenToGameSpace = function(screenPosition) {
+  return new Vector2D(screenPosition.x, -screenPosition.y).scalarMultiply(1/PIXEL_PER_METER)
+}

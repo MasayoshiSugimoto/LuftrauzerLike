@@ -6,7 +6,7 @@ import {BattalionSystem} from '../components/BattalionComponent.js'
 import {GraphicSystem} from '../graphics/GraphicSystem.js'
 import {Subscription} from '../core/Subscription.js'
 import {PhysicsSystem} from '../game/PhysicsSystem.js'
-import {GameSystem} from '../game/GameSystem.js'
+import {GameSystem, GAME_COMPONENT_ID_CAMERA} from '../game/GameSystem.js'
 
 
 export function EntityManager(camera) {
@@ -109,4 +109,15 @@ EntityManager.prototype.getDeathSubscription = function() {
 
 EntityManager.prototype.isActive = function(entityId) {
   return this.actives[entityId]
+}
+
+EntityManager.prototype.createCamera = function() {
+  const entityId = this.createEntity()
+  this.cameraEntityId = entityId
+  return entityId
+}
+
+EntityManager.prototype.getCamera = function() {
+  const gameSystem = this.getGameSystem()
+  return gameSystem.getComponent(this.cameraEntityId, GAME_COMPONENT_ID_CAMERA)
 }

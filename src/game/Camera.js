@@ -28,7 +28,7 @@ Camera.prototype.toScreenCoordinates = function(vMeter) {
 Camera.prototype.setup = function(entityManager, targetEntityId) {
   this.physicsSystem = entityManager.getPhysicsSystem()
   this.targetEntityId = targetEntityId
-  this.entityId = entityManager.createEntity()
+  this.entityId = entityManager.createCamera()
   
   const {
     gameSystem,
@@ -65,4 +65,18 @@ Camera.prototype.update = function(entityId, elapsedTimeSecond) {
     clamp(left, position.x, right),
     clamp(down, position.y, up)
   )
+}
+
+
+Camera.prototype.screenToGame = function(v) {
+  const physicsComponent = this.physicsSystem.getComponent(this.entityId)
+  if (!physicsComponent) return Vector2D.ZERO
+
+  const position = physicsComponent.position
+  const offset = new Vector2D(-this.canvas.getWidth()/2, this.canvas.getHeight()/2)
+  
+  return new Vector2D(v.x, -v.y)
+    .add(offset)
+    .scalarMultiply(1/PIXEL_PER_METER)
+    .add(position)
 }

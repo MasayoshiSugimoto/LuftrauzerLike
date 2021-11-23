@@ -135,7 +135,7 @@ Reisen.prototype.update = function(appContext, elapsedTimeSecond, canvas) {
   const entityManager = appContext.getEntityManager()
 
   updateDebug(entityManager, elapsedTimeSecond)
-  appContext.getTinyPlanePopper().update(elapsedTimeSecond)
+  //appContext.getTinyPlanePopper().update(elapsedTimeSecond)
   appContext.getParticleSystem().update(elapsedTimeSecond, entityManager)
   entityManager.update(elapsedTimeSecond)
   appContext.getSea().draw()
