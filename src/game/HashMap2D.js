@@ -17,8 +17,8 @@ export function HashMap2D(x, y, width, height, cellInterval) {
 
 HashMap2D.prototype.addEntity = function(entityId, position, radius) {
 	this.entityMap.set(entityId, { position, radius })
-	for (let i = this.toCellX(position.x); i <= this.toCellX(position.x + radius)+1; i++) {
-		for (let j = this.toCellY(position.y); j <= this.toCellY(position.y + radius)+1; j++) {
+	for (let i = this.toCellX(position.x - radius); i <= this.toCellX(position.x + radius); i++) {
+		for (let j = this.toCellY(position.y - radius); j <= this.toCellY(position.y + radius); j++) {
 			const key = `${i}.${j}`
 			let cell = this.cells.get(key)	
 			if (!cell) {
@@ -41,8 +41,8 @@ HashMap2D.prototype.removeEntity = function(entityId) {
 
 	const position = entityInfo.position
 	const radius = entityInfo.radius
-	for (let i = this.toCellX(position.x); i <= this.toCellX(position.x + radius)+1; i++) {
-		for (let j = this.toCellY(position.y); j <= this.toCellY(position.y + radius)+1; j++) {
+	for (let i = this.toCellX(position.x - radius); i <= this.toCellX(position.x + radius); i++) {
+		for (let j = this.toCellY(position.y - radius); j <= this.toCellY(position.y + radius); j++) {
 			const cell = this.cells.get(`${i}.${j}`)
 			if (!cell) continue
       this.remove(cell, entityId)
@@ -50,10 +50,10 @@ HashMap2D.prototype.removeEntity = function(entityId) {
 	}
 }
 
-HashMap2D.prototype.searchEntities = function(x, y, width, height) {
+HashMap2D.prototype.searchEntities = function(x, y, radius) {
 	const set = new Set()
-	for (let i = this.toCellX(x); i <= this.toCellX(x+width)+1; i++) {
-		for (let j = this.toCellY(y); j <= this.toCellY(y+height)+1; j++) {
+	for (let i = this.toCellX(x - radius); i <= this.toCellX(x + radius); i++) {
+		for (let j = this.toCellY(y - radius); j <= this.toCellY(y + radius); j++) {
 			const cell = this.cells.get(`${i}.${j}`)
 			if (!cell) continue
 			cell.forEach(entityId => set.add(entityId))

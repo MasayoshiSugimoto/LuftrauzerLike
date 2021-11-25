@@ -178,7 +178,7 @@ PhysicsSystem.prototype.updateCollisions = function() {
     if (radius <= 0) return
 
     const position = component.position
-    const entitiesNearby = this.map2D.searchEntities(position.x, position.y, size.x, size.y)
+    const entitiesNearby = this.map2D.searchEntities(position.x, position.y, radius)
 
     entitiesNearby.forEach(id => {
       if (id === entityId) return
