@@ -4,6 +4,7 @@
 
 import {ComponentFactory} from '../game/ComponentFactory.js'
 import {Vector2D} from '../geometry/Vector2D.js'
+import {enableCollisionCircle} from '../graphics/CollisionCircle.js'
 
 
 export function BulletEntity() {}
@@ -34,5 +35,7 @@ BulletEntity.create = function(entityManager, physicsSystem, graphicSystem, imag
   // Graphic system setup.
   graphicSystem.setupImage(entityId, image) 
   graphicSystem.setScale(entityId, BulletEntity.scale)
+
+  enableCollisionCircle(entityId, entityManager)
   return entityId
 }

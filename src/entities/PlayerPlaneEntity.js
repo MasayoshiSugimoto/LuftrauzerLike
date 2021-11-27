@@ -73,7 +73,7 @@ PlayerPlaneEntity.create = function(entityId, entityManager, images, particleSys
 
   const physicsComponent = physicsSystem.getComponent(entityId)
   physicsComponent.maxVelocity = PlayerPlaneEntity.MAX_VELOCITY
-  physicsComponent.gravity = false
+  physicsComponent.gravity = true
   physicsComponent.vectorFieldIndices = [0, 1]
   physicsComponent.collision = true
   physicsComponent.collisionSize = new Vector2D(0.1, 0.1)

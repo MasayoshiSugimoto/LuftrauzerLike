@@ -9,13 +9,14 @@ const DEBUG_MENU_NB_ENTITIES = 'debug-menu-nb-entities'
 const DEBUG_MENU_HP = 'debug-menu-hp'
 const DEBUG_MENU_ROOT_ID = 'debug-menu'
 const DEBUG_MENU_CB_ENNEMY_GENERATOR_ENABLED = 'cb-ennemy-generator-enabled'
+const DEBUG_MENU_CB_PLAYER_GRAVITY_ENABLED = 'cb-player-gravity-enabled'
 
 
 export let DEBUG_ENABLED = false
 
 
-export const debugData = {
-  ennemyGeneratorEnabled: true
+export let debugData = {
+  ennemyGeneratorEnabled: false,
 }
 
 
@@ -36,6 +37,7 @@ export function updateDebug(entityManager, elapsedTimeSecond) {
   fpsElement().innerText = 1 / elapsedTimeSecond 
   nbEntitiesElement().innerText = entityManager.getActiveCount()
   updateEnnemyGeneratorEnabled(debugData)
+  updatePlayerGravity(entityManager, debugData)
 }
 
 
@@ -69,5 +71,18 @@ function updateEnnemyGeneratorEnabled(debugData) {
   const input = document.getElementById(DEBUG_MENU_CB_ENNEMY_GENERATOR_ENABLED)
   debugData.ennemyGeneratorEnabled = input.checked
 }
+
+
+function updatePlayerGravity(entityManager, debugData) {
+  const input = document.getElementById(DEBUG_MENU_CB_PLAYER_GRAVITY_ENABLED)
+  if (!input) return
+
+  const physicsSystem = entityManager.getPhysicsSystem()
+  const physicsComponent = physicsSystem.components[entityManager.playerEntityId]
+  if (!physicsComponent) return
+
+  physicsComponent.gravity = !DEBUG_ENABLED || input.checked
+}
+
 
 setupDebug()
