@@ -6,6 +6,7 @@ import {ComponentFactory} from '../game/ComponentFactory.js'
 import {BATTALION_ID_ENNEMY} from '../components/BattalionComponent.js'
 import {Vector2D} from '../geometry/Vector2D.js'
 import {enableCollisionCircle} from '../graphics/CollisionCircle.js'
+import {DEBUG_ENABLED, debugData} from '../game/Debug.js'
 
 
 const TINY_PLANE_POP_TIME_SECOND = 0.5
@@ -54,6 +55,9 @@ export function TinyPlanePopper(entityManager, playerEntityId, images) {
 }
 
 TinyPlanePopper.prototype.update = function(elapsedTimeSecond) {
+  // Disable ennemy generation when the feature is disabled in debug mode.
+  if (DEBUG_ENABLED && !debugData.ennemyGeneratorEnabled) return
+
   this.timeAccumulator += elapsedTimeSecond
   if (this.timeAccumulator >= TINY_PLANE_POP_TIME_SECOND) {
     const entityId = TinyPlaneEntity.create(this.entityManager, this.playerEntityId, this.image, this.images)
