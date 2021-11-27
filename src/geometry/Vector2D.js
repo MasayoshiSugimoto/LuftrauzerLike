@@ -65,7 +65,9 @@ Vector2D.prototype.scalarMultiply = function(scalar) {
 }
 
 Vector2D.prototype.resize = function(size) {
-  return this.scalarMultiply(size / this.distance())
+  const distance = this.distance()
+  if (distance < VECTOR_2D_EPSILON) return Vector2D.ZERO
+  return this.scalarMultiply(size / distance)
 }
 
 Vector2D.prototype.normalize = function() {
@@ -73,7 +75,12 @@ Vector2D.prototype.normalize = function() {
 }
 
 Vector2D.prototype.distance = function() {
-  return Math.sqrt((this.x * this.x) + (this.y * this.y))
+  const x = Math.abs(this.x)
+  const y = Math.abs(this.y)
+  if (x < VECTOR_2D_EPSILON && y < VECTOR_2D_EPSILON) {
+    return 0
+  }
+  return Math.sqrt((x * x) + (y * y))
 }
 
 Vector2D.prototype.cut = function(size) {
