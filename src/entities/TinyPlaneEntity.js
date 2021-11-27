@@ -15,6 +15,7 @@ const TINY_PLANE_POP_Y = 2
 const TINY_PLANE_POP_X_FORBIDDEN_RANGE = 4
 const TINY_PLANE_SCALE = 0.5
 const TINY_PLANE_MAX_HP = 1
+const TINY_PLANE_COLLISION_SIZE = new Vector2D(0.05, 0.05)
 
 function TinyPlaneEntity() {}
 
@@ -34,6 +35,8 @@ TinyPlaneEntity.create = function(entityManager, playerEntityId, image, images) 
   // Physics system setup.
   const physicsSystem = entityManager.getPhysicsSystem()
   physicsSystem.enableCollision(entityId)
+  const physicsComponent = physicsSystem.components[entityId]
+  physicsComponent.collisionSize = TINY_PLANE_COLLISION_SIZE
 
   // Graphic system setup.
   const graphicSystem = entityManager.getGraphicSystem()

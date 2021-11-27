@@ -120,6 +120,7 @@ PhysicsSystem.initComponent = function(component) {
   component.velocityUpdate = true
 	component.vectorFieldIndices = []
 	component.size = PhysicsSystem.DEFAULT_SIZE
+	component.collisionSize = PhysicsSystem.DEFAULT_SIZE
   component.collision = false
 }
 
@@ -246,7 +247,7 @@ PhysicsSystem.prototype.setSizeFromImage = function(entityId, image, scale) {
 }
 
 PhysicsSystem.getRadius = function(component) {
-  const size = component.size
+  const size = component.collisionSize
   return Math.max(size.x, size.y)
 }
 
